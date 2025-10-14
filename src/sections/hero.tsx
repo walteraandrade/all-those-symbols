@@ -1,6 +1,5 @@
 "use client";
 import { motion } from "framer-motion";
-import { AnimatedBorder } from "@/components/AnimatedBorder";
 
 export function Hero() {
   const prefersReducedMotion = typeof window !== 'undefined' 
@@ -26,7 +25,7 @@ export function Hero() {
           animate={prefersReducedMotion ? {} : { opacity: 1, y: 0 }}
           transition={prefersReducedMotion ? {} : { duration: 0.7 }}
         >
-          Hi, I'm Walter Andrade
+          Hi, I&apos;m Walter Andrade
         </motion.h1>
         <motion.p
           className="text-lg lg:text-xl max-w-lg mb-8 text-gray-200"

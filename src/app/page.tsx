@@ -1,9 +1,9 @@
-import { Hero } from "@/sections/Hero";
-import { About } from "@/sections/About";
-import { Projects } from "@/sections/Projects";
-import { Experience } from "@/sections/Experience";
-import { TechStack } from "@/sections/TechStack";
-import { Contact } from "@/sections/Contact";
+import { Hero } from "@/sections/hero";
+import { About } from "@/sections/about";
+import { Projects } from "@/sections/projects";
+import { Experience } from "@/sections/experience";
+import { TechStack } from "@/sections/tech-stack";
+import { Contact } from "@/sections/contact";
 
 export default function HomePage() {
   return (

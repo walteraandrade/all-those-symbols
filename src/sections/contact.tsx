@@ -19,7 +19,7 @@ export function Contact() {
           Get In Touch
         </h2>
         <p className="text-lg mb-8 max-w-2xl mx-auto text-subtext">
-          I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+          I&apos;m always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
         </p>
         <a
           href="mailto:walter@example.com"
