@@ -1,18 +1,19 @@
-import { HeroSection } from "./components/sections/hero-section.component";
-import { AboutSection } from "./components/sections/about-section.component";
-import { ProjectsSection } from "./components/sections/projects-section.component";
-import { GitHubProjectsSection } from "./components/sections/github-projects.section";
+import { Hero } from "@/sections/Hero";
+import { About } from "@/sections/About";
+import { Projects } from "@/sections/Projects";
+import { Experience } from "@/sections/Experience";
+import { TechStack } from "@/sections/TechStack";
+import { Contact } from "@/sections/Contact";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="flex flex-col items-center px-[32px]">
-      <HeroSection />
-
-      <div className="container">
-        <AboutSection />
-        <ProjectsSection />
-        <GitHubProjectsSection />
-      </div>
-    </main>
+    <>
+      <Hero />
+      <About />
+      <Projects />
+      <Experience />
+      <TechStack />
+      <Contact />
+    </>
   );
 }

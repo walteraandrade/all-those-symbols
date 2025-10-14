@@ -1,22 +1,24 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google"; 
 import "./globals.css";
+import { ReactNode } from "react";
+import { Inter } from "next/font/google";
+import { Header } from "@/components/Header";
+import { Footer } from "@/components/Footer";
 
-const jakarta = Plus_Jakarta_Sans({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Walter Andrade A. Sobrinho | Project Lead & Mentor",
-  description: "I transform complex problems into elegant digital solutions.",
+export const metadata = {
+  title: "Walter Andrade | Developer Portfolio",
+  description: "Minimal dark portfolio built with Next.js",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className="!scroll-smooth">
-      <body className={jakarta.className}>{children}</body>
+    <html lang="en">
+      <body className={inter.className}>
+        <Header />
+        <main id="main-content">{children}</main>
+        <Footer />
+      </body>
     </html>
   );
 }

@@ -1,32 +1,108 @@
-/* src/app/globals.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-body {
-  background-color: #111111; 
-  color: #EAEAEA; 
-  overflow-x: hidden; 
+@theme {
+  --color-primary: #9eb0eb;
+  --color-subtext: #b3b3b3;
+  --color-overlay-rgb: 11 11 12;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
+@layer base {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-black text-white;
+  }
+
+  a {
+    @apply no-underline;
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    @apply outline-2 outline-offset-2;
+    outline-color: var(--color-primary);
   }
 }
 
-a {
-  color: #EAEAEA;
-  text-decoration: none;
+.section {
+  @apply py-20 px-6 max-w-7xl mx-auto;
+}
 
-  :visited {
-    color: slategrey;
+.text-primary {
+  color: var(--color-primary);
+}
+
+.text-subtext {
+  color: var(--color-subtext);
+}
+
+.bg-primary {
+  background-color: var(--color-primary);
+}
+
+.bg-overlay\/80 {
+  background-color: rgb(var(--color-overlay-rgb) / 0.8);
+}
+
+.bg-overlay\/40 {
+  background-color: rgb(var(--color-overlay-rgb) / 0.4);
+}
+
+.border-primary {
+  border-color: var(--color-primary);
+}
+
+.border-primary\/70 {
+  border-color: rgb(158 176 235 / 0.7);
+}
+
+.bg-primary\/10 {
+  background-color: rgb(158 176 235 / 0.1);
+}
+
+.text-primary\/70 {
+  color: rgb(158 176 235 / 0.7);
+}
+
+.hover\:text-primary:hover {
+  color: var(--color-primary);
+}
+
+.hover\:bg-primary:hover {
+  background-color: var(--color-primary);
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
   }
 }
 
+@keyframes shimmer-x {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
 
+@keyframes shimmer-y {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
