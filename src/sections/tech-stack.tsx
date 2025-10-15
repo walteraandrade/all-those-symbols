@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 import { techStack } from "@/data/techStack";
+import { GradientHeading } from "@/components/gradient-heading";
 
 export function TechStack() {
   const prefersReducedMotion = typeof window !== 'undefined' 
@@ -9,9 +10,9 @@ export function TechStack() {
 
   return (
     <section id="tech" className="section">
-      <h2 className="text-3xl font-bold mb-12 text-white">
+      <GradientHeading className="text-3xl font-bold mb-12">
         Tech Stack
-      </h2>
+      </GradientHeading>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {Object.entries(techStack).map(([category, items], index) => (
           <motion.div
@@ -21,9 +22,9 @@ export function TechStack() {
             viewport={{ once: true }}
             transition={prefersReducedMotion ? {} : { duration: 0.5, delay: index * 0.1 }}
           >
-            <h3 className="text-xl font-bold mb-4 capitalize text-primary">
+            <GradientHeading as="h3" className="text-xl font-bold mb-4 capitalize">
               {category}
-            </h3>
+            </GradientHeading>
             <div className="flex flex-wrap gap-2">
               {items.map((item) => (
                 <span

@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #9eb0eb;
+  --color-primary: #FCB045;
   --color-subtext: #b3b3b3;
   --color-overlay-rgb: 11 11 12;
 }
@@ -61,15 +61,15 @@
 }
 
 .border-primary\/70 {
-  border-color: rgb(158 176 235 / 0.7);
+  border-color: rgb(252 176 69 / 0.7);
 }
 
 .bg-primary\/10 {
-  background-color: rgb(158 176 235 / 0.1);
+  background-color: rgb(252 176 69 / 0.1);
 }
 
 .text-primary\/70 {
-  color: rgb(158 176 235 / 0.7);
+  color: rgb(252 176 69 / 0.7);
 }
 
 .hover\:text-primary:hover {

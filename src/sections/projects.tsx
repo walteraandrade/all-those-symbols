@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { projects } from "@/data/projects";
 import { AnimatedBorder } from "@/components/animated-border";
+import { GradientHeading } from "@/components/gradient-heading";
 
 export function Projects() {
   const prefersReducedMotion = typeof window !== 'undefined' 
@@ -10,9 +11,9 @@ export function Projects() {
 
   return (
     <section id="projects" className="section">
-      <h2 className="text-3xl font-bold mb-12 text-white">
+      <GradientHeading className="text-3xl font-bold mb-12">
         Featured Projects
-      </h2>
+      </GradientHeading>
       <div className="space-y-8">
         {projects.map((project, index) => (
           <AnimatedBorder
@@ -25,12 +26,27 @@ export function Projects() {
             transition={prefersReducedMotion ? {} : { duration: 0.5, delay: index * 0.1 }}
             className="bg-background p-6"
           >
-              <span className="inline-block px-3 py-1 text-xs rounded-full mb-3 bg-cyan-500/10 text-primary">
-                {project.role}
+              <span 
+                className="inline-block px-3 py-1 text-xs rounded-full mb-3"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(10px)',
+                }}
+              >
+                <span
+                  style={{
+                    backgroundImage: 'linear-gradient(90deg, rgba(58, 129, 180, 1) 0%, rgba(167, 73, 186, 1) 76%, rgba(0, 217, 25, 1) 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  {project.role}
+                </span>
               </span>
-              <h3 className="text-2xl font-bold mb-2 text-white">
+              <GradientHeading as="h3" className="text-2xl font-bold mb-2">
                 {project.title}
-              </h3>
+              </GradientHeading>
               <p className="mb-4 text-subtext">
                 {project.description}
               </p>
@@ -48,10 +64,29 @@ export function Projects() {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-primary hover:underline"
+                className="inline-block px-3 py-1 rounded relative group"
+                style={{
+                  background: 'rgba(255, 255, 255, 0.05)',
+                  backdropFilter: 'blur(10px)',
+                }}
                 aria-label={`Visit ${project.title} (opens in new tab)`}
               >
-                Live Site <span aria-hidden="true">→</span>
+                <span
+                  style={{
+                    backgroundImage: 'linear-gradient(90deg, rgba(58, 129, 180, 1) 0%, rgba(167, 73, 186, 1) 76%, rgba(0, 217, 25, 1) 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    backgroundClip: 'text',
+                  }}
+                >
+                  Live Site <span aria-hidden="true">→</span>
+                </span>
+                <span 
+                  className="absolute bottom-1 left-3 right-3 h-[1px] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"
+                  style={{
+                    background: 'linear-gradient(90deg, rgba(58, 129, 180, 1) 0%, rgba(167, 73, 186, 1) 76%, rgba(0, 217, 25, 1) 100%)',
+                  }}
+                />
               </a>
           </motion.div>
             </AnimatedBorder>
