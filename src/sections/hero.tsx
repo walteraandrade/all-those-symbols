@@ -20,7 +20,7 @@ export function Hero() {
     >
       <div className="absolute inset-0 bg-overlay/40 border-2 p-4" aria-hidden="true" />
       
-      <div className="relative z-10 max-w-2xl w-full top-[400px] border-2 p-4">
+      <div className="relative z-10 max-w-2xl w-full top-[400px] border-2 bg-[#0E0E0E] p-4">
         <GradientHeading
           as="h1"
           className="text-4xl lg:text-5xl font-bold mb-4"
@@ -37,7 +37,11 @@ export function Hero() {
           animate={prefersReducedMotion ? {} : { opacity: 1 }}
           transition={prefersReducedMotion ? {} : { delay: 0.3, duration: 0.7 }}
         >
-          I have fun transforming prople&apos;s problems into computer problems.
+          I have fun transforming{' '}
+          <span style={{ color: 'rgba(58, 129, 180, 1)' }}>human problems </span>
+          
+          <span style={{ color: 'rgba(167, 73, 186, 1) ' }}>into</span>
+          {' '}<span style={{ color: 'rgba(0, 217, 25, 1)' }}>computer solutions.</span>
         </motion.p>
         
       </div>
