@@ -1,0 +1,100 @@
+About Me
+
+As a child, I was captivated by computers and the world of reading. My formal academic journey began with studies in literature and journalism, before I delved into philosophy, where I discovered a profound love for formal logic and the philosophy of mathematics. This rigorous, first-principles approach "naturally" led me to programming. I now apply this foundation to leading teams and architecting full-stack applications, thriving on building elegant and efficient systems. My journey with programming started with building simple apps, knowing a little bit about javascript to implement full systems from the ground up, even in a time where everything is simply handled to you. These experiences taught me that programming is nothing more than converting human problems into computer problems, and that this is fun. I am currently at the forefront of exploring and implementing solutions in the new frontiers of Artificial Intelligence and Large Language Models, while also profoundly curious about how the philosophical debate is changing because of this new technology.
+Featured Projects
+Full Stack Developer & Product Owner
+Modulart System
+
+Full-stack event sales and management platform with responsive webpage, robust PostgreSQL backend, and comprehensive admin panel.
+Next.jsNode.jsPostgreSQLTypeScriptPayload CMSGCPPrismaApollo GraphQLDocker
+Live Site →
+Full-Stack Developer & Lead
+NaPorta Platform
+
+Animated landing page and responsive admin system for delivery management. Winner of national competition.
+Next.jsNode.jsFramer MotionRefineGSAPReact QueryTypeScriptTailwind CSS
+Live Site →
+Full-Stack Developer & Architect
+Payssego Payment System
+
+Node.js platform for employee salary advances with rigorous API security requirements and secure client integrations.
+Node.jsRetoolAPI SecurityPostgreSQLAWS
+Live Site →
+Full-Stack Developer & DevOps
+Vivenda Platform
+
+Astro-based platform connecting construction companies to at-risk individuals, simplifying bureaucracy and stakeholder connections.
+AstroAWSEC2UbuntuNode.js
+Live Site →
+Mobile Developer
+ioP Pet App
+
+React Native application with Bluetooth integration for pet management, deployed on Apple Store and Google Play.
+React NativeBluetoothiOSAndroidApple StoreGoogle Play
+Live Site →
+Full-Stack Developer
+Timesheet Management System
+
+Full-stack application replacing expensive Redmine with React, GraphQL, Node.js and PostgreSQL integration.
+ReactGraphQLNode.jsPostgreSQLBigQueryLookerStudio
+Live Site →
+Full-Stack Developer & Lead
+Gentelab E-learning Platform
+
+Comprehensive e-learning platform with React frontend, Relay integration, and advanced video tracking features.
+ReactRelayHasuraFirebaseNetlifyNode.js
+Live Site →
+Experience
+Senior Software Engineer
+
+SmartHow
+
+September 2025 - Present (2 months)
+
+Developing AI-powered solutions for training and accident prevention in large industrial environments. Building comprehensive platforms that leverage machine learning and computer vision to enhance workplace safety and operational efficiency across heavy industries.
+Senior Full Stack Developer | Mentor | Product Owner
+
+Instaq – Instituto Taqtile
+
+October 2023 - September 2025 (2 years)
+
+Led full-stack development of Modulart system (modul.art.br) for event management company. Developed animated landing page and admin system for NaPorta (naporta.digital), winner of national competition. Created Payssego payment platform with Node.js for employee salary advances with rigorous API security requirements. Built Vivenda platform using Astro connecting construction companies to at-risk individuals, handling complete AWS deployment.
+Software Engineer
+
+Taqtile Brasil
+
+September 2020 - May 2023 (2 years 9 months)
+
+Developed React Native app with Bluetooth integration for ioP Pet, managing Apple Store and Google Play deployment. Created full-stack Timesheet application replacing expensive Redmine system with React, GraphQL, Node.js and PostgreSQL. Built donation platform for Poli-USP angel group evolving into interactive social network. Led Gentelab e-learning platform development with React and Relay integration.
+Student
+
+Labenu
+
+March 2020 - September 2020 (7 months)
+
+Completed intensive Web Full Stack Development program focusing on modern web technologies and best practices.
+Tech Stack
+languages
+TypeScriptJavaScriptPythonSQLGraphQL
+frontend
+Next.jsReactReact NativeAstroTailwind CSSFramer MotionGSAPRelay
+backend
+Node.jsPostgreSQLPrismaApollo GraphQLHasuraREST APIsFirebase
+mobile
+React NativeiOSAndroidBluetooth Integration
+cloud
+AWSEC2GCPNetlifyVercelDocker
+tools
+RetoolPayload CMSGitBigQueryLookerStudio
+Get In Touch
+
+I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.
+Email
+walteraandrade@gmail.com
+LinkedIn
+/in/walteraandrade
+GitHub
+@walteraandrade
+Discord@walteraandrade
+
+© 2025 Walter Andrade. All rights reserved.
