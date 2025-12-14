@@ -28,10 +28,13 @@ export function NetworkBackground({ nodes, activeNodeId }: NetworkBackgroundProp
   const centerY = 50;
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-      {/* Abstract Background Texture */}
-      <div className="absolute inset-0 opacity-20 bg-[url('@assets/generated_images/dark_abstract_geometric_network_background.png')] bg-cover bg-center mix-blend-overlay" />
+    <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-background">
+      {/* Abstract Background Texture - Much more subtle */}
+      <div className="absolute inset-0 opacity-5 bg-[url('@assets/generated_images/dark_abstract_geometric_network_background.png')] bg-cover bg-center mix-blend-overlay grayscale" />
       
+      {/* Vignette to fade edges */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)]" />
+
       {/* SVG Layer for Lines */}
       <svg className="absolute inset-0 w-full h-full">
         {nodes.map((node) => {
@@ -39,14 +42,14 @@ export function NetworkBackground({ nodes, activeNodeId }: NetworkBackgroundProp
           
           return (
             <g key={node.id}>
-              {/* Static Line */}
+              {/* Static Line - Very faint */}
               <line
                 x1={`${centerX}%`}
                 y1={`${centerY}%`}
                 x2={`${node.x}%`}
                 y2={`${node.y}%`}
                 stroke="currentColor"
-                className="text-primary/20"
+                className="text-primary/5"
                 strokeWidth="1"
               />
 
