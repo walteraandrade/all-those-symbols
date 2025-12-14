@@ -47,22 +47,25 @@
 :root {
   /* Dark Mode Default (Logic/Void Theme) */
   --background: 220 15% 10%; /* Very dark grey/blue */
-  --foreground: 210 20% 90%;
+  
+  /* Increased brightness for text */
+  --foreground: 210 20% 98%; /* Almost white */
   
   --card: 220 15% 14%;
-  --card-foreground: 210 20% 90%;
+  --card-foreground: 210 20% 98%;
   
   --popover: 220 15% 12%;
-  --popover-foreground: 210 20% 90%;
+  --popover-foreground: 210 20% 98%;
   
   --primary: 180 80% 60%; /* Cyan/Electric Blue for logic lines */
   --primary-foreground: 220 15% 10%;
   
   --secondary: 220 10% 20%;
-  --secondary-foreground: 210 20% 90%;
+  --secondary-foreground: 210 20% 98%;
   
   --muted: 220 10% 20%;
-  --muted-foreground: 215 15% 60%;
+  /* Significantly lightened muted text for better legibility */
+  --muted-foreground: 215 15% 80%;
   
   --accent: 45 90% 60%; /* Gold for human/philosophy touches */
   --accent-foreground: 220 15% 10%;
