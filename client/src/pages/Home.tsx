@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ExternalLink, Github, Linkedin, Mail, Play, Pause, SkipForward, SkipBack, Terminal, Music } from "lucide-react";
 
+import { CentralHub } from "@/components/CentralHub";
+
 export default function Home() {
   const [activeNode, setActiveNode] = useState<string | null>(null);
 
@@ -42,7 +44,7 @@ export default function Home() {
         </header>
 
         {/* Central Hub (Visual anchor) */}
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full shadow-[0_0_20px_var(--color-primary)] z-0" />
+        <CentralHub />
 
         {/* Interactive Nodes */}
         <div className="absolute inset-0 pointer-events-auto">
