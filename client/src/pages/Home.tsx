@@ -72,9 +72,12 @@ export default function Home() {
                 <div className="flex-1 flex flex-col overflow-hidden">
                   <div className="p-6 border-b border-border flex justify-between items-center bg-card/50">
                     <h2 className="text-2xl font-display font-bold text-primary flex items-center gap-2">
-                      {nodes.find(n => n.id === activeNode)?.icon && (
-                         nodes.find(n => n.id === activeNode)?.icon({} as any)
-                      )} 
+                      {(() => {
+                        const node = nodes.find(n => n.id === activeNode);
+                        if (!node) return null;
+                        const Icon = node.icon;
+                        return <Icon className="w-6 h-6" />;
+                      })()}
                       {nodes.find(n => n.id === activeNode)?.title}
                     </h2>
                     <Button variant="ghost" size="sm" onClick={() => setActiveNode(null)} className="hover:bg-destructive/10 hover:text-destructive">
