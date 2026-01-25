@@ -7,6 +7,7 @@
     "dev:client": "bunx vite dev --port 5000",
     "dev": "NODE_ENV=development bun run server/index.ts",
     "build": "bun run script/build.ts",
+    "build:client": "bunx vite build",
     "start": "NODE_ENV=production bun run dist/index.js",
     "check": "bunx tsc",
     "db:push": "bunx drizzle-kit push"
@@ -42,6 +43,7 @@
     "@radix-ui/react-toggle-group": "1.1.11",
     "@radix-ui/react-tooltip": "1.2.8",
     "@tanstack/react-query": "5.60.5",
+    "@vercel/kv": "^3.0.0",
     "axios": "^1.13.2",
     "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
@@ -91,6 +93,7 @@
     "@types/react": "19.2.0",
     "@types/react-dom": "19.2.0",
     "@types/ws": "8.5.13",
+    "@vercel/node": "^5.5.27",
     "@vitejs/plugin-react": "5.0.4",
     "autoprefixer": "10.4.21",
     "drizzle-kit": "0.31.4",
