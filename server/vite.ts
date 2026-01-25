@@ -29,9 +29,25 @@ export async function setupVite(server: Server, app: Express) {
     appType: "custom",
   });
 
-  app.use(vite.middlewares);
+  // Only use Vite middleware for non-API routes
+  // We need to skip /api routes so Express can handle them
+  const viteMiddlewareWrapper = (req: any, res: any, next: any) => {
+    // Skip API routes and vite HMR - let Express handle them
+    if (req.path.startsWith("/api") || req.path.startsWith("/vite-hmr")) {
+      return next();
+    }
+    // For all other routes, use Vite middleware
+    vite.middlewares(req, res, next);
+  };
+
+  app.use(viteMiddlewareWrapper);
 
   app.use("*", async (req, res, next) => {
+    // Skip API routes - they should be handled by Express routes registered before this middleware
+    if (req.path.startsWith("/api")) {
+      return next();
+    }
+
     const url = req.originalUrl;
 
     try {

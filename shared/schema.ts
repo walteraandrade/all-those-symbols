@@ -9,6 +9,14 @@ export const users = pgTable("users", {
   password: text("password").notNull(),
 });
 
+export const spotifyTokens = pgTable("spotify_tokens", {
+  id: varchar("id").primaryKey(), // Single row for site owner (always "site_owner")
+  accessToken: text("access_token").notNull(),
+  refreshToken: text("refresh_token").notNull(),
+  expiresAt: text("expires_at").notNull(), // ISO timestamp
+  updatedAt: text("updated_at").notNull().default(sql`now()`),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -16,3 +24,4 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+export type SpotifyToken = typeof spotifyTokens.$inferSelect;

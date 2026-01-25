@@ -99,3 +99,30 @@ export const nodes: NodeSection[] = [
   { id: "music", title: "Soundscapes", icon: Music, x: 20, y: 80 },
   { id: "blog", title: "Writings", icon: BookOpen, x: 80, y: 80 },
 ];
+
+export interface BlogPost {
+  slug: string;
+  title: string;
+  date: string;
+  category: string;
+  excerpt: string;
+}
+
+export const blogPosts: BlogPost[] = [
+  {
+    slug: "rigor-of-logic-vs-fluidity-of-code",
+    title: "The Rigor of Logic vs. The Fluidity of Code",
+    date: "Dec 14, 2025",
+    category: "Philosophy",
+    excerpt:
+      "In formal logic, a contradiction is fatal. In software engineering, a race condition is often just a Tuesday. Transitioning from the absolute truths of mathematical philosophy to the heuristic reality of distributed systems taught me that perfection is not about the absence of error, but the elegance of recovery...",
+  },
+  {
+    slug: "why-i-cook-like-i-code",
+    title: "Why I Cook Like I Code",
+    date: "Nov 02, 2025",
+    category: "Life",
+    excerpt:
+      "Mise en place is just dependency injection for the kitchen. Understanding the heat capacity of a cast iron skillet is no different than understanding the throughput of a database connection pool. It's all about resource management...",
+  },
+];
