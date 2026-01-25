@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { MainNav } from "@/components/MainNav";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { SfxToggle } from "@/components/SfxToggle";
 import { NetworkBackground } from "@/components/NetworkBackground";
 import { CentralHub } from "@/components/CentralHub";
 import { nodes } from "@/lib/data";
@@ -19,7 +20,7 @@ export function Layout({ children }: LayoutProps) {
   const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen w-full bg-background text-foreground relative overflow-x-hidden font-sans selection:bg-primary/20">
+    <div className="scanlines min-h-screen w-full bg-background text-foreground relative overflow-x-hidden font-sans selection:bg-primary/20">
       {/* Skip link for a11y */}
       <a
         href="#main-content"
@@ -28,11 +29,13 @@ export function Layout({ children }: LayoutProps) {
         Skip to main content
       </a>
 
-      {/* Decorative background */}
-      <NetworkBackground nodes={nodes} activeNodeId={null} />
+      {/* Decorative background (hidden on home desktop when 3D active) */}
+      {!(isHome && !isMobile) && (
+        <NetworkBackground nodes={nodes} activeNodeId={null} />
+      )}
 
-      {/* Central hub on home only */}
-      {isHome && <CentralHub />}
+      {/* Central hub on home only (mobile fallback) */}
+      {isHome && isMobile && <CentralHub />}
 
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/50">
@@ -41,7 +44,7 @@ export function Layout({ children }: LayoutProps) {
             href="/"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="font-display font-bold text-xl tracking-tighter"
+            className="font-retro text-sm tracking-tight"
           >
             WALTER<span className="text-primary">.</span>
           </motion.a>
@@ -50,6 +53,7 @@ export function Layout({ children }: LayoutProps) {
             <div className="hidden md:block">
               <MainNav />
             </div>
+            <SfxToggle />
             <ThemeToggle />
           </div>
         </div>

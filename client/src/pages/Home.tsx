@@ -1,16 +1,23 @@
 import { motion } from "framer-motion";
 import { ContentNode } from "@/components/ContentNode";
+import { Hero3D } from "@/components/three";
 import { nodes } from "@/lib/data";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Home() {
+  const isMobile = useIsMobile();
+
   return (
     <div className="relative min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center">
+      {/* 3D Hero (desktop only) */}
+      <Hero3D />
+
       {/* Brand tagline */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="text-center mb-16 px-4"
+        className="text-center mb-16 px-4 relative z-20"
       >
         <p className="text-sm md:text-base text-muted-foreground font-mono">
           Logic <span className="text-accent mx-2">×</span> Philosophy{" "}
@@ -18,14 +25,16 @@ export default function Home() {
         </p>
       </motion.div>
 
-      {/* Navigation nodes */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="relative w-full h-full pointer-events-auto">
-          {nodes.map((node) => (
-            <ContentNode key={node.id} {...node} />
-          ))}
+      {/* Navigation nodes (mobile fallback) */}
+      {isMobile && (
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="relative w-full h-full pointer-events-auto">
+            {nodes.map((node) => (
+              <ContentNode key={node.id} {...node} />
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

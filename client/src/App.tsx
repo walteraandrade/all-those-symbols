@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { MotionProvider } from "@/contexts/MotionContext";
+import { AudioProvider } from "@/contexts/AudioContext";
 import { Layout } from "@/components/Layout";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
@@ -30,14 +31,16 @@ function App() {
   return (
     <ThemeProvider>
       <MotionProvider>
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <Toaster />
-            <Layout>
-              <Router />
-            </Layout>
-          </TooltipProvider>
-        </QueryClientProvider>
+        <AudioProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <Toaster />
+              <Layout>
+                <Router />
+              </Layout>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </AudioProvider>
       </MotionProvider>
     </ThemeProvider>
   );
