@@ -1,8 +1,10 @@
+import { lazy, Suspense } from "react";
 import { motion } from "framer-motion";
 import { ContentNode } from "@/components/ContentNode";
-import { Hero3D } from "@/components/three";
 import { nodes } from "@/lib/data";
 import { useIsMobile } from "@/hooks/use-mobile";
+
+const Hero3D = lazy(() => import("@/components/three/Hero3D").then(m => ({ default: m.Hero3D })));
 
 export default function Home() {
   const isMobile = useIsMobile();
@@ -10,7 +12,9 @@ export default function Home() {
   return (
     <div className="relative min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center">
       {/* 3D Hero (desktop only) */}
-      <Hero3D />
+      <Suspense fallback={null}>
+        <Hero3D />
+      </Suspense>
 
       {/* Brand tagline */}
       <motion.div
