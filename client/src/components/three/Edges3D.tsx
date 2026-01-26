@@ -11,19 +11,24 @@ interface Edges3DProps {
 
 export function Edges3D({ nodes, hoveredId }: Edges3DProps) {
   const center = useMemo(() => new Vector3(0, 0, 0), []);
-  const pulseRef = useRef(0);
+  const posCache = useRef(new Map<string, Vector3>());
 
-  useFrame((_, delta) => {
-    pulseRef.current = (pulseRef.current + delta) % (Math.PI * 2);
-  });
+  const getPos = (node: Node3DData): Vector3 => {
+    let cached = posCache.current.get(node.id);
+    if (!cached) {
+      cached = node.position instanceof Vector3
+        ? node.position
+        : new Vector3(...(node.position as [number, number, number]));
+      posCache.current.set(node.id, cached);
+    }
+    return cached;
+  };
 
   return (
     <group>
       {nodes.map((node) => {
         const isHovered = node.id === hoveredId;
-        const pos = node.position instanceof Vector3
-          ? node.position
-          : new Vector3(...node.position);
+        const pos = getPos(node);
 
         return (
           <Line

@@ -6,7 +6,7 @@ import { nodes } from "@/lib/data";
 import { HeroScene } from "./HeroScene";
 import { Node3D } from "./Node3D";
 import { NodeLabel } from "./NodeLabel";
-import { CentralHub3D } from "./CentralHub3D";
+import { MonitorAvatar3D } from "./MonitorAvatar3D";
 import { Edges3D } from "./Edges3D";
 import { ParticleField } from "./ParticleField";
 import { PerspectiveGrid } from "./PerspectiveGrid";
@@ -38,7 +38,7 @@ export function Hero3D() {
       <HeroScene prefersReducedMotion={prefersReducedMotion}>
         <PerspectiveGrid prefersReducedMotion={prefersReducedMotion} />
 
-        <CentralHub3D prefersReducedMotion={prefersReducedMotion} />
+        <MonitorAvatar3D prefersReducedMotion={prefersReducedMotion} />
 
         <Edges3D nodes={nodes3D} hoveredId={hoveredId} />
 

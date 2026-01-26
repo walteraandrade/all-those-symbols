@@ -13,6 +13,7 @@ import Bio from "@/pages/Bio";
 import Projects from "@/pages/Projects";
 import Music from "@/pages/Music";
 import Blog from "@/pages/Blog";
+import BlogPost from "@/pages/BlogPost";
 
 function Router() {
   return (
@@ -22,6 +23,7 @@ function Router() {
       <Route path="/projects" component={Projects} />
       <Route path="/music" component={Music} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
       <Route component={NotFound} />
     </Switch>
   );

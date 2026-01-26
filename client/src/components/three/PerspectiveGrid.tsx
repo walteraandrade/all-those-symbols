@@ -1,6 +1,13 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
+
+const cyanColor = new THREE.Color(0x00d4aa);
+const purpleColor = new THREE.Color(0x9944ff);
+const gridDepth = 30;
+const gridWidth = 20;
+const lineCount = 15;
+const vertCount = 10;
 
 interface PerspectiveGridProps {
   prefersReducedMotion: boolean;
@@ -9,14 +16,6 @@ interface PerspectiveGridProps {
 export function PerspectiveGrid({ prefersReducedMotion }: PerspectiveGridProps) {
   const groupRef = useRef<THREE.Group>(null);
   const timeRef = useRef(0);
-
-  const gridDepth = 30;
-  const gridWidth = 20;
-  const lineCount = 15;
-  const vertCount = 10;
-
-  const cyanColor = new THREE.Color(0x00d4aa);
-  const purpleColor = new THREE.Color(0x9944ff);
 
   const horizontalLines = useMemo(() => {
     const lines: THREE.Line[] = [];
@@ -73,6 +72,19 @@ export function PerspectiveGrid({ prefersReducedMotion }: PerspectiveGridProps) 
 
     return lines;
   }, []);
+
+  useEffect(() => {
+    return () => {
+      horizontalLines.forEach((line) => {
+        line.geometry.dispose();
+        (line.material as THREE.Material).dispose();
+      });
+      verticalLines.forEach((line) => {
+        line.geometry.dispose();
+        (line.material as THREE.Material).dispose();
+      });
+    };
+  }, [horizontalLines, verticalLines]);
 
   useFrame((_, delta) => {
     if (prefersReducedMotion) return;

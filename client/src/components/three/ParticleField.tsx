@@ -1,7 +1,10 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import type { Points } from "three";
 import * as THREE from "three";
+
+const _tempVec = new THREE.Vector3();
+const _tailVec = new THREE.Vector3();
 
 interface ParticleFieldProps {
   count?: number;
@@ -79,6 +82,15 @@ export function ParticleField({
     return stars;
   }, []);
 
+  useEffect(() => {
+    return () => {
+      shootingStarsRef.current.forEach((star) => {
+        star.line.geometry.dispose();
+        (star.line.material as THREE.Material).dispose();
+      });
+    };
+  }, []);
+
   useFrame((state, delta) => {
     if (prefersReducedMotion) return;
 
@@ -98,16 +110,18 @@ export function ParticleField({
         star.maxLifetime = 2 + Math.random() * 2;
       }
 
-      star.position.add(star.velocity.clone().multiplyScalar(delta * 60));
+      _tempVec.copy(star.velocity).multiplyScalar(delta * 60);
+      star.position.add(_tempVec);
 
-      const tail = star.position.clone().sub(star.velocity.clone().multiplyScalar(2));
+      _tailVec.copy(star.velocity).multiplyScalar(2);
+      _tailVec.subVectors(star.position, _tailVec);
       const positions = star.line.geometry.attributes.position.array as Float32Array;
       positions[0] = star.position.x;
       positions[1] = star.position.y;
       positions[2] = star.position.z;
-      positions[3] = tail.x;
-      positions[4] = tail.y;
-      positions[5] = tail.z;
+      positions[3] = _tailVec.x;
+      positions[4] = _tailVec.y;
+      positions[5] = _tailVec.z;
       star.line.geometry.attributes.position.needsUpdate = true;
     });
   });

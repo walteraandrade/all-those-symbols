@@ -1,10 +1,28 @@
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/lib/data";
+import { blogPosts, BlogCategory } from "@/lib/data";
+import { CategoryTabs, BlogCard, BlogFeaturedCard } from "@/components/blog";
 
 export default function Blog() {
+  const [activeCategory, setActiveCategory] = useState<BlogCategory | null>(null);
+
+  const filteredPosts = useMemo(() => {
+    if (!activeCategory) return blogPosts;
+    return blogPosts.filter((p) => p.category === activeCategory);
+  }, [activeCategory]);
+
+  const featuredPost = useMemo(
+    () => filteredPosts.find((p) => p.featured),
+    [filteredPosts]
+  );
+
+  const regularPosts = useMemo(
+    () => filteredPosts.filter((p) => !p.featured || !featuredPost || p.slug !== featuredPost.slug),
+    [filteredPosts, featuredPost]
+  );
+
   return (
-    <div className="container mx-auto px-4 max-w-3xl">
+    <div className="container mx-auto px-4 max-w-5xl">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -19,29 +37,28 @@ export default function Blog() {
           </p>
         </header>
 
-        <section className="space-y-8">
-          {blogPosts.map((post, i) => (
-            <motion.article
-              key={post.slug}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              className="border-b border-border pb-8"
-            >
-              <div className="text-xs font-mono text-primary mb-2">
-                {post.date} • {post.category}
-              </div>
-              <h2 className="text-2xl font-display font-bold mb-4 hover:text-accent transition-colors">
-                {post.title}
-              </h2>
-              <p className="text-muted-foreground leading-relaxed">
-                {post.excerpt}
-              </p>
-              <Button variant="link" className="pl-0 mt-2 text-primary">
-                Read more →
-              </Button>
-            </motion.article>
-          ))}
+        <section aria-label="Filter by category">
+          <CategoryTabs active={activeCategory} onChange={setActiveCategory} />
+        </section>
+
+        {featuredPost && activeCategory === null && (
+          <section aria-label="Featured post">
+            <BlogFeaturedCard post={featuredPost} />
+          </section>
+        )}
+
+        <section aria-label="Post list">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {regularPosts.map((post, i) => (
+              <BlogCard key={post.slug} post={post} index={i} />
+            ))}
+          </div>
+
+          {filteredPosts.length === 0 && (
+            <div className="text-center py-12 text-muted-foreground">
+              No posts in this category yet.
+            </div>
+          )}
         </section>
       </motion.div>
     </div>
