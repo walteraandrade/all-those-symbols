@@ -4,6 +4,7 @@ import { blogPosts } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import {
   ReadingProgress,
+  BackToTop,
   BlogHero,
   BlogContent,
   TableOfContents,
@@ -40,10 +41,11 @@ export default function BlogPost() {
   return (
     <>
       <ReadingProgress />
+      <BackToTop />
       <div className="container mx-auto px-4 max-w-5xl">
         <BlogHero post={post} />
 
-        <div className="flex gap-12">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
           <main className="flex-1 min-w-0">
             <TableOfContents content={post.content} />
             <BlogContent content={post.content} />

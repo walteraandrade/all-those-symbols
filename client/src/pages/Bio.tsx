@@ -23,7 +23,7 @@ export default function Bio() {
           <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
             Bio <span className="text-primary">/</span> Philosophy
           </h1>
-          <p className="text-lg leading-relaxed text-muted-foreground">
+          <p className="text-lg leading-loose sm:leading-relaxed text-muted-foreground">
             {bio}
           </p>
         </header>

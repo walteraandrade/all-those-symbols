@@ -176,28 +176,35 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Blog prose styles */
 .blog-prose {
-  @apply text-foreground leading-relaxed;
+  @apply text-foreground leading-loose sm:leading-relaxed;
 }
 
 .blog-prose > * + * {
-  margin-top: 1.5em;
+  margin-top: 1.75em;
+}
+
+@media (min-width: 640px) {
+  .blog-prose > * + * {
+    margin-top: 1.5em;
+  }
 }
 
 .blog-prose h2 {
-  @apply text-2xl font-display font-bold mt-12 mb-4 text-foreground;
+  @apply text-xl sm:text-2xl font-display font-bold mt-10 sm:mt-12 mb-4 text-foreground;
+  @apply border-t border-border/40 pt-8;
 }
 
 .blog-prose h3 {
-  @apply text-xl font-display font-bold mt-8 mb-3 text-foreground;
+  @apply text-lg sm:text-xl font-display font-bold mt-8 mb-3 text-foreground;
 }
 
 .blog-prose p {
-  @apply leading-relaxed text-muted-foreground;
+  @apply text-base sm:text-lg leading-loose sm:leading-relaxed text-muted-foreground;
 }
 
 .blog-prose ul,
 .blog-prose ol {
-  @apply pl-6 space-y-2 text-muted-foreground;
+  @apply pl-4 sm:pl-6 space-y-2 text-muted-foreground;
 }
 
 .blog-prose ul {
@@ -209,7 +216,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .blog-prose li {
-  @apply leading-relaxed;
+  @apply leading-loose sm:leading-relaxed;
 }
 
 .blog-prose strong {

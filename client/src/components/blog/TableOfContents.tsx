@@ -92,13 +92,13 @@ export function TableOfContents({ content }: TableOfContentsProps) {
 
       {/* Mobile: Collapsible */}
       <Collapsible open={isOpen} onOpenChange={setIsOpen} className="lg:hidden mb-8">
-        <CollapsibleTrigger className="flex items-center justify-between w-full p-4 bg-card/50 border border-border rounded-sm">
+        <CollapsibleTrigger className="flex items-center justify-between w-full px-5 py-4 bg-card/50 border border-border rounded-sm">
           <span className="text-sm font-mono uppercase">Table of Contents</span>
           <ChevronDown
             className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`}
           />
         </CollapsibleTrigger>
-        <CollapsibleContent className="p-4 bg-card/30 border border-t-0 border-border rounded-b-sm">
+        <CollapsibleContent className="px-5 py-4 bg-card/30 border border-t-0 border-border rounded-b-sm">
           <TocList />
         </CollapsibleContent>
       </Collapsible>

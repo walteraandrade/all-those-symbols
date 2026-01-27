@@ -6,3 +6,4 @@ export { BlogContent } from "./BlogContent";
 export { TableOfContents } from "./TableOfContents";
 export { PostNavigation } from "./PostNavigation";
 export { ReadingProgress } from "./ReadingProgress";
+export { BackToTop } from "./BackToTop";
