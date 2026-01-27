@@ -3,11 +3,22 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import axios from "axios";
+import { Resend } from "resend";
+import { z } from "zod";
 
 const CLIENT_ID = process.env.SPOTIFY_CLIENT_ID || "YOUR_SPOTIFY_CLIENT_ID";
 const CLIENT_SECRET = process.env.SPOTIFY_CLIENT_SECRET || "YOUR_SPOTIFY_CLIENT_SECRET";
 const REDIRECT_URI = process.env.SPOTIFY_REDIRECT_URI || "http://127.0.0.1:3000/api/spotify/callback";
 const FRONTEND_URI = process.env.FRONTEND_URI || "http://127.0.0.1:3000";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
+
+const contactSchema = z.object({
+  name: z.string().min(2),
+  email: z.string().email(),
+  message: z.string().min(10),
+});
 
 const getAuthHeader = () => ({
   "Authorization": "Basic " + Buffer.from(CLIENT_ID + ":" + CLIENT_SECRET).toString("base64"),
@@ -174,6 +185,37 @@ export async function registerRoutes(
     } catch (error: any) {
       console.error("Error fetching playlist:", error.response?.data || error.message);
       res.status(error.response?.status || 500).json({ error: "Failed to fetch playlist" });
+    }
+  });
+
+  app.post("/api/contact", async (req, res) => {
+    const parsed = contactSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: "Invalid request", details: parsed.error.flatten() });
+    }
+
+    const { name, email, message } = parsed.data;
+
+    try {
+      await resend.emails.send({
+        from: "Contact Form <onboarding@resend.dev>",
+        to: CONTACT_EMAIL,
+        replyTo: email,
+        subject: `Contact from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
+        html: `
+          <h2>New Contact Form Submission</h2>
+          <p><strong>Name:</strong> ${name}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <h3>Message:</h3>
+          <p>${message.replace(/\n/g, "<br>")}</p>
+        `,
+      });
+
+      return res.json({ success: true });
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      return res.status(500).json({ error: "Failed to send message" });
     }
   });
 

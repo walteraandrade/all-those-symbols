@@ -16,6 +16,7 @@ const Bio = lazy(() => import("@/pages/Bio"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const Blog = lazy(() => import("@/pages/Blog"));
 const BlogPost = lazy(() => import("@/pages/BlogPost"));
+const Contact = lazy(() => import("@/pages/Contact"));
 
 function Router() {
   return (
@@ -25,6 +26,7 @@ function Router() {
       <Route path="/projects" component={Projects} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>
   );
