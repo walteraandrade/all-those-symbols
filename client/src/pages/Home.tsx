@@ -47,11 +47,11 @@ export default function Home() {
 
         {/* Avatar with orbiting buttons */}
         {!isMobile && (
-          <div className="relative w-32 h-32 flex items-center justify-center overflow-visible">
+          <div className="relative w-80 h-80 flex items-center justify-center overflow-visible">
             <MouseTrackingAvatar />
             {menuItems.map((item, index) => {
-              const angle = (index * 60 + 30) * (Math.PI / 180);
-              const radius = 110;
+              const angle = (index * 120 - 30) * (Math.PI / 180);
+              const radius = 150;
               const x = Math.cos(angle) * radius;
               const y = Math.sin(angle) * radius;
 
