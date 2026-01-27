@@ -1,4 +1,4 @@
-import { LucideIcon, Music, BookOpen, User, Code, Briefcase, Cpu, Layers, Terminal } from "lucide-react";
+import { LucideIcon, BookOpen, User, Code, Briefcase, Cpu, Layers, Terminal } from "lucide-react";
 
 export interface Project {
   title: string;
@@ -94,10 +94,9 @@ export interface NodeSection {
 }
 
 export const nodes: NodeSection[] = [
-  { id: "bio", title: "Bio / Philosophy", icon: User, x: 20, y: 30 },
-  { id: "projects", title: "Projects", icon: Code, x: 80, y: 30 },
-  { id: "music", title: "Soundscapes", icon: Music, x: 20, y: 80 },
-  { id: "blog", title: "Writings", icon: BookOpen, x: 80, y: 80 },
+  { id: "bio", title: "Bio", icon: User, x: 20, y: 50 },
+  { id: "projects", title: "Projects", icon: Code, x: 50, y: 30 },
+  { id: "blog", title: "Blog", icon: BookOpen, x: 80, y: 50 },
 ];
 
 export type BlogCategory = "Cinema" | "Philosophy" | "Code" | "Life" | "Project" | "Music";

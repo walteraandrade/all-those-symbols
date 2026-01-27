@@ -11,7 +11,6 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
 import Bio from "@/pages/Bio";
 import Projects from "@/pages/Projects";
-import Music from "@/pages/Music";
 import Blog from "@/pages/Blog";
 import BlogPost from "@/pages/BlogPost";
 
@@ -21,7 +20,6 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/bio" component={Bio} />
       <Route path="/projects" component={Projects} />
-      <Route path="/music" component={Music} />
       <Route path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={BlogPost} />
       <Route component={NotFound} />

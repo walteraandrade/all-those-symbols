@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { MainNav } from "@/components/MainNav";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
@@ -40,14 +40,15 @@ export function Layout({ children }: LayoutProps) {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/50">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <motion.a
-            href="/"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="font-retro text-sm tracking-tight"
-          >
-            WALTER<span className="text-primary">.</span>
-          </motion.a>
+          <Link href="/">
+            <motion.span
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="font-retro text-sm tracking-tight"
+            >
+              WALTER<span className="text-primary">.</span>
+            </motion.span>
+          </Link>
 
           <div className="flex items-center gap-2">
             <div className="hidden md:block">

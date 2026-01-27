@@ -5,8 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { projects } from "@/lib/data";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Projects() {
+  useDocumentMeta({
+    title: "Projects | Walter Andrade",
+    description: "Full-stack applications, platforms, and systems built by Walter Andrade.",
+    canonical: "/projects",
+  });
+
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
 
   const categories = useMemo(() => {

@@ -83,7 +83,25 @@ export function MouseTrackingAvatar({
         backgroundPosition: `${bgX}px ${bgY}px`,
         backgroundRepeat: "no-repeat",
         imageRendering: "pixelated",
+        filter: "contrast(1.1) brightness(1.05)",
+        boxShadow: "0 0 30px hsl(180 80% 60% / 0.4), 0 0 60px hsl(180 80% 60% / 0.2)",
+        borderRadius: "8px",
       }}
-    />
+    >
+      {/* Scanline overlay */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: `repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.1) 2px,
+            rgba(0, 0, 0, 0.1) 4px
+          )`,
+          borderRadius: "8px",
+        }}
+      />
+    </div>
   );
 }

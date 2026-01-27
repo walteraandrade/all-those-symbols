@@ -2,8 +2,15 @@ import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { blogPosts, BlogCategory } from "@/lib/data";
 import { CategoryTabs, BlogCard, BlogFeaturedCard } from "@/components/blog";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Blog() {
+  useDocumentMeta({
+    title: "Blog | Walter Andrade",
+    description: "Thoughts on logic, code, cinema, and life. Essays and reflections by Walter Andrade.",
+    canonical: "/blog",
+  });
+
   const [activeCategory, setActiveCategory] = useState<BlogCategory | null>(null);
 
   const filteredPosts = useMemo(() => {

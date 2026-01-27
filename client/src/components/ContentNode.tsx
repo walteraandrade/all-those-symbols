@@ -15,7 +15,6 @@ interface ContentNodeProps {
 const pathMap: Record<string, string> = {
   bio: "/bio",
   projects: "/projects",
-  music: "/music",
   blog: "/blog",
 };
 

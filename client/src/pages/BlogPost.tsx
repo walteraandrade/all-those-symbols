@@ -1,6 +1,7 @@
 import { useMemo, useEffect } from "react";
 import { useParams, Redirect } from "wouter";
 import { blogPosts } from "@/lib/data";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import {
   ReadingProgress,
   BlogHero,
@@ -24,6 +25,13 @@ export default function BlogPost() {
   const post = postIndex >= 0 ? blogPosts[postIndex] : null;
   const prevPost = postIndex > 0 ? blogPosts[postIndex - 1] : null;
   const nextPost = postIndex < blogPosts.length - 1 ? blogPosts[postIndex + 1] : null;
+
+  useDocumentMeta({
+    title: post ? `${post.title} | Walter Andrade` : "Blog | Walter Andrade",
+    description: post?.excerpt,
+    canonical: post ? `/blog/${post.slug}` : "/blog",
+    ogType: "article",
+  });
 
   if (!post) {
     return <Redirect to="/blog" />;

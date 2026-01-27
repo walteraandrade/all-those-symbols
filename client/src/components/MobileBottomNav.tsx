@@ -1,12 +1,11 @@
 import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
-import { Home, User, Code, Music, BookOpen } from "lucide-react";
+import { Home, User, Code, BookOpen } from "lucide-react";
 
 const navItems = [
   { path: "/", label: "Home", icon: Home },
   { path: "/bio", label: "Bio", icon: User },
   { path: "/projects", label: "Projects", icon: Code },
-  { path: "/music", label: "Music", icon: Music },
   { path: "/blog", label: "Blog", icon: BookOpen },
 ];
 

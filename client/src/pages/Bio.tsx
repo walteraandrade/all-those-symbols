@@ -3,8 +3,15 @@ import { Terminal, Github, Linkedin, Mail } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { bio, experience, skills, socialLinks } from "@/lib/data";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Bio() {
+  useDocumentMeta({
+    title: "Bio | Walter Andrade",
+    description: "Software developer with a background in philosophy and logic. Building rigorous, elegant systems.",
+    canonical: "/bio",
+  });
+
   return (
     <div className="container mx-auto px-4 max-w-3xl">
       <motion.div
