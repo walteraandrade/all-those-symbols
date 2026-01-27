@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
-import { User, Code, BookOpen } from "lucide-react";
+import { User, Code, BookOpen, Mail } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useRetroSfx } from "@/hooks/useRetroSfx";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -13,6 +13,7 @@ const menuItems = [
   { path: "/bio", label: "Bio", icon: User },
   { path: "/projects", label: "Projects", icon: Code },
   { path: "/blog", label: "Blog", icon: BookOpen },
+  { path: "/contact", label: "Contact", icon: Mail },
 ];
 
 export default function Home() {
@@ -50,7 +51,7 @@ export default function Home() {
           <div className="relative w-80 h-80 flex items-center justify-center overflow-visible">
             <MouseTrackingAvatar />
             {menuItems.map((item, index) => {
-              const angle = (index * 120 - 30) * (Math.PI / 180);
+              const angle = (index * 90 - 45) * (Math.PI / 180);
               const radius = 150;
               const x = Math.cos(angle) * radius;
               const y = Math.sin(angle) * radius;
