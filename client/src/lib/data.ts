@@ -15,7 +15,9 @@ export interface Experience {
   description: string;
 }
 
-export const bio = `As a child, I was captivated by computers and the world of reading. My formal academic journey began with studies in literature and journalism, before I delved into philosophy, where I discovered a profound love for formal logic and the philosophy of mathematics. This rigorous, first-principles approach "naturally" led me to programming. I now apply this foundation to leading teams and architecting full-stack applications, thriving on building elegant and efficient systems.`;
+export const bio = `I build things end-to-end: AI-powered interview bots, fintech platforms, e-learning systems, mobile apps. At SmartHow I own DevOps, define architecture, and lead technical decisions while shipping features daily.
+
+Philosophy degree in logic taught me to find clarity in complexity. I care about why we're building something, not just how.`;
 
 export const projects: Project[] = [
   {
@@ -47,6 +49,40 @@ export const projects: Project[] = [
     role: "Mobile Developer",
     description: "React Native application with Bluetooth integration for pet management, deployed on Apple Store and Google Play.",
     tech: ["React Native", "Bluetooth", "iOS", "Android"]
+  },
+  {
+    title: "AI Decco Assistant",
+    role: "Creator",
+    description: "AI-powered assistant for interior decoration recommendations.",
+    tech: ["HTML", "CSS", "JavaScript"]
+  },
+  {
+    title: "HTML to DOCX Converter",
+    role: "Creator",
+    description: "Python tool for converting HTML documents to DOCX format.",
+    tech: ["Python"],
+    link: "https://github.com/walteraandrade/html-to-docx"
+  },
+  {
+    title: "Aetheria",
+    role: "Creator",
+    description: "Game project built with Phaser.js and TypeScript.",
+    tech: ["Phaser.js", "TypeScript"],
+    link: "https://github.com/walteraandrade/aetheria"
+  },
+  {
+    title: "Smells Like Job Spirit",
+    role: "Creator",
+    description: "Browser extension with Python backend and Ollama integration for job search assistance.",
+    tech: ["Browser Extension", "Python", "Ollama"],
+    link: "https://github.com/walteraandrade/smells-like-job-spirit"
+  },
+  {
+    title: "The Thought Weaver",
+    role: "Creator",
+    description: "TypeScript project for thought organization and note-taking.",
+    tech: ["TypeScript"],
+    link: "https://github.com/walteraandrade/the-thought-weaver"
   }
 ];
 
@@ -55,19 +91,19 @@ export const experience: Experience[] = [
     role: "Senior Software Engineer",
     company: "SmartHow",
     period: "September 2025 - Present",
-    description: "Developing AI-powered solutions for training and accident prevention in large industrial environments."
+    description: "Own DevOps and infrastructure on Azure. Define architecture and lead technical decisions. Built AI interview automation with Recall.ai and ElevenLabs. Ship features across Node.js/NestJS, Next.js, Python/FastAPI, PostgreSQL/MongoDB."
   },
   {
     role: "Senior Full Stack Developer",
     company: "Instaq – Instituto Taqtile",
     period: "October 2023 - September 2025",
-    description: "Led full-stack development of Modulart system. Developed animated landing page for NaPorta. Created Payssego payment platform."
+    description: "Led Modulart platform as Full Stack Dev & Product Owner. Built NaPorta landing page (won national competition). Architected Payssego payment system. Deployed Vivenda on AWS. Led Pence culture analytics platform with Neo4j."
   },
   {
     role: "Software Engineer",
     company: "Taqtile Brasil",
     period: "September 2020 - May 2023",
-    description: "Developed React Native app for ioP Pet. Created full-stack Timesheet application. Led Gentelab e-learning platform development."
+    description: "Built ioP Pet mobile app with Bluetooth, released on App Store & Play Store. Created Timesheet platform replacing Redmine (React, GraphQL, BigQuery, Looker). Led Gentelab e-learning with React, Relay, Firebase."
   }
 ];
 
