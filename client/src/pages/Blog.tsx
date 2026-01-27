@@ -1,7 +1,9 @@
 import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import { blogPosts, BlogCategory } from "@/lib/data";
-import { CategoryTabs, BlogCard, BlogFeaturedCard } from "@/components/blog";
+import { CategoryTabs } from "@/components/blog/CategoryTabs";
+import { BlogCard } from "@/components/blog/BlogCard";
+import { BlogFeaturedCard } from "@/components/blog/BlogFeaturedCard";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 
 export default function Blog() {

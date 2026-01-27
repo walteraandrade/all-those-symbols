@@ -1,5 +1,3 @@
-import { CSSParticles } from "./CSSParticles";
-
 export function RetroHeroBackground() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -45,9 +43,6 @@ export function RetroHeroBackground() {
           )`,
         }}
       />
-
-      {/* Floating particles */}
-      <CSSParticles />
     </div>
   );
 }

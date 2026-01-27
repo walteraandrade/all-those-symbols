@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -7,12 +8,14 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import { MotionProvider } from "@/contexts/MotionContext";
 import { AudioProvider } from "@/contexts/AudioContext";
 import { Layout } from "@/components/Layout";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import NotFound from "@/pages/not-found";
-import Home from "@/pages/Home";
-import Bio from "@/pages/Bio";
-import Projects from "@/pages/Projects";
-import Blog from "@/pages/Blog";
-import BlogPost from "@/pages/BlogPost";
+
+const Home = lazy(() => import("@/pages/Home"));
+const Bio = lazy(() => import("@/pages/Bio"));
+const Projects = lazy(() => import("@/pages/Projects"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const BlogPost = lazy(() => import("@/pages/BlogPost"));
 
 function Router() {
   return (
@@ -36,7 +39,9 @@ function App() {
             <TooltipProvider>
               <Toaster />
               <Layout>
-                <Router />
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Router />
+                </Suspense>
               </Layout>
             </TooltipProvider>
           </QueryClientProvider>

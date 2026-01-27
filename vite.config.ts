@@ -39,6 +39,22 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom"],
+          "vendor-motion": ["framer-motion"],
+          "vendor-ui": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-tooltip",
+            "@radix-ui/react-toast",
+            "@radix-ui/react-collapsible",
+            "@radix-ui/react-toggle",
+            "@radix-ui/react-toggle-group",
+          ],
+        },
+      },
+    },
   },
   server: {
     host: "0.0.0.0",

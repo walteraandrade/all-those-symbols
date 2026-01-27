@@ -2,14 +2,12 @@ import { useMemo, useEffect } from "react";
 import { useParams, Redirect } from "wouter";
 import { blogPosts } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import {
-  ReadingProgress,
-  BackToTop,
-  BlogHero,
-  BlogContent,
-  TableOfContents,
-  PostNavigation,
-} from "@/components/blog";
+import { ReadingProgress } from "@/components/blog/ReadingProgress";
+import { BackToTop } from "@/components/blog/BackToTop";
+import { BlogHero } from "@/components/blog/BlogHero";
+import { BlogContent } from "@/components/blog/BlogContent";
+import { TableOfContents } from "@/components/blog/TableOfContents";
+import { PostNavigation } from "@/components/blog/PostNavigation";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();

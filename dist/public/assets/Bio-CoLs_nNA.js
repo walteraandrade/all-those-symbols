@@ -1,0 +1,21 @@
+import{j as e,m as l}from"./vendor-motion-BUQSxQvB.js";import{B as o}from"./badge-D1Y4T4Yu.js";import{b as s,d as c,e as d,s as i,f as t,g as r}from"./index-C7lEkM-k.js";import{u as h}from"./useDocumentMeta-QNACE5A7.js";import"./vendor-react-Bzgz95E1.js";import"./vendor-ui-D6TPc0xl.js";/**
+ * @license lucide-react v0.545.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const m=[["path",{d:"M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4",key:"tonef"}],["path",{d:"M9 18c-4.51 2-5-2-7-2",key:"9comsn"}]],x=s("github",m);/**
+ * @license lucide-react v0.545.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const p=[["path",{d:"M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",key:"c2jq9f"}],["rect",{width:"4",height:"12",x:"2",y:"9",key:"mk3on5"}],["circle",{cx:"4",cy:"4",r:"2",key:"bt5ra8"}]],u=s("linkedin",p);/**
+ * @license lucide-react v0.545.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const j=[["path",{d:"m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7",key:"132q7q"}],["rect",{x:"2",y:"4",width:"20",height:"16",rx:"2",key:"izxlao"}]],y=s("mail",j);/**
+ * @license lucide-react v0.545.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const b=[["path",{d:"M12 19h8",key:"baeox8"}],["path",{d:"m4 17 6-6-6-6",key:"1yngyt"}]],f=s("terminal",b);function B(){return h({title:"Bio | Walter Andrade",description:"Software developer with a background in philosophy and logic. Building rigorous, elegant systems.",canonical:"/bio"}),e.jsx("div",{className:"container mx-auto px-4 max-w-3xl",children:e.jsxs(l.div,{initial:{opacity:0,y:20},animate:{opacity:1,y:0},className:"space-y-12",children:[e.jsxs("header",{children:[e.jsxs("h1",{className:"text-4xl md:text-5xl font-display font-bold mb-4",children:["Bio ",e.jsx("span",{className:"text-primary",children:"/"})," Philosophy"]}),e.jsx("p",{className:"text-lg leading-loose sm:leading-relaxed text-muted-foreground",children:c})]}),e.jsxs("section",{children:[e.jsxs("h2",{className:"text-2xl font-display font-bold mb-6 flex items-center gap-2",children:[e.jsx(f,{className:"w-6 h-6 text-accent","aria-hidden":"true"}),"Experience"]}),e.jsx("div",{className:"space-y-6",children:d.map((a,n)=>e.jsxs("article",{className:"border-l-2 border-primary/20 pl-4 py-1",children:[e.jsx("h3",{className:"font-bold text-foreground",children:a.role}),e.jsxs("p",{className:"text-sm text-accent mb-2",children:[a.company," | ",a.period]}),e.jsx("p",{className:"text-sm text-muted-foreground",children:a.description})]},n))})]}),e.jsxs("section",{children:[e.jsx("h2",{className:"text-2xl font-display font-bold mb-4",children:"Tech Stack"}),e.jsx("div",{className:"flex flex-wrap gap-2",children:[...i.languages,...i.frontend,...i.backend,...i.cloud].map(a=>e.jsx(o,{variant:"outline",className:"bg-primary/5 hover:bg-primary/10 transition-colors",children:a},a))})]}),e.jsxs("section",{className:"pt-6 border-t border-border",children:[e.jsx("h2",{className:"sr-only",children:"Contact"}),e.jsxs("div",{className:"flex gap-4",children:[e.jsx(t,{variant:"outline",size:"icon",asChild:!0,children:e.jsx("a",{href:`mailto:${r.email}`,"aria-label":"Email Walter",children:e.jsx(y,{className:"w-4 h-4","aria-hidden":"true"})})}),e.jsx(t,{variant:"outline",size:"icon",asChild:!0,children:e.jsx("a",{href:`https://linkedin.com${r.linkedin}`,target:"_blank",rel:"noopener noreferrer","aria-label":"Walter's LinkedIn profile",children:e.jsx(u,{className:"w-4 h-4","aria-hidden":"true"})})}),e.jsx(t,{variant:"outline",size:"icon",asChild:!0,children:e.jsx("a",{href:`https://github.com/${r.github.replace("@","")}`,target:"_blank",rel:"noopener noreferrer","aria-label":"Walter's GitHub profile",children:e.jsx(x,{className:"w-4 h-4","aria-hidden":"true"})})})]})]})]})})}export{B as default};
