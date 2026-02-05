@@ -1,9 +1,10 @@
 import { motion } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail } from "lucide-react";
+import { Terminal, Github, Linkedin, Mail, ArrowRight } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { bio, experience, skills, socialLinks } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { BrutalistBackground } from "@/components/BrutalistBackground";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 export default function Bio() {
   useDocumentMeta({
@@ -12,88 +13,120 @@ export default function Bio() {
     canonical: "/bio",
   });
 
+  const isMobile = useIsMobile();
+
   return (
-    <div className="container mx-auto px-4 max-w-3xl">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="space-y-12"
-      >
-        <header>
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Bio <span className="text-primary">/</span> Philosophy
-          </h1>
-          <p className="text-lg leading-loose sm:leading-relaxed text-muted-foreground">
-            {bio}
-          </p>
-        </header>
+    <div className="relative min-h-[calc(100vh-10rem)] bg-[#F5F5F0]">
+      {!isMobile && <BrutalistBackground />}
 
-        <section>
-          <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
-            <Terminal className="w-6 h-6 text-accent" aria-hidden="true" />
-            Experience
-          </h2>
-          <div className="space-y-6">
-            {experience.map((exp, i) => (
-              <article key={i} className="border-l-2 border-primary/20 pl-4 py-1">
-                <h3 className="font-bold text-foreground">{exp.role}</h3>
-                <p className="text-sm text-accent mb-2">
-                  {exp.company} | {exp.period}
-                </p>
-                <p className="text-sm text-muted-foreground">{exp.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+      <div className="relative z-10 container mx-auto px-4 py-12 max-w-3xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="space-y-12"
+        >
+          <header>
+            <h1 className="font-mono text-4xl md:text-5xl tracking-tight uppercase mb-4 text-black glitch-hover">
+              Bio<span className="text-red-500">/</span>Philosophy
+              <span className="cursor-blink text-red-500">_</span>
+            </h1>
+            <p className="text-base leading-loose text-black/70 font-mono">
+              {bio}
+            </p>
+          </header>
 
-        <section>
-          <h2 className="text-2xl font-display font-bold mb-4">Tech Stack</h2>
-          <div className="flex flex-wrap gap-2">
-            {[...skills.languages, ...skills.frontend, ...skills.backend, ...skills.cloud].map(
-              (skill) => (
-                <Badge
-                  key={skill}
-                  variant="outline"
-                  className="bg-primary/5 hover:bg-primary/10 transition-colors"
+          <section>
+            <h2 className="font-mono text-xl uppercase tracking-wider mb-6 flex items-center gap-3 text-black">
+              <Terminal className="w-5 h-5 text-red-500" aria-hidden="true" />
+              <span className="text-black/50">&gt;</span> Experience
+            </h2>
+            <div className="space-y-4">
+              {experience.map((exp, i) => (
+                <motion.article
+                  key={i}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="border-brutal bg-white/50 p-4 hover:bg-black hover:text-white group transition-colors"
                 >
-                  {skill}
-                </Badge>
-              )
-            )}
-          </div>
-        </section>
+                  <div className="flex items-start justify-between">
+                    <div>
+                      <h3 className="font-mono text-sm uppercase tracking-wider font-bold">
+                        {exp.role}
+                      </h3>
+                      <p className="font-mono text-xs text-red-500 group-hover:text-red-400 mt-1">
+                        {exp.company} <span className="text-black/30 group-hover:text-white/30">|</span> {exp.period}
+                      </p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </div>
+                  <p className="font-mono text-xs text-black/60 group-hover:text-white/60 mt-2">
+                    {exp.description}
+                  </p>
+                </motion.article>
+              ))}
+            </div>
+          </section>
 
-        <section className="pt-6 border-t border-border">
-          <h2 className="sr-only">Contact</h2>
-          <div className="flex gap-4">
-            <Button variant="outline" size="icon" asChild>
-              <a href={`mailto:${socialLinks.email}`} aria-label="Email Walter">
-                <Mail className="w-4 h-4" aria-hidden="true" />
+          <section>
+            <h2 className="font-mono text-xl uppercase tracking-wider mb-4 text-black">
+              <span className="text-black/50">&gt;</span> Tech_Stack
+            </h2>
+            <div className="flex flex-wrap gap-2">
+              {[...skills.languages, ...skills.frontend, ...skills.backend, ...skills.cloud].map(
+                (skill, i) => (
+                  <motion.div
+                    key={skill}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: i * 0.02 }}
+                  >
+                    <Badge
+                      variant="outline"
+                      className="border-brutal bg-white/50 text-black font-mono text-xs uppercase tracking-wider hover:bg-black hover:text-white hover:border-red-500 transition-colors cursor-default"
+                    >
+                      {skill}
+                    </Badge>
+                  </motion.div>
+                )
+              )}
+            </div>
+          </section>
+
+          <section className="pt-6 border-t-2 border-black">
+            <h2 className="font-mono text-sm uppercase tracking-wider mb-4 text-black/50">
+              &gt; Connect
+            </h2>
+            <div className="flex gap-3">
+              <a
+                href={`mailto:${socialLinks.email}`}
+                aria-label="Email Walter"
+                className="p-3 border-brutal bg-white/50 hover:bg-black hover:text-white hover:border-red-500 transition-colors"
+              >
+                <Mail className="w-5 h-5" aria-hidden="true" />
               </a>
-            </Button>
-            <Button variant="outline" size="icon" asChild>
               <a
                 href={`https://linkedin.com${socialLinks.linkedin}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Walter's LinkedIn profile"
+                className="p-3 border-brutal bg-white/50 hover:bg-black hover:text-white hover:border-red-500 transition-colors"
               >
-                <Linkedin className="w-4 h-4" aria-hidden="true" />
+                <Linkedin className="w-5 h-5" aria-hidden="true" />
               </a>
-            </Button>
-            <Button variant="outline" size="icon" asChild>
               <a
                 href={`https://github.com/${socialLinks.github.replace("@", "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Walter's GitHub profile"
+                className="p-3 border-brutal bg-white/50 hover:bg-black hover:text-white hover:border-red-500 transition-colors"
               >
-                <Github className="w-4 h-4" aria-hidden="true" />
+                <Github className="w-5 h-5" aria-hidden="true" />
               </a>
-            </Button>
-          </div>
-        </section>
-      </motion.div>
+            </div>
+          </section>
+        </motion.div>
+      </div>
     </div>
   );
 }

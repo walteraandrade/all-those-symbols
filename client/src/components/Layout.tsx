@@ -3,11 +3,6 @@ import { Link, useLocation } from "wouter";
 import { motion } from "framer-motion";
 import { MainNav } from "@/components/MainNav";
 import { MobileBottomNav } from "@/components/MobileBottomNav";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { SfxToggle } from "@/components/SfxToggle";
-import { NetworkBackground } from "@/components/NetworkBackground";
-import { CentralHub } from "@/components/CentralHub";
-import { nodes } from "@/lib/data";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 interface LayoutProps {
@@ -20,42 +15,32 @@ export function Layout({ children }: LayoutProps) {
   const isMobile = useIsMobile();
 
   return (
-    <div className="scanlines min-h-screen w-full bg-background text-foreground relative overflow-x-hidden font-sans selection:bg-primary/20">
+    <div className="min-h-screen w-full bg-[#F5F5F0] text-black relative overflow-x-hidden font-mono selection:bg-red-500/20">
       {/* Skip link for a11y */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-background focus:text-primary focus:rounded-md focus:ring-2 focus:ring-ring"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:border-brutal"
       >
         Skip to main content
       </a>
 
-      {/* Decorative background (hidden on home desktop when 3D active) */}
-      {!(isHome && !isMobile) && (
-        <NetworkBackground nodes={nodes} activeNodeId={null} />
-      )}
-
-      {/* Central hub on home only (mobile fallback) */}
-      {isHome && isMobile && <CentralHub />}
-
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/50">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-[#F5F5F0]/95 backdrop-blur-sm border-b-2 border-black">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/">
             <motion.span
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              className="font-retro text-sm tracking-tight"
+              className="font-mono text-sm uppercase tracking-wider hover:text-red-500 transition-colors"
             >
-              WALTER<span className="text-primary">.</span>
+              WALTER<span className="text-red-500">_</span>
             </motion.span>
           </Link>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-4">
             <div className="hidden md:block">
               <MainNav />
             </div>
-            <SfxToggle />
-            <ThemeToggle />
           </div>
         </div>
       </header>
@@ -63,14 +48,14 @@ export function Layout({ children }: LayoutProps) {
       {/* Main content */}
       <main
         id="main-content"
-        className={`relative z-10 pt-20 ${isMobile ? "pb-24" : "pb-8"}`}
+        className={`relative z-10 pt-16 ${isMobile ? "pb-24" : "pb-8"}`}
       >
         {children}
       </main>
 
       {/* Footer */}
-      <footer className="relative z-10 text-center py-8 text-xs text-muted-foreground font-mono">
-        © {new Date().getFullYear()} Walter Andrade
+      <footer className="relative z-10 text-center py-8 text-xs text-black/40 font-mono uppercase tracking-wider border-t-2 border-black bg-[#F5F5F0]">
+        <span className="text-red-500">&gt;</span> {new Date().getFullYear()} Walter Andrade
       </footer>
 
       {/* Mobile bottom nav */}
