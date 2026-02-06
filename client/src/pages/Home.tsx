@@ -5,9 +5,9 @@ import { User, Code, BookOpen, Mail } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useRetroSfx } from "@/hooks/useRetroSfx";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { cn } from "@/lib/utils";
-import { RetroHeroBackground } from "@/components/RetroHeroBackground";
-import { MouseTrackingAvatar } from "@/components/MouseTrackingAvatar";
+import { BrutalistBackground } from "@/components/BrutalistBackground";
+import { BrutalistAvatar } from "@/components/BrutalistAvatar";
+import { BrutalistOrbitButton } from "@/components/BrutalistOrbitButton";
 
 const menuItems = [
   { path: "/bio", label: "Bio", icon: User },
@@ -25,11 +25,11 @@ export default function Home() {
 
   const isMobile = useIsMobile();
   const sfx = useRetroSfx();
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className="relative min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center">
-      {!isMobile && <RetroHeroBackground />}
+    <div className="relative min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center bg-[#F5F5F0]">
+      {!isMobile && <BrutalistBackground />}
 
       <div className="relative z-20 flex flex-col items-center gap-8 px-4 overflow-visible">
         <motion.div
@@ -37,19 +37,19 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center"
         >
-          <h1 className="font-display text-4xl md:text-6xl tracking-widest uppercase mb-2 text-primary drop-shadow-[0_0_10px_hsl(var(--primary)/0.5)]">
-            Walter Andrade
+          <h1 className="font-mono text-4xl md:text-6xl tracking-tight uppercase mb-2 text-black glitch-hover">
+            Walter Andrade<span className="cursor-blink text-red-500">_</span>
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground font-mono tracking-wider">
-            Logic <span className="text-accent mx-2">×</span> Philosophy{" "}
-            <span className="text-accent mx-2">×</span> Code
+          <p className="text-sm md:text-base text-black/60 font-mono tracking-wider">
+            Logic <span className="text-red-500 mx-2">/</span> Philosophy{" "}
+            <span className="text-red-500 mx-2">/</span> Code
           </p>
         </motion.div>
 
         {/* Avatar with orbiting buttons */}
         {!isMobile && (
           <div className="relative w-80 h-80 flex items-center justify-center overflow-visible">
-            <MouseTrackingAvatar />
+            <BrutalistAvatar />
             {menuItems.map((item, index) => {
               const angle = (index * 90 - 45) * (Math.PI / 180);
               const radius = 150;
@@ -57,48 +57,20 @@ export default function Home() {
               const y = Math.sin(angle) * radius;
 
               return (
-                <motion.div
+                <BrutalistOrbitButton
                   key={item.path}
-                  initial={{ opacity: 0, scale: 0, x, y }}
-                  animate={{ opacity: 1, scale: 1, x, y }}
-                  transition={{ delay: 0.4 + index * 0.1 }}
-                  className="absolute"
-                >
-                  <Link
-                    href={item.path}
-                    onMouseEnter={() => {
-                      setHoveredIndex(index);
-                      sfx.hover();
-                    }}
-                    onMouseLeave={() => setHoveredIndex(null)}
-                    onClick={() => sfx.navigate()}
-                    className={cn(
-                      "group flex flex-col items-center gap-2 p-3",
-                      "border-2 border-border bg-background/80 backdrop-blur-sm rounded-lg",
-                      "transition-all duration-200",
-                      "hover:border-primary hover:bg-primary/10",
-                      "hover:shadow-[0_0_20px_hsl(var(--primary)/0.3)]",
-                      "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    )}
-                  >
-                    <item.icon
-                      className={cn(
-                        "w-6 h-6 transition-colors",
-                        hoveredIndex === index
-                          ? "text-primary"
-                          : "text-muted-foreground"
-                      )}
-                    />
-                    <span
-                      className={cn(
-                        "font-display text-xs tracking-widest uppercase transition-colors",
-                        hoveredIndex === index ? "text-primary" : "text-foreground"
-                      )}
-                    >
-                      {item.label}
-                    </span>
-                  </Link>
-                </motion.div>
+                  path={item.path}
+                  label={item.label}
+                  icon={item.icon}
+                  index={index}
+                  x={x}
+                  y={y}
+                  onHover={() => {
+                    setHoveredIndex(index);
+                    sfx.hover();
+                  }}
+                  onClick={() => sfx.navigate()}
+                />
               );
             })}
           </div>
@@ -106,7 +78,7 @@ export default function Home() {
 
         {/* Mobile menu fallback */}
         {isMobile && (
-          <nav className="flex gap-4">
+          <nav className="flex flex-wrap justify-center gap-2">
             {menuItems.map((item, index) => (
               <motion.div
                 key={item.path}
@@ -117,15 +89,13 @@ export default function Home() {
                 <Link
                   href={item.path}
                   onClick={() => sfx.navigate()}
-                  className={cn(
-                    "flex flex-col items-center gap-2 p-3",
-                    "border-2 border-border bg-background/80 rounded-lg",
-                    "transition-all duration-200",
-                    "hover:border-primary hover:bg-primary/10"
-                  )}
+                  className="group flex items-center gap-2 px-3 py-2 bg-[#F5F5F0] border-brutal hover:bg-black hover:text-white hover:border-brutal-red"
                 >
-                  <item.icon className="w-5 h-5 text-muted-foreground" />
-                  <span className="font-display text-xs tracking-widest uppercase">
+                  <span className="font-mono text-xs text-black/50 group-hover:text-white/50">
+                    {`> ${String(index + 1).padStart(2, "0")}`}
+                  </span>
+                  <item.icon className="w-4 h-4" />
+                  <span className="font-mono text-xs uppercase tracking-wider group-hover:line-through">
                     {item.label}
                   </span>
                 </Link>
@@ -138,7 +108,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="mt-8 text-[10px] text-muted-foreground/40 font-mono uppercase tracking-wider"
+          className="mt-8 text-[10px] text-black/30 font-mono uppercase tracking-wider"
         >
           v1.0 &nbsp;|&nbsp; 2025
         </motion.div>

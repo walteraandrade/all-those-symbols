@@ -30,12 +30,14 @@ interface Props {
   spriteSheet?: string;
   frameSize?: number;
   deadZone?: number;
+  disableGlow?: boolean;
 }
 
 export function MouseTrackingAvatar({
   spriteSheet = "/avatar-sprite.png",
   frameSize = 128,
   deadZone = 50,
+  disableGlow = false,
 }: Props) {
   const [direction, setDirection] = useState<Direction>("c");
   const containerRef = useRef<HTMLDivElement>(null);
@@ -84,8 +86,8 @@ export function MouseTrackingAvatar({
         backgroundRepeat: "no-repeat",
         imageRendering: "pixelated",
         filter: "contrast(1.1) brightness(1.05)",
-        boxShadow: "0 0 30px hsl(180 80% 60% / 0.4), 0 0 60px hsl(180 80% 60% / 0.2)",
-        borderRadius: "8px",
+        boxShadow: disableGlow ? "none" : "0 0 30px hsl(180 80% 60% / 0.4), 0 0 60px hsl(180 80% 60% / 0.2)",
+        borderRadius: disableGlow ? 0 : "8px",
       }}
     >
       {/* Scanline overlay */}
@@ -96,10 +98,10 @@ export function MouseTrackingAvatar({
             0deg,
             transparent,
             transparent 2px,
-            rgba(0, 0, 0, 0.1) 2px,
-            rgba(0, 0, 0, 0.1) 4px
+            rgba(0, 0, 0, ${disableGlow ? 0.15 : 0.1}) 2px,
+            rgba(0, 0, 0, ${disableGlow ? 0.15 : 0.1}) 4px
           )`,
-          borderRadius: "8px",
+          borderRadius: disableGlow ? 0 : "8px",
         }}
       />
     </div>

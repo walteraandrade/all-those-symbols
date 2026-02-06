@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://questinable.space/sitemap.xml
