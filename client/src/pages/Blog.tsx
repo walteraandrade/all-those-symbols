@@ -49,6 +49,9 @@ export default function Blog() {
             <p className="font-mono text-sm text-black/60 uppercase tracking-wider">
               &gt; Thoughts on logic, code, and life
             </p>
+            <p className="font-mono text-xs text-black/40 mt-3 max-w-xl leading-relaxed">
+              Most of these were written around 2021 as a personal diary while studying cinema on my own. Others are scattered texts I've written here and there over the years.
+            </p>
           </header>
 
           <section aria-label="Filter by category">
