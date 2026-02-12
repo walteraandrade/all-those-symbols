@@ -551,7 +551,6 @@ export const blogPosts: BlogPost[] = [
       "This must be the third or fourth time I watch Ingmar Bergman's Through a Glass Darkly and it still holds up as one of the best films I've ever seen. The paradox between human desire and sin is the key to understanding this film.",
     content: throughAGlassDarklyContent,
     readingTime: calculateReadingTime(throughAGlassDarklyContent),
-    featured: true,
     tags: ["bergman", "schizophrenia", "freud", "christianity", "film-analysis"],
   },
   {
@@ -563,6 +562,7 @@ export const blogPosts: BlogPost[] = [
       "No Country for Old Men is a film about the randomness of destiny and the inability to deal with it whether you are an experienced person or not. Or if you prefer, it's about the innocence of the idea of maturity itself.",
     content: noCountryContent,
     readingTime: calculateReadingTime(noCountryContent),
+    featured: true,
     tags: ["coen-brothers", "destiny", "western", "philosophy"],
   },
   {
@@ -618,7 +618,6 @@ export const blogPosts: BlogPost[] = [
       "This is not an easy-digest movie. This vision of love this movie shows is exactly the vision we had as a child and that we lost when we became adults.",
     content: loveExposureContent,
     readingTime: calculateReadingTime(loveExposureContent),
-    featured: true,
     tags: ["sion-sono", "japanese-cinema", "love", "religion", "sexuality"],
   },
   {
@@ -652,7 +651,6 @@ export const blogPosts: BlogPost[] = [
       "One of the finest dramas about love ever. An amazing aesthetic exercise of the most fiery moment of seduction.",
     content: inTheMoodForLoveContent,
     readingTime: calculateReadingTime(inTheMoodForLoveContent),
-    featured: true,
     tags: ["wong-kar-wai", "hong-kong", "romance", "seduction"],
   },
   {
@@ -708,7 +706,6 @@ export const blogPosts: BlogPost[] = [
       "O paradoxo é tema e ferramenta da obra de Gilberto Gil. Em Gil, os paradoxos se completam, se misturam e só podem ser entendidos na sua relação de simultânea tensão e harmonia.",
     content: gilversoContent,
     readingTime: calculateReadingTime(gilversoContent),
-    featured: true,
     tags: ["gilberto-gil", "mpb", "paradoxo", "taoísmo", "análise"],
   },
 ];
