@@ -1,4 +1,13 @@
-import { LucideIcon, BookOpen, User, Code, Briefcase, Cpu, Layers, Terminal } from "lucide-react";
+import {
+  LucideIcon,
+  BookOpen,
+  User,
+  Code,
+  Briefcase,
+  Cpu,
+  Layers,
+  Terminal,
+} from "lucide-react";
 
 export interface Project {
   title: string;
@@ -23,67 +32,109 @@ export const projects: Project[] = [
   {
     title: "Modulart System",
     role: "Full Stack Developer & Product Owner",
-    description: "Full-stack event sales and management platform with responsive webpage, robust PostgreSQL backend, and comprehensive admin panel.",
-    tech: ["Next.js", "Node.js", "PostgreSQL", "TypeScript", "Payload CMS", "GCP", "Prisma", "Apollo GraphQL", "Docker"]
+    description:
+      "Full-stack event sales and management platform with responsive webpage, robust PostgreSQL backend, and comprehensive admin panel.",
+    tech: [
+      "Next.js",
+      "Node.js",
+      "PostgreSQL",
+      "TypeScript",
+      "Payload CMS",
+      "GCP",
+      "Prisma",
+      "Apollo GraphQL",
+      "Docker",
+    ],
   },
   {
     title: "NaPorta Platform",
     role: "Full-Stack Developer & Lead",
-    description: "Animated landing page and responsive admin system for delivery management. Winner of national competition.",
-    tech: ["Next.js", "Node.js", "Framer Motion", "Refine", "GSAP", "React Query", "TypeScript", "Tailwind CSS"]
+    description:
+      "Animated landing page and responsive admin system for delivery management. Winner of national competition.",
+    tech: [
+      "Next.js",
+      "Node.js",
+      "Framer Motion",
+      "Refine",
+      "GSAP",
+      "React Query",
+      "TypeScript",
+      "Tailwind CSS",
+    ],
   },
   {
     title: "Payssego Payment System",
     role: "Full-Stack Developer & Architect",
-    description: "Node.js platform for employee salary advances with rigorous API security requirements and secure client integrations.",
-    tech: ["Node.js", "Retool", "API Security", "PostgreSQL", "AWS"]
+    description:
+      "Node.js platform for employee salary advances with rigorous API security requirements and secure client integrations.",
+    tech: ["Node.js", "Retool", "API Security", "PostgreSQL", "AWS"],
   },
   {
     title: "Vivenda Platform",
     role: "Full-Stack Developer & DevOps",
-    description: "Astro-based platform connecting construction companies to at-risk individuals, simplifying bureaucracy and stakeholder connections.",
-    tech: ["Astro", "AWS", "EC2", "Ubuntu", "Node.js"]
+    description:
+      "Astro-based platform connecting construction companies to at-risk individuals, simplifying bureaucracy and stakeholder connections.",
+    tech: ["Astro", "AWS", "EC2", "Ubuntu", "Node.js"],
   },
   {
     title: "ioP Pet App",
     role: "Mobile Developer",
-    description: "React Native application with Bluetooth integration for pet management, deployed on Apple Store and Google Play.",
-    tech: ["React Native", "Bluetooth", "iOS", "Android"]
+    description:
+      "React Native application with Bluetooth integration for pet management, deployed on Apple Store and Google Play.",
+    tech: ["React Native", "Bluetooth", "iOS", "Android"],
   },
   {
     title: "AI Decco Assistant",
     role: "Creator",
-    description: "AI-powered assistant for interior decoration recommendations.",
-    tech: ["HTML", "CSS", "JavaScript"]
+    description:
+      "AI-powered assistant for interior decoration recommendations.",
+    tech: ["HTML", "CSS", "JavaScript"],
   },
   {
     title: "HTML to DOCX Converter",
     role: "Creator",
     description: "Python tool for converting HTML documents to DOCX format.",
     tech: ["Python"],
-    link: "https://github.com/walteraandrade/html-to-docx"
+    link: "https://github.com/walteraandrade/html-to-docx",
   },
   {
     title: "Aetheria",
     role: "Creator",
     description: "Game project built with Phaser.js and TypeScript.",
     tech: ["Phaser.js", "TypeScript"],
-    link: "https://github.com/walteraandrade/aetheria"
+    link: "https://github.com/walteraandrade/aetheria",
   },
   {
     title: "Smells Like Job Spirit",
     role: "Creator",
-    description: "Browser extension with Python backend and Ollama integration for job search assistance.",
+    description:
+      "Browser extension with Python backend and Ollama integration for job search assistance.",
     tech: ["Browser Extension", "Python", "Ollama"],
-    link: "https://github.com/walteraandrade/smells-like-job-spirit"
+    link: "https://github.com/walteraandrade/smells-like-job-spirit",
   },
   {
     title: "The Thought Weaver",
     role: "Creator",
     description: "TypeScript project for thought organization and note-taking.",
     tech: ["TypeScript"],
-    link: "https://github.com/walteraandrade/the-thought-weaver"
-  }
+    link: "https://github.com/walteraandrade/the-thought-weaver",
+  },
+  {
+    title: "Arachne",
+    role: "Creator",
+    description:
+      "TUI git network graph viewer that replaces GitHub's Network tab. Renders commit DAGs with branch lanes, integrates with GitHub for fork/branch data, and live-reloads on new commits.",
+    tech: ["Rust", "TUI", "Git", "GitHub API"],
+    link: "https://github.com/walteraandrade/arachne",
+  },
+  {
+    title: "Mr. Argus",
+    role: "Creator",
+    description:
+      "Terminal process monitor for Claude Code instances. Displays a live dashboard with process trees, CPU/memory usage, sparkline history, and aggregated totals by reading the Linux /proc filesystem directly.",
+    tech: ["TypeScript", "Bun", "Ink", "React", "Linux"],
+    link: "https://github.com/walteraandrade/mr-argus",
+  },
 ];
 
 export const experience: Experience[] = [
@@ -91,34 +142,54 @@ export const experience: Experience[] = [
     role: "Senior Software Engineer",
     company: "SmartHow",
     period: "September 2025 - Present",
-    description: "Own DevOps and infrastructure on Azure. Define architecture and lead technical decisions. Built AI interview automation with Recall.ai and ElevenLabs. Ship features across Node.js/NestJS, Next.js, Python/FastAPI, PostgreSQL/MongoDB."
+    description:
+      "Own DevOps and infrastructure on Azure. Define architecture and lead technical decisions. Built AI interview automation with Recall.ai and ElevenLabs. Ship features across Node.js/NestJS, Next.js, Python/FastAPI, PostgreSQL/MongoDB.",
   },
   {
     role: "Senior Full Stack Developer",
     company: "Instaq – Instituto Taqtile",
     period: "October 2023 - September 2025",
-    description: "Led Modulart platform as Full Stack Dev & Product Owner. Built NaPorta landing page (won national competition). Architected Payssego payment system. Deployed Vivenda on AWS. Led Pence culture analytics platform with Neo4j."
+    description:
+      "Led Modulart platform as Full Stack Dev & Product Owner. Built NaPorta landing page (won national competition). Architected Payssego payment system. Deployed Vivenda on AWS. Led Pence culture analytics platform with Neo4j.",
   },
   {
     role: "Software Engineer",
     company: "Taqtile Brasil",
     period: "September 2020 - May 2023",
-    description: "Built ioP Pet mobile app with Bluetooth, released on App Store & Play Store. Created Timesheet platform replacing Redmine (React, GraphQL, BigQuery, Looker). Led Gentelab e-learning with React, Relay, Firebase."
-  }
+    description:
+      "Built ioP Pet mobile app with Bluetooth, released on App Store & Play Store. Created Timesheet platform replacing Redmine (React, GraphQL, BigQuery, Looker). Led Gentelab e-learning with React, Relay, Firebase.",
+  },
 ];
 
 export const skills = {
   languages: ["TypeScript", "JavaScript", "Python", "SQL", "GraphQL"],
-  frontend: ["Next.js", "React", "React Native", "Astro", "Tailwind CSS", "Framer Motion", "GSAP", "Relay"],
-  backend: ["Node.js", "PostgreSQL", "Prisma", "Apollo GraphQL", "Hasura", "REST APIs", "Firebase"],
-  cloud: ["AWS", "EC2", "GCP", "Netlify", "Vercel", "Docker"]
+  frontend: [
+    "Next.js",
+    "React",
+    "React Native",
+    "Astro",
+    "Tailwind CSS",
+    "Framer Motion",
+    "GSAP",
+    "Relay",
+  ],
+  backend: [
+    "Node.js",
+    "PostgreSQL",
+    "Prisma",
+    "Apollo GraphQL",
+    "Hasura",
+    "REST APIs",
+    "Firebase",
+  ],
+  cloud: ["AWS", "EC2", "GCP", "Netlify", "Vercel", "Docker"],
 };
 
 export const socialLinks = {
   email: "walteraandrade@gmail.com",
   linkedin: "/in/walteraandrade",
   github: "@walteraandrade",
-  discord: "@walteraandrade"
+  discord: "@walteraandrade",
 };
 
 export interface NodeSection {
@@ -135,7 +206,13 @@ export const nodes: NodeSection[] = [
   { id: "blog", title: "Blog", icon: BookOpen, x: 80, y: 50 },
 ];
 
-export type BlogCategory = "Cinema" | "Philosophy" | "Code" | "Life" | "Project" | "Music";
+export type BlogCategory =
+  | "Cinema"
+  | "Philosophy"
+  | "Code"
+  | "Life"
+  | "Project"
+  | "Music";
 
 export interface BlogPost {
   slug: string;
@@ -551,7 +628,13 @@ export const blogPosts: BlogPost[] = [
       "This must be the third or fourth time I watch Ingmar Bergman's Through a Glass Darkly and it still holds up as one of the best films I've ever seen. The paradox between human desire and sin is the key to understanding this film.",
     content: throughAGlassDarklyContent,
     readingTime: calculateReadingTime(throughAGlassDarklyContent),
-    tags: ["bergman", "schizophrenia", "freud", "christianity", "film-analysis"],
+    tags: [
+      "bergman",
+      "schizophrenia",
+      "freud",
+      "christianity",
+      "film-analysis",
+    ],
   },
   {
     slug: "no-country-for-old-men",
@@ -673,7 +756,15 @@ export const blogPosts: BlogPost[] = [
       "Os sistemas de agrofloresta e agricultura sintrópica me encantam pelos seus fundamentos filosóficos. Acho que o ser humano é algo como uma célula num corpo maior.",
     content: agriculturaSintropicaContent,
     readingTime: calculateReadingTime(agriculturaSintropicaContent),
-    tags: ["agrofloresta", "agricultura-sintropica", "spinoza", "michael-levin", "ernst-gotsch", "ecologia", "cell-memory"],
+    tags: [
+      "agrofloresta",
+      "agricultura-sintropica",
+      "spinoza",
+      "michael-levin",
+      "ernst-gotsch",
+      "ecologia",
+      "cell-memory",
+    ],
   },
   {
     slug: "paisagem-da-janela-milton-nascimento",
@@ -684,7 +775,15 @@ export const blogPosts: BlogPost[] = [
       "Paisagem da Janela é sobre essa coisa de menino de se imaginar como guerreiro, e a dificuldade das meninas de entenderem esse impulso. Uma herança evolutiva impressa no corpo.",
     content: paisagemDaJanelaContent,
     readingTime: calculateReadingTime(paisagemDaJanelaContent),
-    tags: ["milton-nascimento", "mpb", "fantasia", "masculinidade", "infância", "análise", "cell-memory"],
+    tags: [
+      "milton-nascimento",
+      "mpb",
+      "fantasia",
+      "masculinidade",
+      "infância",
+      "análise",
+      "cell-memory",
+    ],
   },
   {
     slug: "aqui-e-agora-gilberto-gil",
@@ -710,4 +809,6 @@ export const blogPosts: BlogPost[] = [
   },
 ];
 
-export const blogCategories: BlogCategory[] = [...new Set(blogPosts.map(p => p.category))];
+export const blogCategories: BlogCategory[] = [
+  ...new Set(blogPosts.map((p) => p.category)),
+];
