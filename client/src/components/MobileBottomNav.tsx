@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
-import { Home, User, Code, BookOpen, Mail } from "lucide-react";
+import { Home, User, Code, BookOpen, Mail, FileDown } from "lucide-react";
+import { cvUrl } from "@/lib/data";
 
 const navItems = [
   { path: "/", label: "Home", icon: Home },
@@ -38,6 +39,17 @@ export function MobileBottomNav() {
             </li>
           );
         })}
+        <li>
+          <a
+            href={cvUrl}
+            download
+            aria-label="Download CV"
+            className="flex flex-col items-center gap-1 px-3 py-2 text-red-500 transition-colors"
+          >
+            <FileDown className="w-5 h-5" aria-hidden="true" />
+            <span className="text-[10px] font-mono uppercase tracking-wider">CV</span>
+          </a>
+        </li>
       </ul>
     </nav>
   );

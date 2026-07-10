@@ -1,5 +1,6 @@
 import { Link, useLocation } from "wouter";
-import { Home, User, Code, BookOpen, Mail } from "lucide-react";
+import { Home, User, Code, BookOpen, Mail, FileDown } from "lucide-react";
+import { cvUrl } from "@/lib/data";
 
 const navItems = [
   { path: "/", label: "Home", icon: Home },
@@ -37,6 +38,16 @@ export function MainNav() {
             </li>
           );
         })}
+        <li>
+          <a
+            href={cvUrl}
+            download
+            className="flex items-center gap-2 px-3 py-2 text-xs uppercase tracking-wider transition-colors bg-red-500 text-white hover:bg-black"
+          >
+            <FileDown className="w-3.5 h-3.5" aria-hidden="true" />
+            <span className="hidden lg:inline">CV</span>
+          </a>
+        </li>
       </ul>
     </nav>
   );

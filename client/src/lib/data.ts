@@ -24,6 +24,8 @@ export interface Experience {
   description: string;
 }
 
+export const cvUrl = "/Walter-Andrade-Resume-2026.pdf";
+
 export const bio = `I build things end-to-end: AI-powered interview bots, fintech platforms, e-learning systems, mobile apps. At SmartHow I own DevOps, define architecture, and lead technical decisions while shipping features daily.
 
 Philosophy degree in logic taught me to find clarity in complexity. I care about why we're building something, not just how.`;

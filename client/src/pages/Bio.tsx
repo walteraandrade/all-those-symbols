@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail, ArrowRight } from "lucide-react";
+import { Terminal, Github, Linkedin, Mail, ArrowRight, FileDown } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { bio, experience, skills, socialLinks } from "@/lib/data";
+import { bio, cvUrl, experience, skills, socialLinks } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { BrutalistBackground } from "@/components/BrutalistBackground";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -94,6 +94,18 @@ export default function Bio() {
           </section>
 
           <section className="pt-6 border-t-2 border-black">
+            <h2 className="font-mono text-sm uppercase tracking-wider mb-4 text-black/50">
+              &gt; Resume
+            </h2>
+            <a
+              href={cvUrl}
+              download
+              className="inline-flex items-center gap-3 px-5 py-3 mb-8 border-brutal bg-red-500 text-white font-mono text-sm uppercase tracking-wider hover:bg-black hover:border-red-500 transition-colors"
+            >
+              <FileDown className="w-5 h-5" aria-hidden="true" />
+              Download CV (PDF)
+            </a>
+
             <h2 className="font-mono text-sm uppercase tracking-wider mb-4 text-black/50">
               &gt; Connect
             </h2>
