@@ -32,6 +32,66 @@ Philosophy degree in logic taught me to find clarity in complexity. I care about
 
 export const projects: Project[] = [
   {
+    title: "SmartHow Workspace Agent",
+    role: "Senior Software Engineer",
+    description:
+      "Agentic chat that writes and edits long-form technical documents. Rebuilt the orchestration loop for cross-turn memory, parallel tool calls and pause/resume, moved tools to a per-tool registry, replaced the blind spinner with a live activity stream over WebSockets, and added voice dictation through Whisper.",
+    tech: [
+      "TypeScript",
+      "NestJS",
+      "Next.js",
+      "WebSockets",
+      "Vercel AI SDK",
+      "Azure OpenAI",
+      "Prisma",
+      "PostgreSQL",
+    ],
+  },
+  {
+    title: "Document Asset Ingestion",
+    role: "Architect & Developer",
+    description:
+      "Retrieval layer that turns uploaded PDFs and audio transcripts into dependable context for the writing agent. Parsing, chunking and full-text search over Postgres, assets scoped per document with per-library permissions, and binary storage on an RBAC-only Azure Blob port with no public URLs.",
+    tech: [
+      "TypeScript",
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Azure Blob Storage",
+      "Python",
+      "FastAPI",
+    ],
+  },
+  {
+    title: "Monorepo CI/CD Hardening",
+    role: "DevOps Lead",
+    description:
+      "Audited and rebuilt delivery for a multi-app monorepo. Restored the Azure OIDC federation that had silently broken every deploy, made quality gates required on protected branches, and added CodeQL, dependency and image scanning, SHA-pinned actions, and mutation testing.",
+    tech: [
+      "GitHub Actions",
+      "Azure",
+      "OIDC",
+      "Docker",
+      "CodeQL",
+      "Stryker",
+      "Vercel",
+    ],
+  },
+  {
+    title: "Azure Cost Program",
+    role: "DevOps & Infrastructure Owner",
+    description:
+      "Cloud cost initiative across 17 resource groups: mapped the full spend, decommissioned the staging environment and a superseded production stack, purged and downgraded container registries, right-sized app plans, and rerouted expensive model traffic to cheaper deployments.",
+    tech: [
+      "Azure",
+      "Terraform",
+      "Container Apps",
+      "Azure OpenAI",
+      "PostgreSQL",
+      "Neo4j",
+    ],
+  },
+  {
     title: "Modulart System",
     role: "Full Stack Developer & Product Owner",
     description:
@@ -164,7 +224,7 @@ export const experience: Experience[] = [
 ];
 
 export const skills = {
-  languages: ["TypeScript", "JavaScript", "Python", "SQL", "GraphQL"],
+  languages: ["TypeScript", "JavaScript", "Python", "Rust", "SQL", "GraphQL"],
   frontend: [
     "Next.js",
     "React",
@@ -177,14 +237,18 @@ export const skills = {
   ],
   backend: [
     "Node.js",
+    "NestJS",
+    "FastAPI",
     "PostgreSQL",
+    "MongoDB",
+    "Neo4j",
     "Prisma",
     "Apollo GraphQL",
     "Hasura",
     "REST APIs",
     "Firebase",
   ],
-  cloud: ["AWS", "EC2", "GCP", "Netlify", "Vercel", "Docker"],
+  cloud: ["Azure", "AWS", "EC2", "GCP", "Vercel", "Netlify", "Docker", "GitHub Actions"],
 };
 
 export const socialLinks = {
