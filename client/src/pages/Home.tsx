@@ -9,7 +9,7 @@ const FEATURED_TITLES = [
   "Mr. Argus",
   "Smells Like Job Spirit",
   "Arachne",
-  "Azure Cost Program",
+  "NaPorta Platform",
 ];
 
 export default function Home() {

@@ -122,8 +122,11 @@
 
 /* constructions grid (projects) */
 .esc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 56px 32px; max-width: 980px; }
-.esc-cell { text-align: center; position: relative; }
-.esc-cell .cube { margin: 0 auto 18px; display: flex; justify-content: center; }
+.esc-cell {
+  text-align: center; position: relative;
+  display: grid; grid-template-rows: subgrid; grid-row: span 3; row-gap: 0;
+}
+.esc-cell .cube { margin: 0 auto 18px; display: flex; justify-content: center; align-items: center; min-height: 88px; }
 .esc-cell .accentcube { display: none; }
 .esc-cell h3 { font-size: 20px; line-height: 1.25; }
 .esc-cell:hover h3, .esc-cell:focus-within h3 { color: var(--accent); }
