@@ -11,12 +11,32 @@ export default function Projects() {
   });
 
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
+  const [showAll, setShowAll] = useState(false);
 
-  const categories = useMemo(() => {
-    const techSet = new Set<string>();
-    projects.forEach((p) => p.tech.forEach((t) => techSet.add(t)));
-    return Array.from(techSet).sort();
+  const counts = useMemo(() => {
+    const m = new Map<string, number>();
+    projects.forEach((p) => p.tech.forEach((t) => m.set(t, (m.get(t) ?? 0) + 1)));
+    return m;
   }, []);
+
+  const categories = useMemo(
+    () =>
+      Array.from(counts.keys()).sort(
+        (a, b) => counts.get(b)! - counts.get(a)! || a.localeCompare(b),
+      ),
+    [counts],
+  );
+
+  const shared = useMemo(
+    () => categories.filter((t) => counts.get(t)! > 1),
+    [categories, counts],
+  );
+
+  const visible = showAll
+    ? categories
+    : activeFilter && !shared.includes(activeFilter)
+      ? [...shared, activeFilter]
+      : shared;
 
   const filtered = activeFilter
     ? projects.filter((p) => p.tech.includes(activeFilter))
@@ -36,7 +56,7 @@ export default function Projects() {
         <button className={`esc-tag ${activeFilter === null ? "on" : ""}`} onClick={() => setActiveFilter(null)}>
           All
         </button>
-        {categories.map((cat) => (
+        {visible.map((cat) => (
           <button
             key={cat}
             className={`esc-tag ${activeFilter === cat ? "on" : ""}`}
@@ -45,6 +65,13 @@ export default function Projects() {
             {cat}
           </button>
         ))}
+        <button
+          className="esc-tag more"
+          aria-expanded={showAll}
+          onClick={() => setShowAll((v) => !v)}
+        >
+          {showAll ? "Show less" : `+${categories.length - shared.length} more`}
+        </button>
       </div>
 
       <div className="esc-projgrid">

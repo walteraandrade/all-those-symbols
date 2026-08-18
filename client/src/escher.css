@@ -94,6 +94,8 @@
 }
 .esc-tag:hover { border-color: var(--mid); }
 .esc-tag.on { border-color: var(--accent); color: var(--accent); }
+.esc-tag.more { border-style: dashed; color: var(--mid); }
+.esc-tag.more:hover { color: var(--bone); }
 .esc-chip { font-size: 13px; color: var(--mid); border: 2px solid var(--dark); padding: 0 8px; }
 
 /* hero (home) */
