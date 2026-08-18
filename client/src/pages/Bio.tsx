@@ -1,10 +1,6 @@
-import { motion } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail, ArrowRight, FileDown } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
 import { bio, cvUrl, experience, skills, socialLinks } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { BrutalistBackground } from "@/components/BrutalistBackground";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { TribarScene } from "@/components/escher/sprites";
 
 export default function Bio() {
   useDocumentMeta({
@@ -13,132 +9,71 @@ export default function Bio() {
     canonical: "/bio",
   });
 
-  const isMobile = useIsMobile();
+  const allSkills = [...skills.languages, ...skills.frontend, ...skills.backend, ...skills.cloud];
 
   return (
-    <div className="relative min-h-[calc(100vh-10rem)] bg-[#F5F5F0]">
-      {!isMobile && <BrutalistBackground />}
+    <div className="esc-page">
+      <header className="esc-pagehead">
+        <h1>The waterfall</h1>
+        <p className="sub">
+          Philosophy first, code second. From the outside it looks like water
+          flowing uphill; from the inside it was always the same stream.
+        </p>
+      </header>
 
-      <div className="relative z-10 container mx-auto px-4 py-12 max-w-3xl">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="space-y-12"
-        >
-          <header>
-            <h1 className="font-mono text-4xl md:text-5xl tracking-tight uppercase mb-4 text-black glitch-hover">
-              Bio<span className="text-red-500">/</span>Philosophy
-              <span className="cursor-blink text-red-500">_</span>
-            </h1>
-            <p className="text-base leading-loose text-black/70 font-mono">
-              {bio}
-            </p>
-          </header>
+      <section className="esc-fall" style={{ padding: "0 0 64px" }} aria-label="About">
+        <TribarScene />
+        <div>
+          {bio.split("\n\n").map((paragraph) => (
+            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+          ))}
+          <p className="dim">
+            Bahia, Brazil. Degree in philosophy with a focus on logic.
+            The wheel has been turning the whole time.
+          </p>
+          <a className="esc-btn" href={cvUrl} download>DOWNLOAD CV</a>
+        </div>
+      </section>
 
-          <section>
-            <h2 className="font-mono text-xl uppercase tracking-wider mb-6 flex items-center gap-3 text-black">
-              <Terminal className="w-5 h-5 text-red-500" aria-hidden="true" />
-              <span className="text-black/50">&gt;</span> Experience
-            </h2>
-            <div className="space-y-4">
-              {experience.map((exp, i) => (
-                <motion.article
-                  key={i}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="border-brutal bg-white/50 p-4 hover:bg-black hover:text-white group transition-colors"
-                >
-                  <div className="flex items-start justify-between">
-                    <div>
-                      <h3 className="font-mono text-sm uppercase tracking-wider font-bold">
-                        {exp.role}
-                      </h3>
-                      <p className="font-mono text-xs text-red-500 group-hover:text-red-400 mt-1">
-                        {exp.company} <span className="text-black/30 group-hover:text-white/30">|</span> {exp.period}
-                      </p>
-                    </div>
-                    <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <p className="font-mono text-xs text-black/60 group-hover:text-white/60 mt-2">
-                    {exp.description}
-                  </p>
-                </motion.article>
-              ))}
-            </div>
-          </section>
+      <section aria-labelledby="bio-xp-h" style={{ marginBottom: 64 }}>
+        <h2 id="bio-xp-h" className="esc-h2">Where the water ran</h2>
+        <p className="esc-sub">Experience, most recent first.</p>
+        <div className="esc-xp">
+          {experience.map((exp) => (
+            <article key={`${exp.company}-${exp.period}`}>
+              <h3>{exp.role}</h3>
+              <p className="where">{exp.company} · {exp.period}</p>
+              <p className="what">{exp.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-          <section>
-            <h2 className="font-mono text-xl uppercase tracking-wider mb-4 text-black">
-              <span className="text-black/50">&gt;</span> Tech_Stack
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {[...skills.languages, ...skills.frontend, ...skills.backend, ...skills.cloud].map(
-                (skill, i) => (
-                  <motion.div
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: i * 0.02 }}
-                  >
-                    <Badge
-                      variant="outline"
-                      className="border-brutal bg-white/50 text-black font-mono text-xs uppercase tracking-wider hover:bg-black hover:text-white hover:border-red-500 transition-colors cursor-default"
-                    >
-                      {skill}
-                    </Badge>
-                  </motion.div>
-                )
-              )}
-            </div>
-          </section>
+      <section aria-labelledby="bio-skills-h" style={{ marginBottom: 64 }}>
+        <h2 id="bio-skills-h" className="esc-h2">Tools of the trade</h2>
+        <p className="esc-sub">Languages, frameworks, and platforms in active use.</p>
+        <div className="esc-tagrow" style={{ marginBottom: 0 }}>
+          {allSkills.map((skill) => (
+            <span key={skill} className="esc-chip" style={{ fontSize: 20, padding: "2px 10px" }}>
+              {skill}
+            </span>
+          ))}
+        </div>
+      </section>
 
-          <section className="pt-6 border-t-2 border-black">
-            <h2 className="font-mono text-sm uppercase tracking-wider mb-4 text-black/50">
-              &gt; Resume
-            </h2>
-            <a
-              href={cvUrl}
-              download
-              className="inline-flex items-center gap-3 px-5 py-3 mb-8 border-brutal bg-red-500 text-white font-mono text-sm uppercase tracking-wider hover:bg-black hover:border-red-500 transition-colors"
-            >
-              <FileDown className="w-5 h-5" aria-hidden="true" />
-              Download CV (PDF)
-            </a>
-
-            <h2 className="font-mono text-sm uppercase tracking-wider mb-4 text-black/50">
-              &gt; Connect
-            </h2>
-            <div className="flex gap-3">
-              <a
-                href={`mailto:${socialLinks.email}`}
-                aria-label="Email Walter"
-                className="p-3 border-brutal bg-white/50 hover:bg-black hover:text-white hover:border-red-500 transition-colors"
-              >
-                <Mail className="w-5 h-5" aria-hidden="true" />
-              </a>
-              <a
-                href={`https://linkedin.com${socialLinks.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Walter's LinkedIn profile"
-                className="p-3 border-brutal bg-white/50 hover:bg-black hover:text-white hover:border-red-500 transition-colors"
-              >
-                <Linkedin className="w-5 h-5" aria-hidden="true" />
-              </a>
-              <a
-                href={`https://github.com/${socialLinks.github.replace("@", "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Walter's GitHub profile"
-                className="p-3 border-brutal bg-white/50 hover:bg-black hover:text-white hover:border-red-500 transition-colors"
-              >
-                <Github className="w-5 h-5" aria-hidden="true" />
-              </a>
-            </div>
-          </section>
-        </motion.div>
-      </div>
+      <section aria-labelledby="bio-connect-h">
+        <h2 id="bio-connect-h" className="esc-h2">Connect</h2>
+        <p className="esc-sub">The next train leaves whenever you write.</p>
+        <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+          <a className="esc-link" href={`mailto:${socialLinks.email}`}>Email</a>
+          <a className="esc-link" href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          <a className="esc-link" href={`https://github.com/${socialLinks.github.replace("@", "")}`} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

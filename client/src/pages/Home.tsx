@@ -1,19 +1,15 @@
-import { useState } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
-import { User, Code, BookOpen, Mail } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import { useRetroSfx } from "@/hooks/useRetroSfx";
+import { projects, blogPosts } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { BrutalistBackground } from "@/components/BrutalistBackground";
-import { BrutalistAvatar } from "@/components/BrutalistAvatar";
-import { BrutalistOrbitButton } from "@/components/BrutalistOrbitButton";
+import { Sprite, TribarScene, MINI_TRIBAR, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
-const menuItems = [
-  { path: "/bio", label: "Bio", icon: User },
-  { path: "/projects", label: "Projects", icon: Code },
-  { path: "/blog", label: "Blog", icon: BookOpen },
-  { path: "/contact", label: "Contact", icon: Mail },
+const FEATURED_TITLES = [
+  "Modulart System",
+  "NaPorta Platform",
+  "Payssego Payment System",
+  "Arachne",
+  "Mr. Argus",
+  "Aetheria",
 ];
 
 export default function Home() {
@@ -23,96 +19,83 @@ export default function Home() {
     canonical: "/",
   });
 
-  const isMobile = useIsMobile();
-  const sfx = useRetroSfx();
-  const [, setHoveredIndex] = useState<number | null>(null);
+  const featured = FEATURED_TITLES
+    .map((t) => projects.find((p) => p.title === t))
+    .filter((p): p is (typeof projects)[number] => Boolean(p));
+  const readings = blogPosts.slice(0, 4);
 
   return (
-    <div className="relative min-h-[calc(100vh-10rem)] flex flex-col items-center justify-center bg-[#F5F5F0]">
-      {!isMobile && <BrutalistBackground />}
+    <div>
+      <section className="esc-hero">
+        <Sprite map={MINI_TRIBAR} palette={POLY_PAL} scale={3} className="floatcube" style={{ top: "12%", right: "8%" }} />
+        <Sprite map={WIRECUBE} palette={POLY_PAL} scale={4} className="floatcube" style={{ bottom: "16%", right: "30%", animationDelay: "1.2s" }} />
+        <h1>
+          Code is a staircase<br />
+          that <span className="accent">only goes up</span>,<br />
+          seen from the right angle.
+        </h1>
+        <p className="tagline">Walter Andrade. Logic / Philosophy / Code.</p>
+      </section>
 
-      <div className="relative z-20 flex flex-col items-center gap-8 px-4 overflow-visible">
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="text-center"
-        >
-          <h1 className="font-mono text-4xl md:text-6xl tracking-tight uppercase mb-2 text-black glitch-hover">
-            Walter Andrade<span className="cursor-blink text-red-500">_</span>
-          </h1>
-          <p className="text-sm md:text-base text-black/60 font-mono tracking-wider">
-            Logic <span className="text-red-500 mx-2">/</span> Philosophy{" "}
-            <span className="text-red-500 mx-2">/</span> Code
+      <section className="esc-fall" aria-labelledby="home-fall-h">
+        <TribarScene />
+        <div>
+          <h2 id="home-fall-h">The waterfall</h2>
+          <p>
+            I did not arrive at code through a computer science degree.
+            I arrived through philosophy, and from the outside that path
+            looks like water flowing uphill.
           </p>
-        </motion.div>
+          <p className="dim">
+            From the inside it was always the same stream: formal logic,
+            careful arguments, systems that hold together. The wheel has
+            been turning the whole time.
+          </p>
+          <Link className="esc-link" href="/bio">The full story</Link>
+        </div>
+      </section>
 
-        {/* Avatar with orbiting buttons */}
-        {!isMobile && (
-          <div className="relative w-80 h-80 flex items-center justify-center overflow-visible">
-            <BrutalistAvatar />
-            {menuItems.map((item, index) => {
-              const angle = (index * 90 - 45) * (Math.PI / 180);
-              const radius = 150;
-              const x = Math.cos(angle) * radius;
-              const y = Math.sin(angle) * radius;
+      <section className="esc-page" aria-labelledby="home-work-h" style={{ paddingTop: 0 }}>
+        <h2 id="home-work-h" className="esc-h2">Constructions</h2>
+        <p className="esc-sub">Selected structures, each one solid from every side you look at it.</p>
+        <div className="esc-grid">
+          {featured.map((p, i) => (
+            <article key={p.title} className="esc-cell">
+              <div className="cube">
+                <Sprite map={i % 2 === 0 ? MINI_TRIBAR : WIRECUBE} palette={POLY_PAL} scale={i % 2 === 0 ? 2 : 5} className="bonecube" />
+                <Sprite map={i % 2 === 0 ? MINI_TRIBAR : WIRECUBE} palette={POLY_PAL_ACCENT} scale={i % 2 === 0 ? 2 : 5} className="accentcube" />
+              </div>
+              <h3>{p.title}</h3>
+              <p className="note">{p.role}</p>
+              <Link href="/projects" aria-label={`See ${p.title} in projects`} />
+            </article>
+          ))}
+        </div>
+        <p style={{ marginTop: 48 }}>
+          <Link className="esc-link" href="/projects">All constructions</Link>
+        </p>
+      </section>
 
-              return (
-                <BrutalistOrbitButton
-                  key={item.path}
-                  path={item.path}
-                  label={item.label}
-                  icon={item.icon}
-                  index={index}
-                  x={x}
-                  y={y}
-                  onHover={() => {
-                    setHoveredIndex(index);
-                    sfx.hover();
-                  }}
-                  onClick={() => sfx.navigate()}
-                />
-              );
-            })}
-          </div>
-        )}
-
-        {/* Mobile menu fallback */}
-        {isMobile && (
-          <nav className="flex flex-wrap justify-center gap-2">
-            {menuItems.map((item, index) => (
-              <motion.div
-                key={item.path}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 + index * 0.1 }}
+      <section className="esc-page" aria-labelledby="home-read-h" style={{ paddingTop: 0 }}>
+        <h2 id="home-read-h" className="esc-h2">Ascending readings</h2>
+        <p className="esc-sub">Essays on film and thought. Each step is higher than the last, forever.</p>
+        <ul style={{ listStyle: "none", maxWidth: 700 }}>
+          {readings.map((post, i) => (
+            <li key={post.slug}>
+              <Link
+                href={`/blog/${post.slug}`}
+                className="esc-steplink"
+                style={{ marginLeft: Math.min(i * 48, 144) }}
               >
-                <Link
-                  href={item.path}
-                  onClick={() => sfx.navigate()}
-                  className="group flex items-center gap-2 px-3 py-2 bg-[#F5F5F0] border-brutal hover:bg-black hover:text-white hover:border-brutal-red"
-                >
-                  <span className="font-mono text-xs text-black/50 group-hover:text-white/50">
-                    {`> ${String(index + 1).padStart(2, "0")}`}
-                  </span>
-                  <item.icon className="w-4 h-4" />
-                  <span className="font-mono text-xs uppercase tracking-wider group-hover:line-through">
-                    {item.label}
-                  </span>
-                </Link>
-              </motion.div>
-            ))}
-          </nav>
-        )}
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-8 text-[10px] text-black/30 font-mono uppercase tracking-wider"
-        >
-          v1.0 &nbsp;|&nbsp; 2025
-        </motion.div>
-      </div>
+                {post.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <p style={{ marginTop: 28 }}>
+          <Link className="esc-link" href="/blog">All writings</Link>
+        </p>
+      </section>
     </div>
   );
 }

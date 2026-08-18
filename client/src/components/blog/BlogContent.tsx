@@ -41,7 +41,7 @@ const CodeBlock = ({ className, children }: { className?: string; children?: Rea
 };
 
 const InlineCode = ({ children }: { children?: React.ReactNode }) => (
-  <code className="font-mono text-xs bg-black/5 border border-black/20 px-1.5 py-0.5 text-red-500">
+  <code className="font-mono text-xs bg-[#1d1c16] border border-[#3a382f] px-1.5 py-0.5 text-[var(--accent)]">
     {children}
   </code>
 );
@@ -56,7 +56,7 @@ export function BlogContent({ content }: BlogContentProps) {
             const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
             return (
               <h2 id={id} className="scroll-mt-24">
-                <span className="text-red-500">&gt;</span> {children}
+                <span className="text-[var(--accent)]">&gt;</span> {children}
               </h2>
             );
           },

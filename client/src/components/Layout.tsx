@@ -1,65 +1,83 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { motion } from "framer-motion";
-import { MainNav } from "@/components/MainNav";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { cvUrl, socialLinks } from "@/lib/data";
+import { Sprite, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-export function Layout({ children }: LayoutProps) {
-  const [location] = useLocation();
-  const isHome = location === "/";
-  const isMobile = useIsMobile();
+const LINKS = [
+  { href: "/bio", label: "Bio" },
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
+];
 
+function TopNav() {
+  const [location] = useLocation();
   return (
-    <div className="min-h-screen w-full bg-[#F5F5F0] text-black relative overflow-x-hidden font-mono selection:bg-red-500/20">
-      {/* Skip link for a11y */}
+    <header className="esc-topnav">
+      <Link href="/" className="brand">WALTER ANDRADE</Link>
+      <nav aria-label="Main">
+        {LINKS.map((l) => {
+          const active = location === l.href || location.startsWith(`${l.href}/`);
+          return (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={active ? "on" : ""}
+              aria-current={active ? "page" : undefined}
+            >
+              {l.label}
+            </Link>
+          );
+        })}
+        <a className="cv" href={cvUrl} download>CV</a>
+      </nav>
+    </header>
+  );
+}
+
+function GemNav() {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="esc-gemnav">
+      {open && (
+        <nav aria-label="Quick">
+          {LINKS.map((l, i) => (
+            <Link key={l.href} href={l.href} style={{ animationDelay: `${i * 60}ms` }} onClick={() => setOpen(false)}>
+              {l.label}
+            </Link>
+          ))}
+        </nav>
+      )}
+      <button aria-expanded={open} aria-label="Quick menu" onClick={() => setOpen(!open)}>
+        <Sprite map={WIRECUBE} palette={open ? POLY_PAL_ACCENT : POLY_PAL} scale={3} />
+      </button>
+    </div>
+  );
+}
+
+export function Layout({ children }: LayoutProps) {
+  return (
+    <div className="esc">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-black focus:border-brutal"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--accent)] focus:text-[#14130f]"
       >
         Skip to main content
       </a>
 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-[#F5F5F0]/95 backdrop-blur-sm border-b-2 border-black">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <Link href="/">
-            <motion.span
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="font-mono text-sm uppercase tracking-wider hover:text-red-500 transition-colors"
-            >
-              WALTER<span className="text-red-500">_</span>
-            </motion.span>
-          </Link>
+      <TopNav />
+      <GemNav />
 
-          <div className="flex items-center gap-4">
-            <div className="hidden md:block">
-              <MainNav />
-            </div>
-          </div>
-        </div>
-      </header>
+      <main id="main-content">{children}</main>
 
-      {/* Main content */}
-      <main
-        id="main-content"
-        className={`relative z-10 pt-16 ${isMobile ? "pb-24" : "pb-8"}`}
-      >
-        {children}
-      </main>
-
-      {/* Footer */}
-      <footer className="relative z-10 text-center py-8 text-xs text-black/40 font-mono uppercase tracking-wider border-t-2 border-black bg-[#F5F5F0]">
-        <span className="text-red-500">&gt;</span> {new Date().getFullYear()} Walter Andrade
+      <footer className="esc-footer">
+        <p className="quote">Impossible objects, shippable software. {new Date().getFullYear()}.</p>
+        <a className="esc-btn" href={`mailto:${socialLinks.email}`}>SAY HELLO</a>
       </footer>
-
-      {/* Mobile bottom nav */}
-      <MobileBottomNav />
     </div>
   );
 }

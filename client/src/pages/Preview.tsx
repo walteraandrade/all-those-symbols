@@ -5,7 +5,6 @@ const EditorialPreview = lazy(() => import("./preview/Editorial"));
 const RetroFuturisticPreview = lazy(() => import("./preview/RetroFuturistic"));
 const OrganicPreview = lazy(() => import("./preview/Organic"));
 const ArtDecoPreview = lazy(() => import("./preview/ArtDeco"));
-
 const DESIGNS = [
   { id: "brutalist", name: "Brutalist", color: "#FF0000", Component: BrutalistPreview },
   { id: "editorial", name: "Editorial", color: "#E63946", Component: EditorialPreview },
