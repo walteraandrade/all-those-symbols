@@ -24,7 +24,9 @@
   min-height: 100vh;
   image-rendering: pixelated;
 }
-.esc h1, .esc h2, .esc .pixfont { font-family: 'Press Start 2P', monospace; }
+.esc h1, .esc h2, .esc h3, .esc .pixfont {
+  font-family: 'League Spartan', sans-serif; font-weight: 700; letter-spacing: -0.015em;
+}
 .esc ::selection { background: var(--accent); color: var(--ink); }
 
 /* primary nav: top bar */
@@ -36,7 +38,8 @@
   border-bottom: 3px solid var(--dark);
 }
 .esc-topnav .brand {
-  font-family: 'Press Start 2P', monospace; font-size: 11px;
+  font-family: 'League Spartan', sans-serif; font-weight: 800;
+  font-size: 21px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--bone); text-decoration: none;
 }
 .esc-topnav .brand:hover { color: var(--accent); }
@@ -60,16 +63,17 @@
 /* page scaffolding */
 .esc-page { padding: 56px 6vw 80px; max-width: 1080px; margin: 0 auto; }
 .esc-pagehead { margin-bottom: 40px; }
-.esc-pagehead h1 { font-size: clamp(1.1rem, 3vw, 1.8rem); line-height: 1.6; }
+.esc-pagehead h1 { font-size: clamp(2.2rem, 5.5vw, 3.4rem); line-height: 1.05; }
 .esc-pagehead h1 .accent { color: var(--accent); }
 .esc-pagehead .sub { color: var(--mid); font-size: 17px; margin-top: 14px; max-width: 65ch; }
 
-.esc-h2 { font-family: 'Press Start 2P', monospace; font-size: clamp(0.9rem, 2.2vw, 1.3rem); margin-bottom: 8px; }
+.esc-h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.15; margin-bottom: 8px; }
 .esc-sub { color: var(--mid); font-size: 16px; margin-bottom: 36px; }
 
 .esc-btn {
   display: inline-block;
-  font-family: 'Press Start 2P', monospace; font-size: 10px;
+  font-family: 'League Spartan', sans-serif; font-weight: 700;
+  font-size: 15px; letter-spacing: 0.06em; text-transform: uppercase;
   color: var(--ink); background: var(--accent); text-decoration: none;
   padding: 12px 16px; border: none; cursor: pointer;
 }
@@ -99,7 +103,7 @@
   padding: 48px 6vw;
   position: relative; overflow: hidden;
 }
-.esc-hero h1 { font-size: clamp(1.4rem, 4vw, 2.6rem); line-height: 1.6; }
+.esc-hero h1 { font-size: clamp(2.8rem, 7vw, 4.8rem); line-height: 1.0; }
 .esc-hero h1 .accent { color: var(--accent); }
 .esc-hero .tagline { font-size: 19px; color: var(--mid); margin-top: 18px; }
 .esc-hero .floatcube { position: absolute; opacity: 0.9; }
@@ -109,7 +113,7 @@
   display: grid; grid-template-columns: 380px 1fr; gap: 56px; align-items: center;
   padding: 24px 6vw 80px; max-width: 1080px; margin: 0 auto;
 }
-.esc-fall h2 { font-size: clamp(0.9rem, 2.2vw, 1.3rem); margin-bottom: 18px; }
+.esc-fall h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); line-height: 1.15; margin-bottom: 18px; }
 .esc-fall p { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
 .esc-fall p.dim { color: var(--mid); }
 
@@ -119,7 +123,7 @@
 .esc-cell { text-align: center; position: relative; }
 .esc-cell .cube { margin: 0 auto 18px; display: flex; justify-content: center; }
 .esc-cell .accentcube { display: none; }
-.esc-cell h3 { font-family: 'Press Start 2P', monospace; font-size: 11px; line-height: 1.7; }
+.esc-cell h3 { font-size: 20px; line-height: 1.25; }
 .esc-cell:hover h3, .esc-cell:focus-within h3 { color: var(--accent); }
 .esc-cell .note { color: var(--mid); font-size: 15px; margin-top: 8px; }
 .esc-cell a { position: absolute; inset: 0; }
@@ -140,7 +144,7 @@
 }
 .esc-projcard:hover, .esc-projcard:focus-within { border-color: var(--accent); }
 .esc-projcard .gem { flex: none; margin-top: 6px; }
-.esc-projcard h3 { font-family: 'Press Start 2P', monospace; font-size: 11px; line-height: 1.7; }
+.esc-projcard h3 { font-size: 21px; line-height: 1.25; }
 .esc-projcard .role { color: var(--accent); font-size: 14px; margin: 6px 0 8px; }
 .esc-projcard .desc { color: var(--mid); font-size: 15px; line-height: 1.6; margin-bottom: 12px; }
 .esc-projcard .chips { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -157,13 +161,13 @@
 .esc-postcard:hover, .esc-postcard:focus-visible { border-color: var(--accent); outline: none; }
 .esc-postcard .meta { display: flex; gap: 14px; font-size: 13px; color: var(--mid); margin-bottom: 10px; }
 .esc-postcard .meta .cat { color: var(--accent); }
-.esc-postcard h3 { font-family: 'Press Start 2P', monospace; font-size: 11px; line-height: 1.7; margin-bottom: 10px; }
+.esc-postcard h3 { font-size: 21px; line-height: 1.25; margin-bottom: 10px; }
 .esc-postcard .excerpt { color: var(--mid); font-size: 15px; line-height: 1.6; }
 .esc-postcard:hover h3 { color: var(--accent); }
 
 .esc-featured { grid-column: 1 / -1; flex-direction: row; gap: 28px; align-items: center; }
 .esc-featured .gem { flex: none; }
-.esc-featured h3 { font-size: 14px; }
+.esc-featured h3 { font-size: 28px; }
 
 /* stepped essay links */
 .esc-steplink {
@@ -177,7 +181,7 @@
 /* experience timeline */
 .esc-xp { display: flex; flex-direction: column; gap: 18px; }
 .esc-xp article { border: 3px solid var(--dark); padding: 18px 22px; background: rgba(20, 19, 15, 0.6); }
-.esc-xp h3 { font-family: 'Press Start 2P', monospace; font-size: 10px; line-height: 1.7; }
+.esc-xp h3 { font-size: 20px; line-height: 1.25; }
 .esc-xp .where { color: var(--accent); font-size: 14px; margin: 6px 0 8px; }
 .esc-xp .what { color: var(--mid); font-size: 15px; line-height: 1.6; }
 
@@ -196,8 +200,8 @@
 
 /* article (blog post body) */
 .esc .blog-prose { font-family: 'JetBrains Mono', monospace; color: var(--bone); font-size: 17px; line-height: 1.65; }
-.esc .blog-prose h2 { font-family: 'Press Start 2P', monospace; font-size: 0.95rem; line-height: 1.7; color: var(--bone); border-top: 3px solid var(--dark); }
-.esc .blog-prose h3 { font-family: 'Press Start 2P', monospace; font-size: 0.75rem; line-height: 1.7; color: var(--bone); }
+.esc .blog-prose h2 { font-size: 1.85rem; line-height: 1.2; color: var(--bone); border-top: 3px solid var(--dark); }
+.esc .blog-prose h3 { font-size: 1.35rem; line-height: 1.25; color: var(--bone); }
 .esc .blog-prose p { font-size: 17px; color: var(--bone); line-height: 1.65; }
 .esc .blog-prose ul, .esc .blog-prose ol { color: var(--bone); }
 .esc .blog-prose ul li::before { color: var(--accent); }
