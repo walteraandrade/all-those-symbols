@@ -222,8 +222,8 @@
 
 /* animations, gated on reduced motion */
 @media (prefers-reduced-motion: no-preference) {
-  .esc-hero .floatcube { animation: escBob 5s steps(4, end) infinite alternate; }
-  @keyframes escBob { from { transform: translateY(0); } to { transform: translateY(-14px); } }
+  .esc-hero .floatcube { animation: escBob 7s ease-in-out infinite alternate; will-change: transform; }
+  @keyframes escBob { from { transform: translateY(0); } to { transform: translateY(-16px); } }
   .esc-gemnav nav a { animation: escGemIn 160ms steps(3, end) backwards; }
   @keyframes escGemIn { from { transform: translateY(14px); opacity: 0; } }
 }
