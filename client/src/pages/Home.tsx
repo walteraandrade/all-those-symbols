@@ -4,12 +4,12 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { Sprite, TribarScene, MINI_TRIBAR, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
 const FEATURED_TITLES = [
-  "Modulart System",
-  "NaPorta Platform",
-  "Payssego Payment System",
-  "Arachne",
+  "SmartHow Workspace Agent",
+  "Document Asset Ingestion",
   "Mr. Argus",
-  "Aetheria",
+  "Smells Like Job Spirit",
+  "Arachne",
+  "Azure Cost Program",
 ];
 
 export default function Home() {
