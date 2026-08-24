@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import { useParams, Redirect, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/data";
+import { slugify } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
@@ -16,7 +17,7 @@ const extractHeadings = (markdown: string) => {
   while ((match = headingRegex.exec(markdown)) !== null) {
     const level = match[0].indexOf(" ");
     const text = match[1];
-    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const id = slugify(text);
     headings.push({ id, text, level });
   }
   return headings;
