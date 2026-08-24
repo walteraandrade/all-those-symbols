@@ -1,0 +1,25 @@
+name: perf
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+jobs:
+  perf:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+      - run: bun install --frozen-lockfile
+      - run: bun run perf
+        env:
+          PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      - run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add perf/history.jsonl
+          git diff --cached --quiet || (git commit -m "perf: weekly measurement" && git push)
