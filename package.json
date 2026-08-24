@@ -11,8 +11,6 @@
   },
   "dependencies": {
     "@hookform/resolvers": "3.10.0",
-    "@radix-ui/react-collapsible": "1.1.12",
-    "@radix-ui/react-slot": "1.2.4",
     "@radix-ui/react-toast": "1.2.7",
     "@tursodatabase/serverless": "^1.4.0",
     "class-variance-authority": "0.7.1",
