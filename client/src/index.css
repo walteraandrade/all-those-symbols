@@ -277,7 +277,7 @@
 
 .blog-prose pre {
   background: rgba(0, 0, 0, 0.9) !important;
-  border: 2px solid #000;
+  border: 2px solid var(--esc-dark);
   padding: 1rem;
   overflow-x: auto;
   font-size: 0.75rem;
@@ -322,7 +322,7 @@
 
 /* Brutalist utilities */
 .border-brutal {
-  border: 2px solid #000;
+  border: 2px solid var(--esc-dark);
 }
 
 .border-brutal-red {
