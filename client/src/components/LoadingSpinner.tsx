@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 export function LoadingSpinner() {
   return (
-    <div className="flex items-center justify-center min-h-[200px]">
+    <div className="flex items-center justify-center min-h-[100dvh]">
       <div className="flex gap-1">
         {[0, 1, 2].map((i) => (
           <motion.div
