@@ -19,15 +19,26 @@
   src: url('/fonts/league-spartan.woff2') format('woff2');
 }
 
+:root {
+  --esc-ink: #14130f;
+  --esc-ink-2: #1d1c16;
+  --esc-bone: #ece6d4;
+  --esc-mid: #8b8778;
+  --esc-dark: #3a382f;
+  --esc-accent: #4aa58e;
+  --esc-accent-mid: #33796a;
+  --esc-accent-dark: #1d4a41;
+}
+
 .esc {
-  --ink: #14130f;
-  --ink-2: #1d1c16;
-  --bone: #ece6d4;
-  --mid: #8b8778;
-  --dark: #3a382f;
-  --accent: #4aa58e;
-  --accent-mid: #33796a;
-  --accent-dark: #1d4a41;
+  --ink: var(--esc-ink);
+  --ink-2: var(--esc-ink-2);
+  --bone: var(--esc-bone);
+  --mid: var(--esc-mid);
+  --dark: var(--esc-dark);
+  --accent: var(--esc-accent);
+  --accent-mid: var(--esc-accent-mid);
+  --accent-dark: var(--esc-accent-dark);
   font-family: 'JetBrains Mono', monospace;
   font-weight: 400;
   font-size: 16px;
@@ -46,6 +57,22 @@
   font-family: 'League Spartan', sans-serif; font-weight: 700; letter-spacing: -0.015em;
 }
 .esc ::selection { background: var(--accent); color: var(--ink); }
+
+.esc-spinner {
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--esc-bone);
+  background: var(--esc-ink);
+}
+.esc-spinner-dots { display: flex; gap: 0.25rem; }
+.esc-spinner-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--esc-accent);
+  opacity: 0.4;
+}
 
 /* primary nav: top bar */
 .esc-topnav {
@@ -243,6 +270,10 @@
 
 /* animations, gated on reduced motion */
 @media (prefers-reduced-motion: no-preference) {
+  .esc-spinner-dot { animation: escSpinnerPulse 800ms steps(3, end) infinite; }
+  .esc-spinner-dot:nth-child(2) { animation-delay: 150ms; }
+  .esc-spinner-dot:nth-child(3) { animation-delay: 300ms; }
+  @keyframes escSpinnerPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
   .esc-hero .floatcube { animation: escBob 7s ease-in-out infinite alternate; will-change: transform; }
   @keyframes escBob { from { transform: translateY(0); } to { transform: translateY(-16px); } }
   .esc-gemnav nav a { animation: escGemIn 160ms steps(3, end) backwards; }
