@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Redirect, Link } from "wouter";
-import { blogPosts } from "@/lib/data";
+import { blogPosts, localizePost, postLangs } from "@/lib/data";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
+import { LanguageToggle } from "@/components/blog/LanguageToggle";
 
 const extractHeadings = (markdown: string) => {
   const headingRegex = /^#{2,3}\s+(.+)$/gm;
@@ -21,6 +23,7 @@ const extractHeadings = (markdown: string) => {
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
+  const { lang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
 
@@ -33,16 +36,24 @@ export default function BlogPost() {
     [slug]
   );
 
-  const post = postIndex >= 0 ? blogPosts[postIndex] : null;
-  const prevPost = postIndex > 0 ? blogPosts[postIndex - 1] : null;
-  const nextPost = postIndex < blogPosts.length - 1 ? blogPosts[postIndex + 1] : null;
-  const headings = post ? extractHeadings(post.content) : [];
+  const post = useMemo(
+    () => (postIndex >= 0 ? localizePost(blogPosts[postIndex], lang) : null),
+    [postIndex, lang]
+  );
+  const prevPost = postIndex > 0 ? localizePost(blogPosts[postIndex - 1], lang) : null;
+  const nextPost =
+    postIndex < blogPosts.length - 1 ? localizePost(blogPosts[postIndex + 1], lang) : null;
+  const headings = useMemo(
+    () => (post ? extractHeadings(post.content) : []),
+    [post]
+  );
 
   useDocumentMeta({
     title: post ? `${post.title} | Walter Andrade` : "Blog | Walter Andrade",
     description: post?.excerpt,
     canonical: post ? `/blog/${post.slug}` : "/blog",
     ogType: "article",
+    ogImage: post?.image ? `https://questinable.space${post.image}` : undefined,
   });
 
   useEffect(() => {
@@ -104,9 +115,17 @@ export default function BlogPost() {
           <span>{post.readingTime} min read</span>
         </div>
 
-        <h1 className="pixfont" style={{ fontSize: "clamp(1rem, 2.6vw, 1.6rem)", lineHeight: 1.7 }}>
+        <h1
+          lang={post.activeLang}
+          className="pixfont"
+          style={{ fontSize: "clamp(1rem, 2.6vw, 1.6rem)", lineHeight: 1.7 }}
+        >
           {post.title}
         </h1>
+
+        <div className="mt-5">
+          <LanguageToggle langs={postLangs(post)} />
+        </div>
 
         {post.tags && (
           <div className="flex flex-wrap gap-3 mt-5">
@@ -116,6 +135,16 @@ export default function BlogPost() {
           </div>
         )}
       </header>
+
+      {post.image && (
+        <img
+          src={post.image}
+          alt={post.imageAlt ?? ""}
+          width={1600}
+          height={900}
+          className="w-full mb-12 border-[3px] border-[#3a382f]"
+        />
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
         <div className="flex-1 min-w-0">
@@ -136,7 +165,9 @@ export default function BlogPost() {
             </div>
           )}
 
-          <BlogContent content={post.content} />
+          <div lang={post.activeLang}>
+            <BlogContent content={post.content} />
+          </div>
 
           {(prevPost || nextPost) && (
             <nav className="flex flex-col sm:flex-row gap-4 mt-16 pt-8 border-t-[3px] border-[#3a382f]">

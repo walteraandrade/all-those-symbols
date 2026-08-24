@@ -7,6 +7,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { MotionProvider } from "@/contexts/MotionContext";
 import { AudioProvider } from "@/contexts/AudioContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Layout } from "@/components/Layout";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import NotFound from "@/pages/not-found";
@@ -70,16 +71,18 @@ function App() {
     <ThemeProvider>
       <MotionProvider>
         <AudioProvider>
-          <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <Toaster />
-              <Layout>
-                <Suspense fallback={<LoadingSpinner />}>
-                  <Router />
-                </Suspense>
-              </Layout>
-            </TooltipProvider>
-          </QueryClientProvider>
+          <LanguageProvider>
+            <QueryClientProvider client={queryClient}>
+              <TooltipProvider>
+                <Toaster />
+                <Layout>
+                  <Suspense fallback={<LoadingSpinner />}>
+                    <Router />
+                  </Suspense>
+                </Layout>
+              </TooltipProvider>
+            </QueryClientProvider>
+          </LanguageProvider>
         </AudioProvider>
       </MotionProvider>
     </ThemeProvider>

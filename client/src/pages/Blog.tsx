@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
-import { blogPosts, BlogCategory, blogCategories } from "@/lib/data";
+import { blogPosts, BlogCategory, blogCategories, localizePost } from "@/lib/data";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { Sprite, MINI_TRIBAR, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
@@ -12,11 +13,14 @@ export default function Blog() {
   });
 
   const [activeCategory, setActiveCategory] = useState<BlogCategory | null>(null);
+  const { lang } = useLanguage();
 
   const filteredPosts = useMemo(() => {
-    if (!activeCategory) return blogPosts;
-    return blogPosts.filter((p) => p.category === activeCategory);
-  }, [activeCategory]);
+    const posts = activeCategory
+      ? blogPosts.filter((p) => p.category === activeCategory)
+      : blogPosts;
+    return posts.map((p) => localizePost(p, lang));
+  }, [activeCategory, lang]);
 
   const featuredPost = useMemo(
     () => filteredPosts.find((p) => p.featured),
@@ -64,8 +68,10 @@ export default function Blog() {
                 <span>{featuredPost.date}</span>
                 <span>{featuredPost.readingTime} min</span>
               </div>
-              <h3>{featuredPost.title}</h3>
-              <p className="excerpt">{featuredPost.excerpt}</p>
+              <h3 lang={featuredPost.activeLang}>{featuredPost.title}</h3>
+              <p className="excerpt" lang={featuredPost.activeLang}>
+                {featuredPost.excerpt}
+              </p>
             </div>
           </Link>
         )}
@@ -77,8 +83,10 @@ export default function Blog() {
               <span>{post.date}</span>
               <span>{post.readingTime} min</span>
             </div>
-            <h3>{post.title}</h3>
-            <p className="excerpt">{post.excerpt}</p>
+            <h3 lang={post.activeLang}>{post.title}</h3>
+            <p className="excerpt" lang={post.activeLang}>
+              {post.excerpt}
+            </p>
           </Link>
         ))}
       </div>
