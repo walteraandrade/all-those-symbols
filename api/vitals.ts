@@ -1,8 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
 import { checkRateLimit, getDatabaseConnection } from "./rate-limit";
-
-const ALLOWED_ORIGIN = "https://all-those-symbols.vercel.app";
+import { applyCors } from "./cors";
 
 const vitalsSchema = z.object({
   metric: z.enum(["LCP", "INP", "CLS", "TTFB"]),
@@ -12,12 +11,7 @@ const vitalsSchema = z.object({
 });
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader("Vary", "Origin");
-  if (req.headers.origin === ALLOWED_ORIGIN) {
-    res.setHeader("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
-    res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  }
+  applyCors(req, res);
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
