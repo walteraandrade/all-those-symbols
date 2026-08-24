@@ -24,7 +24,8 @@ jobs:
           key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
       - run: bun install --frozen-lockfile
       - run: bun run build
-      - run: bun run script/perf.ts --gate
+      - if: github.event_name == 'pull_request'
+        run: bun run script/perf.ts --gate
       - if: github.event_name == 'schedule'
         run: bun run perf
         env:
