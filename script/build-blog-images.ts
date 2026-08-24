@@ -1,4 +1,4 @@
-import { readdir } from "node:fs/promises";
+import { readdir, stat } from "node:fs/promises";
 import { extname, join, parse } from "node:path";
 import sharp from "sharp";
 
@@ -21,12 +21,24 @@ await Promise.all(
       );
     }
 
+    const targets = widths.map((targetWidth) => ({
+      targetWidth,
+      out: join(blogDir, `${parse(file).name}-${targetWidth}.webp`),
+    }));
+    const sourceMtime = (await stat(source)).mtimeMs;
+    const fresh = await Promise.all(
+      targets.map(({ out }) =>
+        stat(out).then(({ mtimeMs }) => mtimeMs >= sourceMtime).catch(() => false),
+      ),
+    );
+    if (fresh.every(Boolean)) return;
+
     await Promise.all(
-      widths.map((targetWidth) =>
+      targets.map(({ targetWidth, out }) =>
         sharp(source)
           .resize({ width: targetWidth })
           .webp({ quality: 82, effort: 6, preset: "photo", smartSubsample: true })
-          .toFile(join(blogDir, `${parse(file).name}-${targetWidth}.webp`)),
+          .toFile(out),
       ),
     );
   }),
