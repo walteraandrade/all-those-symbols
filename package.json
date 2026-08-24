@@ -4,13 +4,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev:client": "bunx vite dev --port 5000",
-    "dev": "NODE_ENV=development bun run server/index.ts",
+    "dev": "bunx vite dev --port 5000",
     "build": "bun run script/build.ts",
-    "build:client": "bunx vite build",
-    "start": "NODE_ENV=production bun run dist/index.js",
-    "check": "bunx tsc",
-    "db:push": "bunx drizzle-kit push"
+    "check": "bunx tsc"
   },
   "dependencies": {
     "@hookform/resolvers": "3.10.0",
