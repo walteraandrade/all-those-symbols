@@ -1,4 +1,5 @@
 import ReactMarkdown from "react-markdown";
+import { slugify } from "@/lib/utils";
 
 interface BlogContentProps {
   content: string;
@@ -11,7 +12,7 @@ export function BlogContent({ content }: BlogContentProps) {
         components={{
           h2: ({ children }) => {
             const text = String(children);
-            const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+            const id = slugify(text);
             return (
               <h2 id={id} className="scroll-mt-24">
                 <span className="text-[var(--accent)]">&gt;</span> {children}
@@ -20,7 +21,7 @@ export function BlogContent({ content }: BlogContentProps) {
           },
           h3: ({ children }) => {
             const text = String(children);
-            const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+            const id = slugify(text);
             return (
               <h3 id={id} className="scroll-mt-24">
                 {children}

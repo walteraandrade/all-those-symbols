@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
+import { MotionConfig } from "framer-motion";
 import { useParams, Redirect, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
 import { isBlogSlug, loadBlogContent } from "@/lib/blog/loaders";
 import type { PostContent } from "@/lib/blog/types";
+import { slugify } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
@@ -18,13 +20,13 @@ const extractHeadings = (markdown: string) => {
   while ((match = headingRegex.exec(markdown)) !== null) {
     const level = match[0].indexOf(" ");
     const text = match[1];
-    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const id = slugify(text);
     headings.push({ id, text, level });
   }
   return headings;
 };
 
-export default function BlogPost() {
+function BlogPostContent() {
   const { slug } = useParams<{ slug: string }>();
   const { lang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("");
@@ -248,5 +250,13 @@ export default function BlogPost() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function BlogPost() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <BlogPostContent />
+    </MotionConfig>
   );
 }

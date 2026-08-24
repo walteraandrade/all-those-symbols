@@ -35,7 +35,7 @@ const staticPages: Record<string, PageMeta> = {
 };
 
 const generateMetaTags = (meta: PageMeta): string => {
-  const ogImage = `${BASE_URL}/og-image.png`;
+  const ogImage = `${BASE_URL}/opengraph.jpg`;
   return `
     <title>${meta.title}</title>
     <meta name="description" content="${meta.description}" />

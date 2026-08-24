@@ -23,9 +23,8 @@ right walls, lit from the upper left.
 ## Typography
 | Use | Font |
 |-----|------|
-| Headings / brand / buttons | Press Start 2P |
-| Body / nav / everything else | Handjet (500, 700) |
-| Code | JetBrains Mono |
+| Headings / brand / primary buttons / CTAs | League Spartan (700-800) |
+| Body / nav / tags / inherited controls / code | JetBrains Mono |
 
 ## Visual elements
 - **Specks background:** sparse 2px dots on ink (two offset radial-gradient layers).
@@ -38,14 +37,18 @@ right walls, lit from the upper left.
 - **Gem dock:** the wire cube bottom-right is an easter-egg quick nav.
 
 ## Motion
-- CSS only, stepped (`steps()`) to keep the pixel feel: bobbing polyhedra,
-  falling water, two-frame wheel spin, gem cascade.
-- Everything gated behind `prefers-reduced-motion: no-preference`.
+- Stepped CSS transitions preserve the pixel feel on hover and focus states.
+- CSS animates the spinner, floating hero cube, and gem-nav entrance. Animations
+  are gated behind `prefers-reduced-motion: no-preference`.
+- Blog reading progress and the back-to-top control use Framer Motion with
+  `reducedMotion="user"`. The global reduced-motion rule disables animation,
+  transitions, and smooth scrolling.
 
 ## Layout
-- Top bar: brand left, links + gold CV right, gold underline on hover/active.
+- Top bar: brand left, links + verdigris CV right, verdigris underline on
+  hover/active.
 - Sections: `.esc-page` (max 1080px), `.esc-h2` + `.esc-sub` headers.
-- Cards: 3px dark borders, gold border on hover. No shadows.
+- Cards: 3px dark borders, verdigris border on hover. No shadows.
 
 ## Files
 - `client/src/escher.css` - the design system (scoped under `.esc`).
