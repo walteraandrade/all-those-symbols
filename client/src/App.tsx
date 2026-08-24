@@ -1,9 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import { MotionProvider } from "@/contexts/MotionContext";
-import { AudioProvider } from "@/contexts/AudioContext";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Layout } from "@/components/Layout";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
@@ -32,20 +29,14 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <MotionProvider>
-        <AudioProvider>
-          <LanguageProvider>
-            <Toaster />
-            <Layout>
-              <Suspense fallback={<LoadingSpinner />}>
-                <Router />
-              </Suspense>
-            </Layout>
-          </LanguageProvider>
-        </AudioProvider>
-      </MotionProvider>
-    </ThemeProvider>
+    <LanguageProvider>
+      <Toaster />
+      <Layout>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Router />
+        </Suspense>
+      </Layout>
+    </LanguageProvider>
   );
 }
 

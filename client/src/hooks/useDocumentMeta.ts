@@ -9,7 +9,7 @@ interface DocumentMeta {
 }
 
 const BASE_URL = "https://all-those-symbols.vercel.app";
-const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
+const DEFAULT_OG_IMAGE = `${BASE_URL}/opengraph.jpg`;
 
 export function useDocumentMeta({
   title,
