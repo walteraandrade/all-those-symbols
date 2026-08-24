@@ -1,7 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Switch, Route, useLocation } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { MotionProvider } from "@/contexts/MotionContext";
 import { AudioProvider } from "@/contexts/AudioContext";
@@ -66,14 +65,12 @@ function App() {
       <MotionProvider>
         <AudioProvider>
           <LanguageProvider>
-            <TooltipProvider>
-              <Toaster />
-              <Layout>
-                <Suspense fallback={<LoadingSpinner />}>
-                  <Router />
-                </Suspense>
-              </Layout>
-            </TooltipProvider>
+            <Toaster />
+            <Layout>
+              <Suspense fallback={<LoadingSpinner />}>
+                <Router />
+              </Suspense>
+            </Layout>
           </LanguageProvider>
         </AudioProvider>
       </MotionProvider>
