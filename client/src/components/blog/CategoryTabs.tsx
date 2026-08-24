@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { BlogCategory, blogCategories } from "@/lib/data";
+import { blogCategories } from "@/lib/blog/metadata";
+import type { BlogCategory } from "@/lib/blog/types";
 
 interface CategoryTabsProps {
   active: BlogCategory | null;

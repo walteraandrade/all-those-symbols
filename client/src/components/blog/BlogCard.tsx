@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Clock } from "lucide-react";
-import { BlogPost } from "@/lib/data";
+import type { BlogPost } from "@/lib/blog/types";
 
 interface BlogCardProps {
   post: BlogPost;

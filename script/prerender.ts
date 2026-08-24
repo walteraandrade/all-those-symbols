@@ -1,5 +1,7 @@
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { blogPosts } from "../client/src/lib/blog/metadata";
+import type { BlogPost } from "../client/src/lib/blog/types";
 
 const BASE_URL = "https://all-those-symbols.vercel.app";
 const DIST_PATH = path.resolve(import.meta.dirname, "..", "dist", "public");
@@ -9,13 +11,6 @@ interface PageMeta {
   description: string;
   canonical: string;
   ogType?: string;
-}
-
-interface BlogPost {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
 }
 
 const staticPages: Record<string, PageMeta> = {
@@ -74,34 +69,6 @@ const injectMeta = (template: string, meta: PageMeta): string => {
   const metaTags = generateMetaTags(meta);
   html = html.replace("<!--ssr-meta-->", metaTags);
   return html;
-};
-
-const extractBlogPosts = async (): Promise<BlogPost[]> => {
-  const dataPath = path.resolve(
-    import.meta.dirname,
-    "..",
-    "client",
-    "src",
-    "lib",
-    "data.ts"
-  );
-  const content = await readFile(dataPath, "utf-8");
-
-  const posts: BlogPost[] = [];
-  const regex =
-    /{\s*slug:\s*"([^"]+)",\s*title:\s*"([^"]+)",\s*date:\s*"([^"]+)",[\s\S]*?excerpt:\s*"([^"]+)"/g;
-
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    posts.push({
-      slug: match[1],
-      title: match[2],
-      date: match[3],
-      excerpt: match[4],
-    });
-  }
-
-  return posts;
 };
 
 const parseDate = (dateStr: string): Date => {
@@ -163,7 +130,6 @@ export async function prerender() {
   console.log("Pre-rendering pages...");
 
   const template = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
-  const blogPosts = await extractBlogPosts();
 
   for (const [route, meta] of Object.entries(staticPages)) {
     const dir = path.join(DIST_PATH, route);

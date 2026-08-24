@@ -1,12 +1,15 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Redirect, Link } from "wouter";
-import { blogPosts, localizePost, postLangs } from "@/lib/data";
+import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
+import { isBlogSlug, loadBlogContent } from "@/lib/blog/loaders";
+import type { PostContent } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 const extractHeadings = (markdown: string) => {
   const headingRegex = /^#{2,3}\s+(.+)$/gm;
@@ -26,6 +29,10 @@ export default function BlogPost() {
   const { lang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
+  const [loadedContent, setLoadedContent] = useState<{
+    slug: string;
+    content: PostContent;
+  } | null>(null);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -36,6 +43,19 @@ export default function BlogPost() {
     [slug]
   );
 
+  useEffect(() => {
+    if (postIndex < 0 || !isBlogSlug(slug)) return;
+
+    let cancelled = false;
+    loadBlogContent(slug).then((content) => {
+      if (!cancelled) setLoadedContent({ slug, content });
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [postIndex, slug]);
+
   const post = useMemo(
     () => (postIndex >= 0 ? localizePost(blogPosts[postIndex], lang) : null),
     [postIndex, lang]
@@ -43,9 +63,13 @@ export default function BlogPost() {
   const prevPost = postIndex > 0 ? localizePost(blogPosts[postIndex - 1], lang) : null;
   const nextPost =
     postIndex < blogPosts.length - 1 ? localizePost(blogPosts[postIndex + 1], lang) : null;
+  const content =
+    loadedContent?.slug === slug && post
+      ? loadedContent.content[post.activeLang] ?? loadedContent.content[post.lang]
+      : null;
   const headings = useMemo(
-    () => (post ? extractHeadings(post.content) : []),
-    [post]
+    () => (content ? extractHeadings(content) : []),
+    [content]
   );
 
   useDocumentMeta({
@@ -78,6 +102,10 @@ export default function BlogPost() {
 
   if (!post) {
     return <Redirect to="/blog" />;
+  }
+
+  if (!content) {
+    return <LoadingSpinner />;
   }
 
   const tocLink = (id: string, text: string, level: number, onPick?: () => void) => (
@@ -166,7 +194,7 @@ export default function BlogPost() {
           )}
 
           <div lang={post.activeLang}>
-            <BlogContent content={post.content} />
+            <BlogContent content={content} />
           </div>
 
           {(prevPost || nextPost) && (

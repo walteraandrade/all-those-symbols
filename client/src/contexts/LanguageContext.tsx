@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { PostLang } from "@/lib/data";
+import type { PostLang } from "@/lib/blog/types";
 
 interface LanguageContextValue {
   lang: PostLang;

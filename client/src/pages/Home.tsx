@@ -1,5 +1,6 @@
 import { Link } from "wouter";
-import { projects, blogPosts } from "@/lib/data";
+import { projects } from "@/lib/data";
+import { blogPosts } from "@/lib/blog/metadata";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { Sprite, TribarScene, MINI_TRIBAR, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 

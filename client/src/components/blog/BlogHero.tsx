@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Clock, ArrowLeft } from "lucide-react";
 import { Link } from "wouter";
-import { BlogPost } from "@/lib/data";
+import type { BlogPost } from "@/lib/blog/types";
 
 interface BlogHeroProps {
   post: BlogPost;
