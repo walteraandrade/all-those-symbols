@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { blogPosts } from "../client/src/lib/blog/metadata";
+import { blogSlugs } from "../client/src/lib/blog/loaders";
 import type { BlogPost } from "../client/src/lib/blog/types";
 
 const BASE_URL = "https://all-those-symbols.vercel.app";
@@ -31,6 +32,12 @@ const staticPages: Record<string, PageMeta> = {
     description:
       "Thoughts on logic, code, cinema, and life. Essays and reflections by Walter Andrade.",
     canonical: "/blog",
+  },
+  "/contact": {
+    title: "Contact | Walter Andrade",
+    description:
+      "Get in touch with Walter Andrade. Send a message for collaborations, questions, or just to say hello.",
+    canonical: "/contact",
   },
 };
 
@@ -93,12 +100,50 @@ const parseDate = (dateStr: string): Date => {
   return new Date(year, month, day);
 };
 
+const assertBlogDataIntegrity = (): void => {
+  const loaderSlugs: readonly string[] = blogSlugs;
+  if (blogPosts.length === 0) {
+    throw new Error("Blog metadata is empty; refusing to prerender.");
+  }
+  if (loaderSlugs.length === 0) {
+    throw new Error("Blog loader slugs are empty; refusing to prerender.");
+  }
+
+  const metadataSlugs = blogPosts.map((post) => post.slug);
+  const duplicateMetadataSlugs = metadataSlugs.filter(
+    (slug, index) => metadataSlugs.indexOf(slug) !== index
+  );
+  const duplicateLoaderSlugs = loaderSlugs.filter(
+    (slug, index) => loaderSlugs.indexOf(slug) !== index
+  );
+
+  if (duplicateMetadataSlugs.length > 0) {
+    throw new Error(
+      `Duplicate blog metadata slugs: ${[...new Set(duplicateMetadataSlugs)].join(", ")}`
+    );
+  }
+  if (duplicateLoaderSlugs.length > 0) {
+    throw new Error(
+      `Duplicate blog loader slugs: ${[...new Set(duplicateLoaderSlugs)].join(", ")}`
+    );
+  }
+
+  const metadataOnly = metadataSlugs.filter((slug) => !loaderSlugs.includes(slug));
+  const loadersOnly = loaderSlugs.filter((slug) => !metadataSlugs.includes(slug));
+  if (metadataOnly.length > 0 || loadersOnly.length > 0) {
+    throw new Error(
+      `Blog metadata and loaders do not match. Metadata only: ${metadataOnly.join(", ") || "none"}; loaders only: ${loadersOnly.join(", ") || "none"}.`
+    );
+  }
+};
+
 const generateSitemap = (posts: BlogPost[]): string => {
   const urls = [
     { loc: "/", priority: "1.0", changefreq: "weekly" },
     { loc: "/bio", priority: "0.8", changefreq: "monthly" },
     { loc: "/projects", priority: "0.8", changefreq: "monthly" },
     { loc: "/blog", priority: "0.9", changefreq: "weekly" },
+    { loc: "/contact", priority: "0.7", changefreq: "yearly" },
     ...posts.map((post) => ({
       loc: `/blog/${post.slug}`,
       priority: "0.7",
@@ -128,6 +173,7 @@ Sitemap: ${BASE_URL}/sitemap.xml`;
 
 export async function prerender() {
   console.log("Pre-rendering pages...");
+  assertBlogDataIntegrity();
 
   const template = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
 
