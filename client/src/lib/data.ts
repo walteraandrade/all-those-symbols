@@ -1,14 +1,3 @@
-import {
-  LucideIcon,
-  BookOpen,
-  User,
-  Code,
-  Briefcase,
-  Cpu,
-  Layers,
-  Terminal,
-} from "lucide-react";
-
 export interface Project {
   title: string;
   role: string;
@@ -258,16 +247,3 @@ export const socialLinks = {
   discord: "@walteraandrade",
 };
 
-export interface NodeSection {
-  id: string;
-  title: string;
-  icon: LucideIcon;
-  x: number; // percentage (0-100)
-  y: number; // percentage (0-100)
-}
-
-export const nodes: NodeSection[] = [
-  { id: "bio", title: "Bio", icon: User, x: 20, y: 50 },
-  { id: "projects", title: "Projects", icon: Code, x: 50, y: 30 },
-  { id: "blog", title: "Blog", icon: BookOpen, x: 80, y: 50 },
-];
