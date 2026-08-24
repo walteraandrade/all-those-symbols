@@ -1,6 +1,24 @@
 /* Escher design system: monochrome ink world, one verdigris accent, pixel fonts.
    Scoped under .esc (applied by Layout). */
 
+/* Self-hosted variable fonts. font-display: optional means a font that misses
+   first paint sits out the whole visit instead of swapping in later - the swap
+   was shifting the entire page (CLS 0.226, footer). Preloaded in index.html. */
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: optional;
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'League Spartan';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: optional;
+  src: url('/fonts/league-spartan.woff2') format('woff2');
+}
+
 .esc {
   --ink: #14130f;
   --ink-2: #1d1c16;

@@ -8,8 +8,8 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Layout } from "@/components/Layout";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 import NotFound from "@/pages/not-found";
+import Home from "@/pages/Home";
 
-const Home = lazy(() => import("@/pages/Home"));
 const Bio = lazy(() => import("@/pages/Bio"));
 const Projects = lazy(() => import("@/pages/Projects"));
 const Blog = lazy(() => import("@/pages/Blog"));
