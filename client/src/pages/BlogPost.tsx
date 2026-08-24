@@ -108,6 +108,13 @@ export default function BlogPost() {
     return <LoadingSpinner />;
   }
 
+  const image = post.image;
+  const imageSrcSet = image
+    ? [480, 960, 1600]
+        .map((width) => `${image.replace(/\.jpe?g$/i, `-${width}.webp`)} ${width}w`)
+        .join(", ")
+    : undefined;
+
   const tocLink = (id: string, text: string, level: number, onPick?: () => void) => (
     <a
       key={id}
@@ -164,14 +171,22 @@ export default function BlogPost() {
         )}
       </header>
 
-      {post.image && (
-        <img
-          src={post.image}
-          alt={post.imageAlt ?? ""}
-          width={1600}
-          height={900}
-          className="w-full mb-12 border-[3px] border-[#3a382f]"
-        />
+      {image && (
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={imageSrcSet}
+            sizes="(max-width: 860px) calc(100vw - 40px), calc(min(100vw, 1180px) - 12vw)"
+          />
+          <img
+            src={image}
+            alt={post.imageAlt ?? ""}
+            width={1600}
+            height={900}
+            fetchPriority="high"
+            className="w-full mb-12 border-[3px] border-[#3a382f]"
+          />
+        </picture>
       )}
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">

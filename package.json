@@ -4,8 +4,9 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-    "dev": "bunx vite dev --port 5000",
+    "dev": "bun run build:images && bunx vite dev --port 5000",
     "build": "bun run script/build.ts",
+    "build:images": "bun run script/build-blog-images.ts",
     "check": "bunx tsc",
     "perf": "bun run script/perf.ts"
   },
@@ -37,6 +38,7 @@
     "@types/react-dom": "19.2.0",
     "@vercel/node": "^5.5.27",
     "@vitejs/plugin-react": "5.0.4",
+    "sharp": "0.34.4",
     "tailwindcss": "4.1.14",
     "typescript": "^5.9.3",
     "vite": "7.1.9"
