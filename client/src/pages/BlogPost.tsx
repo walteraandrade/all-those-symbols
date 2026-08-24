@@ -33,6 +33,8 @@ export default function BlogPost() {
     slug: string;
     content: PostContent;
   } | null>(null);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -47,14 +49,19 @@ export default function BlogPost() {
     if (postIndex < 0 || !isBlogSlug(slug)) return;
 
     let cancelled = false;
-    loadBlogContent(slug).then((content) => {
-      if (!cancelled) setLoadedContent({ slug, content });
-    });
+    setLoadFailed(false);
+    loadBlogContent(slug)
+      .then((content) => {
+        if (!cancelled) setLoadedContent({ slug, content });
+      })
+      .catch(() => {
+        if (!cancelled) setLoadFailed(true);
+      });
 
     return () => {
       cancelled = true;
     };
-  }, [postIndex, slug]);
+  }, [postIndex, slug, retry]);
 
   const post = useMemo(
     () => (postIndex >= 0 ? localizePost(blogPosts[postIndex], lang) : null),
@@ -102,6 +109,18 @@ export default function BlogPost() {
 
   if (!post) {
     return <Redirect to="/blog" />;
+  }
+
+  if (loadFailed) {
+    return (
+      <div className="esc-page" style={{ minHeight: "70dvh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+        <p className="esc-sub" style={{ maxWidth: 460, marginBottom: 18 }}>
+          This post did not load. The connection dropped, or the page is running an older build.
+        </p>
+        <button className="esc-btn" onClick={() => setRetry((n) => n + 1)}>TRY AGAIN</button>
+        <Link className="esc-sub" href="/blog" style={{ marginTop: 18 }}>Back to the blog</Link>
+      </div>
+    );
   }
 
   if (!content) {
