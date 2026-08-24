@@ -92,43 +92,49 @@ async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
   }
 }
 
+function p75(values: number[]): number | null {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.ceil(sorted.length * 0.75) - 1];
+}
+
 async function collectField(): Promise<FieldResult> {
-  if (!process.env.DATABASE_URL) {
-    console.log("DATABASE_URL not set, skipping field data");
+  if (!process.env.TURSO_DATABASE_URL) {
+    console.log("TURSO_DATABASE_URL not set, skipping field data");
     return null;
   }
 
-  const { Client } = await import("pg");
-  const client = new Client({ connectionString: process.env.DATABASE_URL });
-
   try {
-    await client.connect();
-    const { rows } = await client.query<{ metric: string; p75: string; cnt: string }>(
-      `select metric, percentile_cont(0.75) within group (order by value) as p75, count(*) as cnt
-       from web_vitals
-       where created_at >= now() - interval '28 days'
-       group by metric`
-    );
+    const { connect } = await import("@tursodatabase/serverless");
+    const conn = connect({
+      url: process.env.TURSO_DATABASE_URL,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    });
 
-    const byMetric = new Map(rows.map((r) => [r.metric, Number(r.p75)]));
-    const sampleCount = rows.reduce((sum, r) => sum + Number(r.cnt), 0);
+    const rows = (await conn.all(
+      "SELECT metric, value FROM web_vitals WHERE created_at >= datetime('now', '-28 days')"
+    )) as { metric: string; value: number }[];
+
+    const byMetric = (name: string) => rows.filter((r) => r.metric === name).map((r) => r.value);
+    const lcp = p75(byMetric("LCP"));
+    const inp = p75(byMetric("INP"));
+    const cls = p75(byMetric("CLS"));
+    const ttfb = p75(byMetric("TTFB"));
 
     return {
       source: "rum",
       windowDays: 28,
-      sampleCount,
+      sampleCount: rows.length,
       p75: {
-        lcpMs: byMetric.has("LCP") ? round(byMetric.get("LCP")!) : null,
-        inpMs: byMetric.has("INP") ? round(byMetric.get("INP")!) : null,
-        cls: byMetric.has("CLS") ? byMetric.get("CLS")! : null,
-        ttfbMs: byMetric.has("TTFB") ? round(byMetric.get("TTFB")!) : null,
+        lcpMs: lcp === null ? null : round(lcp),
+        inpMs: inp === null ? null : round(inp),
+        cls,
+        ttfbMs: ttfb === null ? null : round(ttfb),
       },
     };
   } catch (err) {
     console.error("field data query failed:", err instanceof Error ? err.message : err);
     return null;
-  } finally {
-    await client.end().catch(() => {});
   }
 }
 

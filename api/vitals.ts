@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { Pool } from "pg";
+import { connect, type Connection } from "@tursodatabase/serverless";
 import { z } from "zod";
 
 const vitalsSchema = z.object({
@@ -9,12 +9,17 @@ const vitalsSchema = z.object({
   device: z.enum(["mobile", "desktop"]),
 });
 
-let pool: Pool | undefined;
+let conn: Connection | undefined;
 
-function getPool(): Pool | undefined {
-  if (!process.env.DATABASE_URL) return undefined;
-  if (!pool) pool = new Pool({ connectionString: process.env.DATABASE_URL });
-  return pool;
+function getConnection(): Connection | undefined {
+  if (!process.env.TURSO_DATABASE_URL) return undefined;
+  if (!conn) {
+    conn = connect({
+      url: process.env.TURSO_DATABASE_URL,
+      authToken: process.env.TURSO_AUTH_TOKEN,
+    });
+  }
+  return conn;
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
@@ -35,17 +40,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Invalid request", details: parsed.error.flatten() });
   }
 
-  const dbPool = getPool();
-  if (!dbPool) {
+  const db = getConnection();
+  if (!db) {
     return res.status(503).json({ error: "storage not configured" });
   }
 
   const { metric, value, path, device } = parsed.data;
 
   try {
-    await dbPool.query(
-      "INSERT INTO web_vitals (metric, value, path, device) VALUES ($1, $2, $3, $4)",
-      [metric, value, path, device],
+    await db.run(
+      "INSERT INTO web_vitals (metric, value, path, device) VALUES (?, ?, ?, ?)",
+      metric, value, path, device,
     );
 
     return res.status(204).end();
