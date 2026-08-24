@@ -2,7 +2,6 @@ import { Resend } from "resend";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
 
 const contactSchema = z.object({
@@ -29,10 +28,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(400).json({ error: "Invalid request", details: parsed.error.flatten() });
   }
 
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    return res.status(503).json({ error: "Email service not configured" });
+  }
+
   const { name, email, message } = parsed.data;
 
   try {
-    await resend.emails.send({
+    const resend = new Resend(apiKey);
+    const { error } = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
       to: CONTACT_EMAIL,
       replyTo: email,
@@ -47,9 +52,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       `,
     });
 
+    if (error) {
+      console.error("Email service rejected request:", error);
+      return res.status(502).json({ error: "Failed to send message" });
+    }
+
     return res.status(200).json({ success: true });
   } catch (error) {
     console.error("Failed to send email:", error);
-    return res.status(500).json({ error: "Failed to send message" });
+    return res.status(502).json({ error: "Failed to send message" });
   }
 }
