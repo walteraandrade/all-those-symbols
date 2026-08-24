@@ -53,7 +53,7 @@ export default function BlogPost() {
     description: post?.excerpt,
     canonical: post ? `/blog/${post.slug}` : "/blog",
     ogType: "article",
-    ogImage: post?.image ? `https://questinable.space${post.image}` : undefined,
+    ogImage: post?.image ? `https://all-those-symbols.vercel.app${post.image}` : undefined,
   });
 
   useEffect(() => {

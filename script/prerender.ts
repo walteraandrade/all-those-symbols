@@ -1,7 +1,7 @@
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
 
-const BASE_URL = "https://questinable.space";
+const BASE_URL = "https://all-those-symbols.vercel.app";
 const DIST_PATH = path.resolve(import.meta.dirname, "..", "dist", "public");
 
 interface PageMeta {

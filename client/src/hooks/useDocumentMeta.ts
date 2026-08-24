@@ -8,7 +8,7 @@ interface DocumentMeta {
   ogImage?: string;
 }
 
-const BASE_URL = "https://questinable.space";
+const BASE_URL = "https://all-those-symbols.vercel.app";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.png`;
 
 export function useDocumentMeta({
