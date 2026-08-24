@@ -1,7 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Switch, Route, useLocation } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/contexts/ThemeContext";
@@ -60,11 +58,7 @@ function App() {
   const isPreview = location.startsWith("/preview");
 
   if (isPreview) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <PreviewRouter />
-      </QueryClientProvider>
-    );
+    return <PreviewRouter />;
   }
 
   return (
@@ -72,16 +66,14 @@ function App() {
       <MotionProvider>
         <AudioProvider>
           <LanguageProvider>
-            <QueryClientProvider client={queryClient}>
-              <TooltipProvider>
-                <Toaster />
-                <Layout>
-                  <Suspense fallback={<LoadingSpinner />}>
-                    <Router />
-                  </Suspense>
-                </Layout>
-              </TooltipProvider>
-            </QueryClientProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Layout>
+                <Suspense fallback={<LoadingSpinner />}>
+                  <Router />
+                </Suspense>
+              </Layout>
+            </TooltipProvider>
           </LanguageProvider>
         </AudioProvider>
       </MotionProvider>
