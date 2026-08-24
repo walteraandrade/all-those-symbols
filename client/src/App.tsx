@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Switch, Route, useLocation } from "wouter";
+import { Switch, Route } from "wouter";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { MotionProvider } from "@/contexts/MotionContext";
@@ -16,13 +16,6 @@ const Blog = lazy(() => import("@/pages/Blog"));
 const BlogPost = lazy(() => import("@/pages/BlogPost"));
 const Contact = lazy(() => import("@/pages/Contact"));
 
-const Preview = lazy(() => import("@/pages/Preview"));
-const PreviewBrutalist = lazy(() => import("@/pages/preview/Brutalist"));
-const PreviewEditorial = lazy(() => import("@/pages/preview/Editorial"));
-const PreviewRetroFuturistic = lazy(() => import("@/pages/preview/RetroFuturistic"));
-const PreviewOrganic = lazy(() => import("@/pages/preview/Organic"));
-const PreviewArtDeco = lazy(() => import("@/pages/preview/ArtDeco"));
-
 function Router() {
   return (
     <Switch>
@@ -37,29 +30,7 @@ function Router() {
   );
 }
 
-function PreviewRouter() {
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <Switch>
-        <Route path="/preview" component={Preview} />
-        <Route path="/preview/brutalist" component={PreviewBrutalist} />
-        <Route path="/preview/editorial" component={PreviewEditorial} />
-        <Route path="/preview/retro-futuristic" component={PreviewRetroFuturistic} />
-        <Route path="/preview/organic" component={PreviewOrganic} />
-        <Route path="/preview/art-deco" component={PreviewArtDeco} />
-      </Switch>
-    </Suspense>
-  );
-}
-
 function App() {
-  const [location] = useLocation();
-  const isPreview = location.startsWith("/preview");
-
-  if (isPreview) {
-    return <PreviewRouter />;
-  }
-
   return (
     <ThemeProvider>
       <MotionProvider>
