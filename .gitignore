@@ -67,3 +67,5 @@ Instructions.md
 .trae/
 .windsurf/
 .zencoder/
+.vercel
+.env*

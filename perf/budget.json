@@ -1,0 +1,13 @@
+{
+  "lab": {
+    "performanceScore": 95,
+    "lcpMs": 2000,
+    "tbtMs": 200,
+    "cls": 0.1
+  },
+  "field": {
+    "lcpMs": 2500,
+    "inpMs": 200,
+    "cls": 0.1
+  }
+}
