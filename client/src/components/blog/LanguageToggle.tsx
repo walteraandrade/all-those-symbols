@@ -1,4 +1,4 @@
-import { PostLang } from "@/lib/data";
+import type { PostLang } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const labels: Record<PostLang, string> = { en: "English", pt: "Português" };
