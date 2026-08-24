@@ -1,4 +1,7 @@
 {
+  "bundle": {
+    "mainChunkKb": 270
+  },
   "lab": {
     "performanceScore": 95,
     "lcpMs": 2000,

@@ -1,9 +1,14 @@
 name: perf
 
 on:
+  pull_request:
   schedule:
     - cron: "0 9 * * 1"
   workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   perf:
@@ -13,13 +18,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
+      - uses: actions/cache@v4
+        with:
+          path: ~/.bun/install/cache
+          key: ${{ runner.os }}-bun-${{ hashFiles('bun.lock') }}
       - run: bun install --frozen-lockfile
-      - run: bun run perf
+      - run: bun run build
+      - run: bun run script/perf.ts --gate
+      - if: github.event_name == 'schedule'
+        run: bun run perf
         env:
           PSI_API_KEY: ${{ secrets.PSI_API_KEY }}
           TURSO_DATABASE_URL: ${{ secrets.TURSO_DATABASE_URL }}
           TURSO_AUTH_TOKEN: ${{ secrets.TURSO_AUTH_TOKEN }}
-      - run: |
+      - if: github.event_name == 'schedule'
+        run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add perf/history.jsonl
