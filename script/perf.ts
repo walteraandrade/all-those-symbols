@@ -40,7 +40,7 @@ type HistoryEntry = {
   budget: { pass: boolean; violations: Violation[] };
 };
 
-const SITE_URL = process.env.SITE_URL ?? "https://questinable.space";
+const SITE_URL = process.env.SITE_URL ?? "https://all-those-symbols.vercel.app";
 const ROOT = path.resolve(import.meta.dirname, "..");
 
 const round = (n: number) => Math.round(n);
