@@ -1,12 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
+import { MotionConfig } from "framer-motion";
 import { useParams, Redirect, Link } from "wouter";
-import { blogPosts, localizePost, postLangs } from "@/lib/data";
+import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
+import { isBlogSlug, loadBlogContent } from "@/lib/blog/loaders";
+import type { PostContent } from "@/lib/blog/types";
+import { slugify } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 const extractHeadings = (markdown: string) => {
   const headingRegex = /^#{2,3}\s+(.+)$/gm;
@@ -15,17 +20,23 @@ const extractHeadings = (markdown: string) => {
   while ((match = headingRegex.exec(markdown)) !== null) {
     const level = match[0].indexOf(" ");
     const text = match[1];
-    const id = text.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    const id = slugify(text);
     headings.push({ id, text, level });
   }
   return headings;
 };
 
-export default function BlogPost() {
+function BlogPostContent() {
   const { slug } = useParams<{ slug: string }>();
   const { lang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
+  const [loadedContent, setLoadedContent] = useState<{
+    slug: string;
+    content: PostContent;
+  } | null>(null);
+  const [loadFailed, setLoadFailed] = useState(false);
+  const [retry, setRetry] = useState(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -36,6 +47,24 @@ export default function BlogPost() {
     [slug]
   );
 
+  useEffect(() => {
+    if (postIndex < 0 || !isBlogSlug(slug)) return;
+
+    let cancelled = false;
+    setLoadFailed(false);
+    loadBlogContent(slug)
+      .then((content) => {
+        if (!cancelled) setLoadedContent({ slug, content });
+      })
+      .catch(() => {
+        if (!cancelled) setLoadFailed(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [postIndex, slug, retry]);
+
   const post = useMemo(
     () => (postIndex >= 0 ? localizePost(blogPosts[postIndex], lang) : null),
     [postIndex, lang]
@@ -43,9 +72,13 @@ export default function BlogPost() {
   const prevPost = postIndex > 0 ? localizePost(blogPosts[postIndex - 1], lang) : null;
   const nextPost =
     postIndex < blogPosts.length - 1 ? localizePost(blogPosts[postIndex + 1], lang) : null;
+  const content =
+    loadedContent?.slug === slug && post
+      ? loadedContent.content[post.activeLang] ?? loadedContent.content[post.lang]
+      : null;
   const headings = useMemo(
-    () => (post ? extractHeadings(post.content) : []),
-    [post]
+    () => (content ? extractHeadings(content) : []),
+    [content]
   );
 
   useDocumentMeta({
@@ -79,6 +112,29 @@ export default function BlogPost() {
   if (!post) {
     return <Redirect to="/blog" />;
   }
+
+  if (loadFailed) {
+    return (
+      <div className="esc-page" style={{ minHeight: "70dvh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+        <p className="esc-sub" style={{ maxWidth: 460, marginBottom: 18 }}>
+          This post did not load. The connection dropped, or the page is running an older build.
+        </p>
+        <button className="esc-btn" onClick={() => setRetry((n) => n + 1)}>TRY AGAIN</button>
+        <Link className="esc-sub" href="/blog" style={{ marginTop: 18 }}>Back to the blog</Link>
+      </div>
+    );
+  }
+
+  if (!content) {
+    return <LoadingSpinner />;
+  }
+
+  const image = post.image;
+  const imageSrcSet = image
+    ? [480, 960, 1600]
+        .map((width) => `${image.replace(/\.jpe?g$/i, `-${width}.webp`)} ${width}w`)
+        .join(", ")
+    : undefined;
 
   const tocLink = (id: string, text: string, level: number, onPick?: () => void) => (
     <a
@@ -136,14 +192,22 @@ export default function BlogPost() {
         )}
       </header>
 
-      {post.image && (
-        <img
-          src={post.image}
-          alt={post.imageAlt ?? ""}
-          width={1600}
-          height={900}
-          className="w-full mb-12 border-[3px] border-[#3a382f]"
-        />
+      {image && (
+        <picture>
+          <source
+            type="image/webp"
+            srcSet={imageSrcSet}
+            sizes="(max-width: 860px) calc(100vw - 40px), calc(min(100vw, 1180px) - 12vw)"
+          />
+          <img
+            src={image}
+            alt={post.imageAlt ?? ""}
+            width={1600}
+            height={900}
+            fetchPriority="high"
+            className="w-full mb-12 border-[3px] border-[#3a382f]"
+          />
+        </picture>
       )}
 
       <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
@@ -166,7 +230,7 @@ export default function BlogPost() {
           )}
 
           <div lang={post.activeLang}>
-            <BlogContent content={post.content} />
+            <BlogContent content={content} />
           </div>
 
           {(prevPost || nextPost) && (
@@ -201,5 +265,13 @@ export default function BlogPost() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function BlogPost() {
+  return (
+    <MotionConfig reducedMotion="user">
+      <BlogPostContent />
+    </MotionConfig>
   );
 }

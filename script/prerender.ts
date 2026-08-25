@@ -1,5 +1,8 @@
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { blogPosts } from "../client/src/lib/blog/metadata";
+import { blogSlugs } from "../client/src/lib/blog/loaders";
+import type { BlogPost } from "../client/src/lib/blog/types";
 
 const BASE_URL = "https://all-those-symbols.vercel.app";
 const DIST_PATH = path.resolve(import.meta.dirname, "..", "dist", "public");
@@ -9,13 +12,6 @@ interface PageMeta {
   description: string;
   canonical: string;
   ogType?: string;
-}
-
-interface BlogPost {
-  slug: string;
-  title: string;
-  date: string;
-  excerpt: string;
 }
 
 const staticPages: Record<string, PageMeta> = {
@@ -37,10 +33,16 @@ const staticPages: Record<string, PageMeta> = {
       "Thoughts on logic, code, cinema, and life. Essays and reflections by Walter Andrade.",
     canonical: "/blog",
   },
+  "/contact": {
+    title: "Contact | Walter Andrade",
+    description:
+      "Get in touch with Walter Andrade. Send a message for collaborations, questions, or just to say hello.",
+    canonical: "/contact",
+  },
 };
 
 const generateMetaTags = (meta: PageMeta): string => {
-  const ogImage = `${BASE_URL}/og-image.png`;
+  const ogImage = `${BASE_URL}/opengraph.jpg`;
   return `
     <title>${meta.title}</title>
     <meta name="description" content="${meta.description}" />
@@ -76,34 +78,6 @@ const injectMeta = (template: string, meta: PageMeta): string => {
   return html;
 };
 
-const extractBlogPosts = async (): Promise<BlogPost[]> => {
-  const dataPath = path.resolve(
-    import.meta.dirname,
-    "..",
-    "client",
-    "src",
-    "lib",
-    "data.ts"
-  );
-  const content = await readFile(dataPath, "utf-8");
-
-  const posts: BlogPost[] = [];
-  const regex =
-    /{\s*slug:\s*"([^"]+)",\s*title:\s*"([^"]+)",\s*date:\s*"([^"]+)",[\s\S]*?excerpt:\s*"([^"]+)"/g;
-
-  let match;
-  while ((match = regex.exec(content)) !== null) {
-    posts.push({
-      slug: match[1],
-      title: match[2],
-      date: match[3],
-      excerpt: match[4],
-    });
-  }
-
-  return posts;
-};
-
 const parseDate = (dateStr: string): Date => {
   const months: Record<string, number> = {
     Jan: 0,
@@ -133,12 +107,50 @@ type SitemapUrl = {
   lastmod?: string;
 };
 
+const assertBlogDataIntegrity = (): void => {
+  const loaderSlugs: readonly string[] = blogSlugs;
+  if (blogPosts.length === 0) {
+    throw new Error("Blog metadata is empty; refusing to prerender.");
+  }
+  if (loaderSlugs.length === 0) {
+    throw new Error("Blog loader slugs are empty; refusing to prerender.");
+  }
+
+  const metadataSlugs = blogPosts.map((post) => post.slug);
+  const duplicateMetadataSlugs = metadataSlugs.filter(
+    (slug, index) => metadataSlugs.indexOf(slug) !== index
+  );
+  const duplicateLoaderSlugs = loaderSlugs.filter(
+    (slug, index) => loaderSlugs.indexOf(slug) !== index
+  );
+
+  if (duplicateMetadataSlugs.length > 0) {
+    throw new Error(
+      `Duplicate blog metadata slugs: ${[...new Set(duplicateMetadataSlugs)].join(", ")}`
+    );
+  }
+  if (duplicateLoaderSlugs.length > 0) {
+    throw new Error(
+      `Duplicate blog loader slugs: ${[...new Set(duplicateLoaderSlugs)].join(", ")}`
+    );
+  }
+
+  const metadataOnly = metadataSlugs.filter((slug) => !loaderSlugs.includes(slug));
+  const loadersOnly = loaderSlugs.filter((slug) => !metadataSlugs.includes(slug));
+  if (metadataOnly.length > 0 || loadersOnly.length > 0) {
+    throw new Error(
+      `Blog metadata and loaders do not match. Metadata only: ${metadataOnly.join(", ") || "none"}; loaders only: ${loadersOnly.join(", ") || "none"}.`
+    );
+  }
+};
+
 const generateSitemap = (posts: BlogPost[]): string => {
   const urls: SitemapUrl[] = [
     { loc: "/", priority: "1.0", changefreq: "weekly" },
     { loc: "/bio", priority: "0.8", changefreq: "monthly" },
     { loc: "/projects", priority: "0.8", changefreq: "monthly" },
     { loc: "/blog", priority: "0.9", changefreq: "weekly" },
+    { loc: "/contact", priority: "0.7", changefreq: "yearly" },
     ...posts.map((post) => ({
       loc: `/blog/${post.slug}`,
       priority: "0.7",
@@ -168,9 +180,9 @@ Sitemap: ${BASE_URL}/sitemap.xml`;
 
 export async function prerender() {
   console.log("Pre-rendering pages...");
+  assertBlogDataIntegrity();
 
   const template = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
-  const blogPosts = await extractBlogPosts();
 
   for (const [route, meta] of Object.entries(staticPages)) {
     const dir = path.join(DIST_PATH, route);
