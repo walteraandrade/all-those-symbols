@@ -1,4 +1,4 @@
-import { mkdir, appendFile, readFile } from "fs/promises";
+import { appendFile, mkdir, readdir, readFile, stat } from "fs/promises";
 import path from "path";
 import { z } from "zod";
 
@@ -25,16 +25,22 @@ type FieldResult = {
   p75: { lcpMs: number | null; inpMs: number | null; cls: number | null; ttfbMs: number | null };
 } | null;
 
-type Violation = { scope: "lab" | "field"; metric: string; value: number; limit: number };
+type Violation = { scope: "bundle" | "lab" | "field"; metric: string; value: number; limit: number };
 
 type Budget = {
+  bundle: { mainChunkKb: number };
   lab: { performanceScore: number; lcpMs: number; tbtMs: number; cls: number };
   field: { lcpMs: number; inpMs: number; cls: number };
+};
+
+type BundleResult = {
+  mainChunkKb: number;
 };
 
 type HistoryEntry = {
   date: string;
   commit: string;
+  bundle: BundleResult;
   lab: LabResult;
   field: FieldResult;
   crux: CruxResult;
@@ -81,6 +87,24 @@ const SITE_URL = process.env.SITE_URL ?? "https://all-those-symbols.vercel.app";
 const ROOT = path.resolve(import.meta.dirname, "..");
 
 const round = (n: number) => Math.round(n);
+
+async function collectBundle(): Promise<BundleResult> {
+  const assetsDir = path.join(ROOT, "dist/public/assets");
+  let entries: string[];
+
+  try {
+    entries = (await readdir(assetsDir)).filter((file) => /^index-[\w-]+\.js$/.test(file));
+  } catch {
+    throw new Error("Entry JavaScript chunk not found; run `bun run build` first");
+  }
+
+  if (entries.length !== 1) {
+    throw new Error(`Expected one entry JavaScript chunk, found ${entries.length}`);
+  }
+
+  const { size } = await stat(path.join(assetsDir, entries[0]));
+  return { mainChunkKb: Math.round(size / 10) / 100 };
+}
 
 async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
   const url = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
@@ -181,8 +205,17 @@ async function collectField(): Promise<FieldResult> {
   }
 }
 
-function checkBudget(budget: Budget, lab: LabResult, field: FieldResult) {
+function checkBudget(budget: Budget, bundle: BundleResult, lab: LabResult, field: FieldResult) {
   const violations: Violation[] = [];
+
+  if (bundle.mainChunkKb > budget.bundle.mainChunkKb) {
+    violations.push({
+      scope: "bundle",
+      metric: "mainChunkKb",
+      value: bundle.mainChunkKb,
+      limit: budget.bundle.mainChunkKb,
+    });
+  }
 
   if (lab) {
     if (lab.performanceScore < budget.lab.performanceScore) {
@@ -223,6 +256,9 @@ function printSummary(entry: HistoryEntry) {
   console.log(`\nperf report — ${entry.date} (${entry.commit})`);
   console.log(`site: ${SITE_URL}\n`);
 
+  console.log(`bundle:`);
+  console.log(`  mainChunkKb       ${entry.bundle.mainChunkKb} kB`);
+  console.log("");
   if (entry.lab) {
     console.log("lab (PSI mobile):");
     console.log(`  performanceScore  ${entry.lab.performanceScore}`);
@@ -266,25 +302,30 @@ function printSummary(entry: HistoryEntry) {
 async function main() {
   const budgetRaw = await readFile(path.join(ROOT, "perf/budget.json"), "utf-8");
   const budget: Budget = JSON.parse(budgetRaw);
-
-  const [{ lab, crux }, field] = await Promise.all([collectLab(), collectField()]);
+  const gate = process.argv.includes("--gate");
+  const bundle = await collectBundle();
+  const [{ lab, crux }, field] = gate
+    ? [{ lab: null, crux: null }, null]
+    : await Promise.all([collectLab(), collectField()]);
 
   const entry: HistoryEntry = {
     date: new Date().toISOString().slice(0, 10),
     commit: getCommit(),
+    bundle,
     lab,
     field,
     crux,
-    budget: checkBudget(budget, lab, field),
+    budget: checkBudget(budget, bundle, lab, field),
   };
 
-  const perfDir = path.join(ROOT, "perf");
-  await mkdir(perfDir, { recursive: true });
-  await appendFile(path.join(perfDir, "history.jsonl"), `${JSON.stringify(entry)}\n`);
+  if (!gate) {
+    const perfDir = path.join(ROOT, "perf");
+    await mkdir(perfDir, { recursive: true });
+    await appendFile(path.join(perfDir, "history.jsonl"), `${JSON.stringify(entry)}\n`);
+  }
 
   printSummary(entry);
 
-  const gate = process.argv.includes("--gate");
   if (!entry.budget.pass && gate) process.exit(1);
   process.exit(0);
 }
