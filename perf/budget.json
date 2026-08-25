@@ -1,6 +1,6 @@
 {
   "bundle": {
-    "mainChunkKb": 270
+    "mainChunkKb": 110
   },
   "lab": {
     "performanceScore": 95,
