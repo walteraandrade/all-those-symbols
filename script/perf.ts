@@ -1,5 +1,6 @@
 import { appendFile, mkdir, readdir, readFile, stat } from "fs/promises";
 import path from "path";
+import { z } from "zod";
 
 type LabResult = {
   source: "psi";
@@ -14,7 +15,7 @@ type LabResult = {
 } | null;
 
 type CruxResult = {
-  p75: { lcpMs: number; inpMs: number; cls: number };
+  p75: { lcpMs: number | null; inpMs: number | null; cls: number | null };
 } | null;
 
 type FieldResult = {
@@ -45,6 +46,42 @@ type HistoryEntry = {
   crux: CruxResult;
   budget: { pass: boolean; violations: Violation[] };
 };
+
+const auditSchema = z.object({ numericValue: z.number().optional() });
+
+const psiResponseSchema = z.object({
+  error: z.object({ message: z.string().optional() }).optional(),
+  lighthouseResult: z
+    .object({
+      audits: z
+        .object({
+          "largest-contentful-paint": auditSchema.optional(),
+          "total-blocking-time": auditSchema.optional(),
+          "cumulative-layout-shift": auditSchema.optional(),
+          "first-contentful-paint": auditSchema.optional(),
+          "speed-index": auditSchema.optional(),
+          "server-response-time": auditSchema.optional(),
+        })
+        .optional(),
+      categories: z
+        .object({
+          performance: z.object({ score: z.number().nullable().optional() }).optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+  loadingExperience: z
+    .object({
+      metrics: z
+        .object({
+          LARGEST_CONTENTFUL_PAINT_MS: z.object({ percentile: z.number() }).optional(),
+          INTERACTION_TO_NEXT_PAINT: z.object({ percentile: z.number() }).optional(),
+          CUMULATIVE_LAYOUT_SHIFT_SCORE: z.object({ percentile: z.number() }).optional(),
+        })
+        .optional(),
+    })
+    .optional(),
+});
 
 const SITE_URL = process.env.SITE_URL ?? "https://all-those-symbols.vercel.app";
 const ROOT = path.resolve(import.meta.dirname, "..");
@@ -78,8 +115,13 @@ async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
 
   try {
     const res = await fetch(url.toString());
-    const data = await res.json();
+    const parsed = psiResponseSchema.safeParse(await res.json());
+    if (!parsed.success) {
+      console.error("PSI returned an invalid response");
+      return { lab: null, crux: null };
+    }
 
+    const data = parsed.data;
     if (!res.ok || data.error) {
       console.error("PSI request failed:", data.error?.message ?? res.statusText);
       return { lab: null, crux: null };
@@ -99,12 +141,13 @@ async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
     };
 
     const metrics = data.loadingExperience?.metrics;
+    const cls = metrics?.CUMULATIVE_LAYOUT_SHIFT_SCORE?.percentile;
     const crux: CruxResult = metrics
       ? {
           p75: {
-            lcpMs: metrics.LARGEST_CONTENTFUL_PAINT_MS?.percentile,
-            inpMs: metrics.INTERACTION_TO_NEXT_PAINT?.percentile,
-            cls: metrics.CUMULATIVE_LAYOUT_SHIFT_SCORE?.percentile / 100,
+            lcpMs: metrics.LARGEST_CONTENTFUL_PAINT_MS?.percentile ?? null,
+            inpMs: metrics.INTERACTION_TO_NEXT_PAINT?.percentile ?? null,
+            cls: cls === undefined ? null : cls / 100,
           },
         }
       : null;

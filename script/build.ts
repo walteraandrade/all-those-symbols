@@ -1,6 +1,7 @@
 import { build as viteBuild } from "vite";
 import { rm } from "fs/promises";
 import { prerender } from "./prerender";
+import "./build-blog-images";
 
 async function buildAll() {
   await rm("dist", { recursive: true, force: true });
