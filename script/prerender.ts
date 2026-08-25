@@ -100,6 +100,13 @@ const parseDate = (dateStr: string): Date => {
   return new Date(year, month, day);
 };
 
+type SitemapUrl = {
+  loc: string;
+  priority: string;
+  changefreq: string;
+  lastmod?: string;
+};
+
 const assertBlogDataIntegrity = (): void => {
   const loaderSlugs: readonly string[] = blogSlugs;
   if (blogPosts.length === 0) {
@@ -138,7 +145,7 @@ const assertBlogDataIntegrity = (): void => {
 };
 
 const generateSitemap = (posts: BlogPost[]): string => {
-  const urls = [
+  const urls: SitemapUrl[] = [
     { loc: "/", priority: "1.0", changefreq: "weekly" },
     { loc: "/bio", priority: "0.8", changefreq: "monthly" },
     { loc: "/projects", priority: "0.8", changefreq: "monthly" },
