@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
-import { checkRateLimit, getDatabaseConnection } from "./rate-limit";
-import { applyCors } from "./cors";
+import { checkRateLimit, getDatabaseConnection } from "./rate-limit.js";
+import { applyCors } from "./cors.js";
 
 const vitalsSchema = z.object({
   metric: z.enum(["LCP", "INP", "CLS", "TTFB"]),
