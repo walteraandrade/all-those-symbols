@@ -1,8 +1,8 @@
 import { Resend } from "resend";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
-import { checkRateLimit } from "./rate-limit";
-import { applyCors } from "./cors";
+import { checkRateLimit } from "./rate-limit.js";
+import { applyCors } from "./cors.js";
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
 
