@@ -18,6 +18,13 @@ await conn.batch([
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   )`,
   `CREATE INDEX IF NOT EXISTS idx_web_vitals_metric_created ON web_vitals (metric, created_at)`,
+  `CREATE TABLE IF NOT EXISTS api_rate_limits (
+    bucket TEXT NOT NULL,
+    ip TEXT NOT NULL,
+    window_start INTEGER NOT NULL,
+    request_count INTEGER NOT NULL,
+    PRIMARY KEY (bucket, ip)
+  )`,
 ]);
 
 console.log("web_vitals table ready");

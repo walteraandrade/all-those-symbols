@@ -1,6 +1,8 @@
 import { Resend } from "resend";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { z } from "zod";
+import { checkRateLimit } from "./rate-limit";
+import { applyCors } from "./cors";
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
 
@@ -10,10 +12,27 @@ const contactSchema = z.object({
   message: z.string().min(10),
 });
 
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => {
+    switch (character) {
+      case "&":
+        return "&amp;";
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case '"':
+        return "&quot;";
+      case "'":
+        return "&#39;";
+      default:
+        return character;
+    }
+  });
+}
+
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  applyCors(req, res);
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
@@ -33,7 +52,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(503).json({ error: "Email service not configured" });
   }
 
+  // fail open: losing a real message costs more than letting a burst through
+  const rateLimit = await checkRateLimit(req, "contact");
+  if (rateLimit.status === "limited") {
+    res.setHeader("Retry-After", String(rateLimit.retryAfter));
+    return res.status(429).json({ error: "Too many requests" });
+  }
+
   const { name, email, message } = parsed.data;
+  const escapedName = escapeHtml(name);
+  const escapedEmail = escapeHtml(email);
+  const escapedMessage = escapeHtml(message).replace(/\r?\n/g, "<br>");
 
   try {
     const resend = new Resend(apiKey);
@@ -45,10 +74,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Name:</strong> ${escapedName}</p>
+        <p><strong>Email:</strong> ${escapedEmail}</p>
         <h3>Message:</h3>
-        <p>${message.replace(/\n/g, "<br>")}</p>
+        <p>${escapedMessage}</p>
       `,
     });
 
