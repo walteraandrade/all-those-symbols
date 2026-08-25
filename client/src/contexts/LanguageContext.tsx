@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useState, ReactNode } from "react";
-import { PostLang } from "@/lib/data";
+import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
+import type { PostLang } from "@/lib/blog/types";
 
 interface LanguageContextValue {
   lang: PostLang;
@@ -24,8 +24,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("blogLang", lang);
   }, [lang]);
 
+  const value = useMemo(() => ({ lang, setLang }), [lang]);
+
   return (
-    <LanguageContext.Provider value={{ lang, setLang }}>
+    <LanguageContext.Provider value={value}>
       {children}
     </LanguageContext.Provider>
   );

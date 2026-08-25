@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
-import { blogPosts, BlogCategory, blogCategories, localizePost } from "@/lib/data";
+import { blogCategories, blogPosts, localizePost } from "@/lib/blog/metadata";
+import type { BlogCategory } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { Sprite, MINI_TRIBAR, POLY_PAL_ACCENT } from "@/components/escher/sprites";
