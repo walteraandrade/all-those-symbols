@@ -1,0 +1,1 @@
+{"date":"2026-08-31","commit":"8439e34","bundle":{"mainChunkKb":95.1},"lab":{"source":"psi","strategy":"mobile","performanceScore":99,"lcpMs":1652,"tbtMs":64,"cls":0,"fcpMs":1367,"speedIndexMs":2083,"ttfbMs":1},"field":{"source":"rum","windowDays":28,"sampleCount":32,"p75":{"lcpMs":748,"inpMs":16,"cls":0,"ttfbMs":88}},"crux":null,"budget":{"pass":true,"violations":[]}}
