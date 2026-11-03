@@ -10,6 +10,8 @@ It was the first month in the new job. The pay, at the time, was insane for some
 
 I loved every second of my job, until the second day, when they asked me to build a very simple state machine to handle the request life cycle in a React app. Add a loading state, a "there is data" state, handle the error. I panicked. I did not know what to do. Their code was written with classes to this day? Are they monkeys? I asked myself, trying to project the monkey in the mirror onto someone else. Anyone. Three weeks is what it took me to write my first PR.
 
+![Pixel-art developer holding their head at a desk while a tangled state machine of LOADING, SUCCESS?, ERROR?, IDLE, RETRY? and CLASS COMPONENT?? boxes sprawls across the wall behind him.](/blog/philosophy-really/state-machine-panic-1600x1073.webp)
+
 At the beginning of the fourth week, the company CEO called me to give me my feedback. I did not know what to expect. Up to that point, he had shown some distance and some impatience, but never cruelty, so I felt it would be alright. The first thing he said to me, in a calm and almost serene tone, was:
 
 'We have a three month contract. If I had to decide between keeping you and not keeping you now, I would choose not keeping you.'
