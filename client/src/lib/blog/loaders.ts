@@ -1,6 +1,7 @@
 import type { PostContent } from "./types";
 
 export const blogSlugs = [
+  "philosophy-really",
   "the-benefits-of-stupidity",
   "through-a-glass-darkly-bergman",
   "no-country-for-old-men",
@@ -25,6 +26,7 @@ type ContentModule = { default: PostContent };
 type ContentLoader = () => Promise<ContentModule>;
 
 const contentLoaders = {
+  "philosophy-really": () => import("./content/philosophy-really"),
   "the-benefits-of-stupidity": () => import("./content/the-benefits-of-stupidity"),
   "through-a-glass-darkly-bergman": () => import("./content/through-a-glass-darkly-bergman"),
   "no-country-for-old-men": () => import("./content/no-country-for-old-men"),

@@ -17,6 +17,18 @@ export const localizePost = (post: BlogPost, lang: PostLang): LocalizedPost => {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "philosophy-really",
+    title: "Philosophy, really?",
+    date: "Nov 3, 2026",
+    category: "Philosophy",
+    lang: "en",
+    excerpt:
+      "From a Philosophy BA to software engineering: how Aristotle, Frege, Boole and Shannon connect the two, and why the most useful question in engineering is still \"what do we mean by this word?\"",
+    readingTime: 9,
+    featured: true,
+    tags: ["philosophy", "logic", "frege", "software-engineering", "ai", "career"],
+  },
+  {
     slug: "the-benefits-of-stupidity",
     title: "The Benefits of Stupidity",
     date: "Aug 24, 2026",
@@ -28,7 +40,6 @@ export const blogPosts: BlogPost[] = [
     excerpt:
       "All content about AI seems to start from the same assumption: intelligence is a scalar value, like a school grade. If we are flooded with intelligence and this is the result, what is valuable is stupidity.",
     readingTime: 3,
-    featured: true,
     translations: {
       pt: {
         title: "O Benefício da Burrice",
