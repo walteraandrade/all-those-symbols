@@ -356,3 +356,8 @@
 @media (max-width: 560px) {
   .esc-grid { grid-template-columns: 1fr; }
 }
+.esc .blog-prose img { display: block; width: auto; max-width: 100%; height: auto; max-height: 70vh; margin: 2rem auto; border: 2px solid var(--dark); }
+.esc .blog-prose sup a { text-decoration: none; }
+.esc .blog-prose .footnotes { margin-top: 3rem; padding-top: 1.5rem; border-top: 2px solid var(--dark); font-size: 14px; }
+.esc .blog-prose .footnotes p { font-size: 14px; }
+.esc .blog-prose .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
