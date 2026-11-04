@@ -23,10 +23,25 @@ export const blogPosts: BlogPost[] = [
     category: "Philosophy",
     lang: "en",
     excerpt:
-      "From a Philosophy BA to software engineering: how Aristotle, Frege, Boole and Shannon connect the two, and why the most useful question in engineering is still \"what do we mean by this word?\"",
+      'From a Philosophy BA to software engineering: how Aristotle, Frege, Boole and Shannon connect the two, and why the most useful question in engineering is still "what do we mean by this word?"',
     readingTime: 9,
     featured: true,
-    tags: ["philosophy", "logic", "frege", "software-engineering", "ai", "career"],
+    tags: [
+      "philosophy",
+      "logic",
+      "frege",
+      "software-engineering",
+      "ai",
+      "career",
+    ],
+    translations: {
+      pt: {
+        title: "Filosofia, sério?",
+        excerpt:
+          'De um bacharelado em Filosofia à engenharia de software: como Aristóteles, Frege, Boole e Shannon conectam os dois, e por que a pergunta mais útil na engenharia continua sendo "o que queremos dizer com esta palavra?"',
+        readingTime: 9,
+      },
+    },
   },
   {
     slug: "the-benefits-of-stupidity",
