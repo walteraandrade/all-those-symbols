@@ -16,8 +16,8 @@ const COPY = {
       "if the key turns, then the door opens",
     ],
     clauses: [
-      { article: ["the", "the"], word: ["meaning", "semantics"], verb: "leaves," },
-      { article: ["the", "the"], word: ["form", "syntax"], verb: "stays." },
+      { article: { from: "the", to: "the" }, word: { from: "meaning", to: "semantics" }, verb: "leaves," },
+      { article: { from: "the", to: "the" }, word: { from: "form", to: "syntax" }, verb: "stays." },
     ],
     stages: {
       sentences: "Three if-then sentences: about rain, a switch and a key.",
@@ -37,8 +37,8 @@ const COPY = {
       "se a chave gira, então a porta abre",
     ],
     clauses: [
-      { article: ["o", "a"], word: ["sentido", "semântica"], verb: "sai," },
-      { article: ["a", "a"], word: ["forma", "sintaxe"], verb: "fica." },
+      { article: { from: "o", to: "a" }, word: { from: "sentido", to: "semântica" }, verb: "sai," },
+      { article: { from: "a", to: "a" }, word: { from: "forma", to: "sintaxe" }, verb: "fica." },
     ],
     stages: {
       sentences: "Três frases \"se, então\": sobre chuva, interruptor e chave.",
@@ -49,7 +49,6 @@ const COPY = {
   },
 };
 
-const ACCENT = "var(--accent)";
 const PALETTE = { w: "--bone", m: "--mid", a: "--accent" };
 
 const CLOUD = [
@@ -199,17 +198,17 @@ const TRACK_CELLS = 24;
 
 const clamp = (n: number) => Math.min(1, Math.max(0, n));
 
-const threshold = (x: number, y: number, seed: number) =>
+const pixelOrder = (x: number, y: number, seed: number) =>
   (((x * 73 + y * 151 + seed * 41) ^ (x * y * 17)) % 97) / 97;
 
 const dissolve = (from: string[], to: string[], t: number, seed: number) =>
   from.map((row, y) =>
-    [...row].map((ch, x) => (t > threshold(x, y, seed) ? to[y][x] : ch)).join(""),
+    [...row].map((ch, x) => (t > pixelOrder(x, y, seed) ? to[y][x] : ch)).join(""),
   );
 
-const morphText = (from: string, to: string, t: number, seed: number) =>
+const morphText = ({ from, to }: { from: string; to: string }, t: number, seed: number) =>
   Array.from({ length: Math.max(from.length, to.length) }, (_, i) =>
-    t > threshold(i + 1, i * 2 + seed, seed) ? (to[i] ?? "") : (from[i] ?? ""),
+    t > pixelOrder(i + 1, i * 2 + seed, seed) ? (to[i] ?? "") : (from[i] ?? ""),
   ).join("");
 
 const stageOf = (t: number) =>
@@ -222,15 +221,15 @@ const Sentence = ({ copy, t }: { copy: (typeof COPY)["en"]; t: number }) => (
   >
     <span className="text-[var(--mid)]">{copy.drag}</span>
     {copy.clauses.map(({ article, word, verb }, i) => (
-      <Fragment key={word[0]}>
+      <Fragment key={word.from}>
         {" "}
         <span className="inline-block whitespace-nowrap">
-          {morphText(article[0], article[1], t, i)}{" "}
+          {morphText(article, t, i)}{" "}
           <span
-            className="inline-block bg-[var(--ink)] px-1.5 text-center font-mono text-base font-bold leading-[1.6] text-[var(--accent)]"
-            style={{ minWidth: `calc(${Math.max(word[0].length, word[1].length)}ch + 0.75rem)` }}
+            className="inline-block bg-[var(--ink)] px-1.5 text-center font-mono text-base font-bold leading-[1.6]"
+            style={{ minWidth: `calc(${Math.max(word.from.length, word.to.length)}ch + 0.75rem)` }}
           >
-            {morphText(word[0], word[1], t, i + 3)}
+            {morphText(word, t, i + 3)}
           </span>{" "}
           {verb}
         </span>
@@ -239,18 +238,14 @@ const Sentence = ({ copy, t }: { copy: (typeof COPY)["en"]; t: number }) => (
   </span>
 );
 
-const Chip = ({ map, done }: { map: string[]; done: boolean }) => (
+const Chip = ({ map, mini }: { map: string[]; mini?: boolean }) => (
   <span
-    className="flex border-2 bg-[var(--ink)] p-1.5 [transition:border-color_.2s_steps(3)]"
-    style={{ borderColor: done ? ACCENT : "var(--dark)" }}
+    className={cn(
+      "flex border-2 border-[var(--dark)] bg-[var(--ink)]",
+      mini ? "shrink-0 p-0.5" : "p-1.5",
+    )}
   >
-    <Sprite map={map} palette={PALETTE} scale={3} />
-  </span>
-);
-
-const MiniChip = ({ map }: { map: string[] }) => (
-  <span className="flex shrink-0 border-2 border-[var(--dark)] bg-[var(--ink)] p-0.5">
-    <Sprite map={map} palette={PALETTE} scale={2} />
+    <Sprite map={map} palette={PALETTE} scale={mini ? 2 : 3} />
   </span>
 );
 
@@ -278,6 +273,7 @@ export function IfThenSlider({ label }: { label?: string }) {
   const [touched, setTouched] = useState(false);
   const merge = clamp(t * 2 - 1);
   const filled = Math.round(t * TRACK_CELLS);
+  const bracket = clamp(merge * 5 - 4);
 
   return (
     <span
@@ -303,17 +299,21 @@ export function IfThenSlider({ label }: { label?: string }) {
             >
               <span className="relative flex items-center gap-2 sm:gap-3">
                 <Word>{copy.if}</Word>
-                <Chip map={dissolve(a, LETTER_A, morph, i)} done={morph === 1} />
+                <Chip map={dissolve(a, LETTER_A, morph, i)} />
                 <Word>{copy.then}</Word>
-                <Chip map={dissolve(b, LETTER_B, morph, i + 5)} done={morph === 1} />
-                {i === 1 && <Bracket side="left" opacity={clamp(merge * 5 - 4)} />}
-                {i === 1 && <Bracket side="right" opacity={clamp(merge * 5 - 4)} />}
+                <Chip map={dissolve(b, LETTER_B, morph, i + 5)} />
+                {i === 1 && (
+                  <>
+                    <Bracket side="left" opacity={bracket} />
+                    <Bracket side="right" opacity={bracket} />
+                  </>
+                )}
                 <span
                   aria-hidden
                   className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-pre font-['League_Spartan',sans-serif] text-xs font-bold leading-4 text-[var(--bone)] sm:text-sm"
                 >
                   {[...copy.sentences[i]].map((ch, j) => (
-                    <span key={j} style={{ visibility: morph > threshold(j + 1, j * 2 + i, i) ? "hidden" : "visible" }}>
+                    <span key={j} style={{ visibility: morph > pixelOrder(j + 1, j * 2 + i, i) ? "hidden" : "visible" }}>
                       {ch}
                     </span>
                   ))}
@@ -325,7 +325,7 @@ export function IfThenSlider({ label }: { label?: string }) {
       </span>
 
       <span className="flex w-full max-w-sm items-center gap-3">
-        <MiniChip map={CLOUD} />
+        <Chip map={CLOUD} mini />
         <span className="relative flex h-8 w-full items-center">
           <input
             type="range"
@@ -342,7 +342,7 @@ export function IfThenSlider({ label }: { label?: string }) {
           />
           <span className="flex h-2 w-full gap-[2px]">
             {Array.from({ length: TRACK_CELLS }, (_, i) => (
-              <span key={i} className="flex-1" style={{ background: i < filled ? ACCENT : "var(--dark)" }} />
+              <span key={i} className="flex-1" style={{ background: i < filled ? "var(--bone)" : "var(--dark)" }} />
             ))}
           </span>
           <motion.span
@@ -353,7 +353,7 @@ export function IfThenSlider({ label }: { label?: string }) {
             transition={touched ? { duration: 0 } : { duration: 1.2, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
           />
         </span>
-        <MiniChip map={LETTER_A} />
+        <Chip map={LETTER_A} mini />
       </span>
     </span>
   );
