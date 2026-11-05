@@ -1,6 +1,7 @@
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
+import { CertaintyMethod } from "./CertaintyMethod";
 import { IfThenSlider } from "./IfThenSlider";
 import { StateMachineWidget } from "./StateMachineWidget";
 
@@ -15,6 +16,8 @@ const components: Components = {
       <IfThenSlider label={alt} />
     ) : src === "#state-machine" ? (
       <StateMachineWidget label={alt} />
+    ) : src === "#certainty-method" ? (
+      <CertaintyMethod label={alt} />
     ) : (
       <img
         src={typeof src === "string" ? src : undefined}
