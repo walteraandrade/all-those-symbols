@@ -10,7 +10,7 @@ It was the first month in the new job. The pay, at the time, was insane for some
 
 I loved every second of my job, until the second day, when they asked me to build a very simple state machine to handle the request life cycle in a React app. Add a loading state, a "there is data" state, handle the error. I panicked. I did not know what to do. Their code was written with classes to this day? Are they monkeys? I asked myself, trying to project the monkey in the mirror onto someone else. Anyone. Three weeks is what it took me to write my first PR.
 
-![Pixel-art developer holding their head at a desk while a tangled state machine of LOADING, SUCCESS?, ERROR?, IDLE, RETRY? and CLASS COMPONENT?? boxes sprawls across the wall behind him.](/blog/philosophy-really/state-machine-panic-1600x1073.webp)
+![Interactive widget: three loose switches let a screen show loading, data and an error all at once; a state machine allows one state at a time, changing only along its arrows.](#state-machine)
 
 At the beginning of the fourth week, the company CEO called me to give me my feedback. I did not know what to expect. Up to that point, he had shown some distance and some impatience, but never cruelty, so I felt it would be alright. The first thing he said to me, in a calm and almost serene tone, was:
 
@@ -90,7 +90,7 @@ Era o primeiro mês no emprego novo. O salário, na época, era insano para quem
 
 Amei cada segundo do meu trabalho até o segundo dia, quando me pediram para construir uma máquina de estados bem simples para lidar com o ciclo de vida de requisições em um app React. Adicionar um estado de carregamento (*loading*), um estado de "há dados" e tratar o erro. Entrei em pânico. Eu não sabia o que fazer. O código deles ainda era escrito com classes até hoje? Eles são macacos? Perguntei a mim mesmo, tentando projetar o macaco do espelho em outra pessoa. Qualquer pessoa. Três semanas foi o tempo que levei para escrever meu primeiro PR.
 
-![Desenvolvedor em pixel-art segurando a cabeça em uma mesa enquanto uma máquina de estados emaranhada com caixas de LOADING, SUCCESS?, ERROR?, IDLE, RETRY? e CLASS COMPONENT?? se espalha pela parede atrás dele.](/blog/philosophy-really/state-machine-panic-1600x1073.webp)
+![Controle interativo: três interruptores soltos deixam uma tela mostrar carregando, dados e erro ao mesmo tempo; uma máquina de estados permite um estado por vez, que só muda seguindo suas setas.](#state-machine)
 
 No início da quarta semana, o CEO da empresa me chamou para dar meu feedback. Eu não sabia o que esperar. Até aquele momento, ele havia demonstrado certa distância e alguma impaciência, mas nunca crueldade, então achei que ficaria tudo bem. A primeira coisa que ele me disse, em um tom calmo e quase sereno, foi:
 
