@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
 import { CertaintyMethod } from "./CertaintyMethod";
 import { IfThenSlider } from "./IfThenSlider";
+import { LogicCircuitWidget } from "./LogicCircuitWidget";
 import { StateMachineWidget } from "./StateMachineWidget";
 
 const sizeFromSrc = (src?: string) => {
@@ -16,6 +17,8 @@ const components: Components = {
       <IfThenSlider label={alt} />
     ) : src === "#state-machine" ? (
       <StateMachineWidget label={alt} />
+    ) : src === "#logic-circuit" ? (
+      <LogicCircuitWidget label={alt} />
     ) : src === "#certainty-method" ? (
       <CertaintyMethod label={alt} />
     ) : (
