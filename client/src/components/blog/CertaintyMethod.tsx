@@ -13,8 +13,8 @@ const COPY = {
         philosophy: { term: "Premises", text: "What we accept before the argument starts." },
       },
       {
-        geometry: { term: "Theorems", text: "What must follow from the definitions." },
-        philosophy: { term: "Arguments", text: "What we deduce from the premises." },
+        geometry: { term: "Theorems", text: "What must follow from definitions and axioms." },
+        philosophy: { term: "Arguments", text: "Reasoning from premises to a conclusion." },
       },
       {
         geometry: { term: "Proofs", text: "Why it cannot be otherwise." },
@@ -32,8 +32,8 @@ const COPY = {
         philosophy: { term: "Premissas", text: "O que aceitamos antes de o argumento começar." },
       },
       {
-        geometry: { term: "Teoremas", text: "O que precisa seguir das definições." },
-        philosophy: { term: "Argumentos", text: "O que deduzimos das premissas." },
+        geometry: { term: "Teoremas", text: "O que decorre necessariamente das definições e dos axiomas." },
+        philosophy: { term: "Argumentos", text: "O raciocínio que vai das premissas à conclusão." },
       },
       {
         geometry: { term: "Provas", text: "Por que não pode ser de outro jeito." },
@@ -56,19 +56,19 @@ const Heading = ({ children, className }: { children: React.ReactNode; className
 );
 
 const Entry = ({
-  column,
+  columnLabel,
   term,
   text,
   className,
 }: {
-  column: string;
+  columnLabel: string;
   term: string;
   text: string;
   className?: string;
 }) => (
   <span role="cell" className={cn("col-start-2 block px-4 py-4 sm:col-start-auto", className)}>
-    <span aria-hidden className="mb-2 block font-mono text-xs leading-none text-[var(--mid)] sm:hidden">
-      {column}
+    <span className="mb-2 block font-mono text-xs leading-none text-[var(--mid)] sm:hidden">
+      {columnLabel}
     </span>
     <span className={cn("block text-xl leading-tight", DISPLAY)}>{term}</span>
     <span className="mt-1 block font-mono text-sm leading-snug text-[var(--mid)]">{text}</span>
@@ -113,9 +113,9 @@ export function CertaintyMethod({ label }: { label?: string }) {
           >
             {i + 1}
           </span>
-          <Entry column={copy.geometry} {...geometry} />
+          <Entry columnLabel={copy.geometry} {...geometry} />
           <Entry
-            column={copy.philosophy}
+            columnLabel={copy.philosophy}
             {...philosophy}
             className="border-t-2 border-[var(--dark)] sm:border-t-0 sm:border-l-2"
           />
