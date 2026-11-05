@@ -40,7 +40,7 @@ So you see the trend here. But to get to the point, we have to time-travel to th
 
 Frege's project was to build a logical tool that could evaluate any sentence just like arithmetic evaluates numbers. He wanted to test whether an argument was valid purely through the rules of its structure (syntax), regardless of what the words actually referred to in the world (semantics). Frege never fully got there, but by proposing this separation between syntax and semantics, he provided the exact framework for modern computers.
 
-![Pixel-art diagram: "if it rains, then the street is wet" and "if the switch flips, then the light turns on" both reduced to the form "if A then B".](/blog/philosophy-really/if-then-1024x1024.webp)
+![Interactive slider: three if-then sentences about rain, a switch and a key lose their meaning and merge into one form, "if A then B".](#if-then)
 
 A few decades earlier, a mathematician named Boole had developed his studies, which were similar to Frege's, except that Boole was trying to express sentences as algebra.
 
@@ -118,7 +118,7 @@ Então dá para ver a tendência aqui. Mas, para ir direto ao ponto, temos que v
 
 O projeto de Frege era construir uma ferramenta lógica capaz de avaliar qualquer frase, assim como a aritmética avalia os números. Ele queria testar se um argumento era válido puramente pelas regras de sua estrutura (sintaxe), independentemente do que as palavras realmente representavam no mundo (semântica). Frege nunca chegou totalmente lá, mas, ao propor essa separação entre sintaxe e semântica, ele forneceu a base exata para os computadores modernos.
 
-![Diagrama em pixel-art: "se chove, então a rua fica molhada" e "se o interruptor muda, então a luz acende", ambos reduzidos à forma "se A então B".](/blog/philosophy-really/if-then-1024x1024.webp)
+![Controle interativo: três frases "se, então" sobre chuva, interruptor e chave perdem o sentido e se fundem em uma só forma, "se A então B".](#if-then)
 
 Algumas décadas antes, um matemático chamado Boole havia desenvolvido seus estudos, que eram semelhantes aos de Frege, exceto pelo fato de que Boole tentava expressar frases como álgebra.
 
