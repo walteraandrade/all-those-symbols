@@ -2,6 +2,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
 import { IfThenSlider } from "./IfThenSlider";
+import { StateMachineWidget } from "./StateMachineWidget";
 
 const sizeFromSrc = (src?: string) => {
   const match = src?.match(/-(\d+)x(\d+)\.\w+$/);
@@ -21,6 +22,8 @@ export function BlogContent({ content }: BlogContentProps) {
           img: ({ src, alt }) =>
             src === "#if-then" ? (
               <IfThenSlider label={alt} />
+            ) : src === "#state-machine" ? (
+              <StateMachineWidget label={alt} />
             ) : (
               <img
                 src={typeof src === "string" ? src : undefined}
