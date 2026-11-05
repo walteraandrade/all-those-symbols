@@ -10,6 +10,11 @@ const COPY = {
     then: "THEN",
     caption: "Drag: the meaning leaves, the form stays.",
     drag: "Drag:",
+    sentences: [
+      "if it rains, then the street is wet",
+      "if the switch flips, then the light turns on",
+      "if the key turns, then the door opens",
+    ],
     clauses: [
       { article: ["the", "the"], word: ["meaning", "semantics"], verb: "leaves," },
       { article: ["the", "the"], word: ["form", "syntax"], verb: "stays." },
@@ -26,6 +31,11 @@ const COPY = {
     then: "ENTÃO",
     caption: "Arraste: o sentido sai, a forma fica.",
     drag: "Arraste:",
+    sentences: [
+      "se chove, então a rua fica molhada",
+      "se o interruptor muda, então a luz acende",
+      "se a chave gira, então a porta abre",
+    ],
     clauses: [
       { article: ["o", "a"], word: ["sentido", "semântica"], verb: "sai," },
       { article: ["a", "a"], word: ["forma", "sintaxe"], verb: "fica." },
@@ -184,7 +194,7 @@ const EXAMPLES = [
   [KEY, DOOR],
 ];
 
-const ROW = 76;
+const ROW = 100;
 const TRACK_CELLS = 24;
 
 const clamp = (n: number) => Math.min(1, Math.max(0, n));
@@ -208,7 +218,7 @@ const stageOf = (t: number) =>
 const Sentence = ({ copy, t }: { copy: (typeof COPY)["en"]; t: number }) => (
   <span
     aria-hidden
-    className="block text-center font-['League_Spartan'] text-lg font-bold leading-[1.9] text-[var(--bone)] sm:text-xl"
+    className="block text-center font-['League_Spartan',sans-serif] text-lg font-bold leading-[1.9] text-[var(--bone)] sm:text-xl"
   >
     <span className="text-[var(--mid)]">{copy.drag}</span>
     {copy.clauses.map(({ article, word, verb }, i) => (
@@ -245,7 +255,7 @@ const MiniChip = ({ map }: { map: string[] }) => (
 );
 
 const Word = ({ children }: { children: string }) => (
-  <span className="font-['League_Spartan'] text-lg font-extrabold leading-none tracking-wide text-[var(--bone)] sm:text-2xl">
+  <span className="font-['League_Spartan',sans-serif] text-lg font-extrabold leading-none tracking-wide text-[var(--bone)] sm:text-2xl">
     {children}
   </span>
 );
@@ -298,6 +308,16 @@ export function IfThenSlider({ label }: { label?: string }) {
                 <Chip map={dissolve(b, LETTER_B, morph, i + 5)} done={morph === 1} />
                 {i === 1 && <Bracket side="left" opacity={clamp(merge * 5 - 4)} />}
                 {i === 1 && <Bracket side="right" opacity={clamp(merge * 5 - 4)} />}
+                <span
+                  aria-hidden
+                  className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-pre font-['League_Spartan',sans-serif] text-xs font-bold leading-4 text-[var(--bone)] sm:text-sm"
+                >
+                  {[...copy.sentences[i]].map((ch, j) => (
+                    <span key={j} style={{ visibility: morph > threshold(j + 1, j * 2 + i, i) ? "hidden" : "visible" }}>
+                      {ch}
+                    </span>
+                  ))}
+                </span>
               </span>
             </span>
           );
