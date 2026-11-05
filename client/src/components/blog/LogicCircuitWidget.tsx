@@ -1,5 +1,5 @@
-import { type KeyboardEvent, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { type KeyboardEvent, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 type Mode = "and" | "or" | "if";
@@ -90,12 +90,22 @@ const onPressKey = (action: () => void) => (e: KeyboardEvent) => {
   action();
 };
 
-const Trace = ({ d, live, visible = true }: { d: string; live: boolean; visible?: boolean }) => {
+const Trace = ({
+  d,
+  live,
+  visible,
+  sparks,
+}: {
+  d: string;
+  live: boolean;
+  visible: boolean;
+  sparks: boolean;
+}) => {
   const reduced = useReducedMotion();
   return (
     <motion.g initial={false} animate={{ opacity: visible ? 1 : 0 }} transition={{ duration: reduced ? 0 : 0.3 }}>
       <path d={d} fill="none" stroke={live ? "var(--accent)" : "var(--dark)"} strokeWidth="5" />
-      {live && !reduced && (
+      {live && sparks && !reduced && (
         <motion.path
           d={d}
           fill="none"
@@ -212,7 +222,7 @@ const Clause = ({
       <text
         y={23}
         textAnchor="middle"
-        fontSize="12"
+        fontSize="14"
         fontFamily="JetBrains Mono, monospace"
         fill={truth ? "var(--accent)" : "var(--mid)"}
       >
@@ -277,9 +287,15 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
   const spots = SPOTS[mode];
   const truthWord = (on: boolean) => (on ? copy.yes : copy.no);
   const note = !conditional ? copy.legend : !a ? copy.notes.idle : b ? copy.notes.kept : copy.notes.broken;
+  const sentence = (
+    conditional ? `${copy.words.if} ${copy.a}, ${copy.then} ${copy.b}` : `${copy.a} ${copy.words[mode]} ${copy.b}`
+  ).toLowerCase();
+  const root = useRef<HTMLSpanElement>(null);
+  const sparks = useInView(root);
 
   return (
     <span
+      ref={root}
       role="group"
       aria-label={label}
       className="mx-auto my-8 flex max-w-[560px] flex-col items-center gap-5 border-[3px] border-[var(--dark)] bg-[var(--ink-2)] px-4 py-6"
@@ -287,14 +303,14 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
       <span className="block text-center font-['League_Spartan',sans-serif] text-lg font-bold leading-snug text-[var(--bone)] sm:text-xl">
         {copy.lead}
       </span>
-      <svg viewBox="0 -8 360 223" className="block h-auto w-full" role="group">
-        <Trace d="M24 112 L24 85 L330 85 L330 103" live={series && lit} visible={series} />
-        <Trace d="M330 137 L330 185 L24 185 L24 128" live={series && lit} visible={series} />
-        <Trace d="M24 112 L24 105 L70 105" live={!series && lit} visible={!series} />
-        <Trace d="M70 105 L70 44 L290 44 L290 105" live={!series && closedA} visible={!series} />
-        <Trace d="M70 105 L70 165 L290 165 L290 105" live={!series && b} visible={!series} />
-        <Trace d="M290 105 L330 105" live={!series && lit} visible={!series} />
-        <Trace d="M330 137 L330 205 L24 205 L24 128" live={!series && lit} visible={!series} />
+      <svg viewBox="0 -8 360 223" className="block h-auto w-full touch-manipulation select-none" role="group">
+        <Trace d="M24 112 L24 85 L330 85 L330 103" live={series && lit} visible={series} sparks={sparks} />
+        <Trace d="M330 137 L330 185 L24 185 L24 128" live={series && lit} visible={series} sparks={sparks} />
+        <Trace d="M24 112 L24 105 L70 105" live={!series && lit} visible={!series} sparks={sparks} />
+        <Trace d="M70 105 L70 44 L290 44 L290 105" live={!series && closedA} visible={!series} sparks={sparks} />
+        <Trace d="M70 105 L70 165 L290 165 L290 105" live={!series && b} visible={!series} sparks={sparks} />
+        <Trace d="M290 105 L330 105" live={!series && lit} visible={!series} sparks={sparks} />
+        <Trace d="M330 137 L330 205 L24 205 L24 128" live={!series && lit} visible={!series} sparks={sparks} />
         <Battery live={lit} />
         <Lamp on={lit} />
         <Clause
@@ -319,6 +335,7 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
         <Connective {...spots.word} text={copy.words[mode]} label={copy.rewire} onPress={() => setMode(NEXT_MODE[mode])} />
       </svg>
       <span aria-live="polite" className="flex flex-col items-center gap-3 text-center">
+        <span className="sr-only">{sentence}</span>
         <span
           className="block font-['League_Spartan',sans-serif] text-xl font-extrabold leading-tight"
           style={{ color: lit ? "var(--accent)" : "var(--mid)" }}
