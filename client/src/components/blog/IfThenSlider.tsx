@@ -14,6 +14,12 @@ const COPY = {
       { article: ["the", "the"], word: ["meaning", "semantics"], verb: "leaves," },
       { article: ["the", "the"], word: ["form", "syntax"], verb: "stays." },
     ],
+    stages: {
+      sentences: "Three if-then sentences: about rain, a switch and a key.",
+      dissolving: "The meaning is leaving the sentences.",
+      merging: "Only the syntax is left: if A then B, three times, merging.",
+      merged: "One form remains: if A then B.",
+    },
   },
   pt: {
     if: "SE",
@@ -24,6 +30,12 @@ const COPY = {
       { article: ["o", "a"], word: ["sentido", "semântica"], verb: "sai," },
       { article: ["a", "a"], word: ["forma", "sintaxe"], verb: "fica." },
     ],
+    stages: {
+      sentences: "Três frases \"se, então\": sobre chuva, interruptor e chave.",
+      dissolving: "O sentido está saindo das frases.",
+      merging: "Só a sintaxe restou: se A então B, três vezes, se fundindo.",
+      merged: "Resta uma só forma: se A então B.",
+    },
   },
 };
 
@@ -190,6 +202,9 @@ const morphText = (from: string, to: string, t: number, seed: number) =>
     t > threshold(i + 1, i * 2 + seed, seed) ? (to[i] ?? "") : (from[i] ?? ""),
   ).join("");
 
+const stageOf = (t: number) =>
+  t === 0 ? "sentences" : t < 0.5 ? "dissolving" : t < 1 ? "merging" : "merged";
+
 const Sentence = ({ copy, t }: { copy: (typeof COPY)["en"]; t: number }) => (
   <span
     aria-hidden
@@ -298,6 +313,7 @@ export function IfThenSlider({ label }: { label?: string }) {
             max={100}
             value={t * 100}
             aria-label={copy.caption}
+            aria-valuetext={copy.stages[stageOf(t)]}
             onChange={(e) => {
               setTouched(true);
               setT(Number(e.target.value) / 100);
