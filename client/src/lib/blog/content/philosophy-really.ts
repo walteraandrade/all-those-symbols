@@ -58,7 +58,7 @@ The answer I usually give is much simpler. I have found over the years that tryi
 
 Which is a known myth, but the symbology is strong: Math and Philosophy tied to the cradle in western thought. I tend to add that the mathematical way of thinking is something philosophers have always treasured, because it brings certainty. We can wonder about "freedom" as much as we want, and the word "freedom" itself will have very different shades whether you are on a hot sunny day in Belo Horizonte, in a cold café in New York or in a remote part of northern Ukraine at this very moment. But in all of these places, the mathematical truths hold.
 
-![Pixel-art chart titled "Method: the search for certainty" comparing geometry (definitions, theorems, proofs) with philosophy (premises, arguments, validity).](/blog/philosophy-really/search-for-certainty-1600x1073.webp)
+![Comparison titled "Method: the search for certainty": geometry goes from definitions to theorems to proofs; philosophy goes from premises to arguments to validity.](#certainty-method)
 
 In order to bring this kind of determinism to language, philosophers opened the portal that brought Computer Science into the game. And by watching, reading and feeling their striving for this kind of rigor in natural language, I, by the same drive that moved all these people, heard the call of Software Engineering. When I first started, programming was as simple as the exercises in the formal logic classes. It was what I loved about it. The pure structure of syntax, not dirtied by the impurities of the real world, is really something to behold, and people make real art with it.
 
@@ -138,7 +138,7 @@ A resposta que costumo dar é muito mais simples. Descobri ao longo dos anos que
 
 O que é um mito conhecido, mas de forte simbologia: Matemática e Filosofia unidas desde o berço no pensamento ocidental. Costumo acrescentar que a maneira matemática de pensar é algo que os filósofos sempre valorizaram, porque traz certeza. Podemos refletir sobre a "liberdade" o quanto quisermos, e a própria palavra "liberdade" terá nuances muito diferentes se você estiver em um dia quente e ensolarado em Belo Horizonte, em um café frio em Nova York ou em uma área remota no norte da Ucrânia neste exato momento. Mas, em todos esses lugares, as verdades matemáticas se mantêm.
 
-![Gráfico em pixel-art intitulado "Método: a busca pela certeza" comparando geometria (definições, teoremas, provas) com filosofia (premissas, argumentos, validade).](/blog/philosophy-really/search-for-certainty-1600x1073.webp)
+![Comparação intitulada "Método: a busca pela certeza": a geometria vai de definições a teoremas e provas; a filosofia vai de premissas a argumentos e validade.](#certainty-method)
 
 Para trazer esse tipo de determinismo para a linguagem, os filósofos abriram o portal que colocou a Ciência da Computação no jogo. E ao observar, ler e sentir a busca deles por esse tipo de rigor na linguagem natural, eu, movido pelo mesmo impulso que moveu todas essas pessoas, ouvi o chamado da Engenharia de Software. Quando comecei, programar era tão simples quanto os exercícios das aulas de lógica formal. Era o que eu amava naquilo. A pura estrutura da sintaxe, não maculada pelas impurezas do mundo real, é realmente algo de se admirar, e as pessoas fazem verdadeira arte com isso.
 
