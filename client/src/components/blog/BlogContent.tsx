@@ -1,6 +1,7 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
+import { IfThenSlider } from "./IfThenSlider";
 
 const sizeFromSrc = (src?: string) => {
   const match = src?.match(/-(\d+)x(\d+)\.\w+$/);
@@ -17,15 +18,18 @@ export function BlogContent({ content }: BlogContentProps) {
       <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         components={{
-          img: ({ src, alt }) => (
-            <img
-              src={typeof src === "string" ? src : undefined}
-              alt={alt ?? ""}
-              loading="lazy"
-              decoding="async"
-              {...sizeFromSrc(typeof src === "string" ? src : undefined)}
-            />
-          ),
+          img: ({ src, alt }) =>
+            src === "#if-then" ? (
+              <IfThenSlider label={alt} />
+            ) : (
+              <img
+                src={typeof src === "string" ? src : undefined}
+                alt={alt ?? ""}
+                loading="lazy"
+                decoding="async"
+                {...sizeFromSrc(typeof src === "string" ? src : undefined)}
+              />
+            ),
           h2: ({ children }) => {
             const text = String(children);
             const id = slugify(text);

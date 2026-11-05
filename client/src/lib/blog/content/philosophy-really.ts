@@ -34,17 +34,19 @@ That then gave birth to Physics. Physics is the name of the book, by Aristotle, 
 
 Francis Bacon, a not that well-known philosopher, trying to answer the famous question: "what is this relation between humanity and nature?" offered the solution "nature is a place where we make experiments, evaluate and validate the outcome" that eventually became what we know as Science. Bacon was fighting those that saw in nature something obscure and sacred, such as traditions and some religious expressions.
 
+Leibniz, a special kind of philosopher, also happened to be one of the greatest mathematicians who ever lived (both math and philosophy departments all over the world still praise his name to this day), and he asked a mathematical question about the limits of math, which is profoundly philosophical: "Can we calculate with something smaller than any number?" His answer, reached independently of Newton, was the infinitesimal calculus: slice a change into pieces so small they are almost nothing, then add them back up. Every bridge that stays up, every circuit that doesn't burn and every rocket that lands owes something to that idea. Engineers still write it in his notation: the dy/dx and the ∫ are his. But he had a stranger dream: a symbolic language in which any dispute could be settled by calculation. *Calculemus*, let us calculate. Two centuries later, Frege picked up that dream.
+
 So you see the trend here. But to get to the point, we have to time-travel to the end of the 1800s, when Frege, another not-so-well-known philosopher, started asking a very different question:
 
 "How can we represent reasoning in a formal language, where its logical structure is explicit enough to be evaluated through precise rules?"
 
 Frege's project was to build a logical tool that could evaluate any sentence just like arithmetic evaluates numbers. He wanted to test whether an argument was valid purely through the rules of its structure (syntax), regardless of what the words actually referred to in the world (semantics). Frege never fully got there, but by proposing this separation between syntax and semantics, he provided the exact framework for modern computers.
 
-![Pixel-art diagram: "if it rains, then the street is wet" and "if the switch flips, then the light turns on" both reduced to the form "if A then B".](/blog/philosophy-really/if-then-1024x1024.webp)
+![Interactive slider: three if-then sentences about rain, a switch and a key lose their meaning and merge into one form, "if A then B".](#if-then)
 
 A few decades earlier, a mathematician named Boole had developed his studies, which were similar to Frege's, except that Boole was trying to express sentences as algebra.
 
-And when Claude Shannon, in his master's thesis, mapped the behavior of electric circuits, he realized that switches turning on and off were doing the exact same thing as the true-and-false rules philosophers had created to validate language with pure logic, born of the work of Frege, Boole, and also Whitehead and Russell.[^2]
+And when Claude Shannon, in his master's thesis, mapped the behavior of electric circuits, he realized that switches turning on and off were doing the exact same thing as the true-and-false rules philosophers and mathematicians had discovered to validate language with pure logic, born of the work of Frege, Boole, and also Whitehead and Russell.[^2]
 
 ![Pixel-art diagram: "if current is high, then LED is on" and "if gate is powered, then motor spins" around a transistor circuit labeled "if A then B".](/blog/philosophy-really/boole-shannon-1024x1024.webp)
 
@@ -77,7 +79,7 @@ Frege wanted to separate the structure of a sentence from what its words refer t
 It’s a funny twist of fate. I spent six years trying to leave Philosophy behind to become a "real" programmer—only for the machines to take over the code and leave me right back where I started: worrying about what words mean.
 
 [^1]: For my favorite text on the subject: *What Is Philosophy?*, Martin Heidegger (1955 lecture).
-[^2]: The accounts of Frege, Boole and Shannon were simplified here to fit this format, and each deserves far more nuance than a blog post allows. To read more: [Gottlob Frege](https://plato.stanford.edu/entries/frege/) and [George Boole](https://plato.stanford.edu/entries/boole/) in the Stanford Encyclopedia of Philosophy; for Shannon, his master's thesis, [A Symbolic Analysis of Relay and Switching Circuits](https://dspace.mit.edu/handle/1721.1/11173) (MIT, 1937), and the SEP entry on [Information](https://plato.stanford.edu/entries/information/).
+[^2]: The accounts of Leibniz, Frege, Boole and Shannon were simplified here to fit this format, and each deserves far more nuance than a blog post allows. To read more: [Gottfried Leibniz](https://plato.stanford.edu/entries/leibniz/), [Gottlob Frege](https://plato.stanford.edu/entries/frege/) and [George Boole](https://plato.stanford.edu/entries/boole/) in the Stanford Encyclopedia of Philosophy; for Shannon, his master's thesis, [A Symbolic Analysis of Relay and Switching Circuits](https://dspace.mit.edu/handle/1721.1/11173) (MIT, 1937), and the SEP entry on [Information](https://plato.stanford.edu/entries/information/).
 `,
   pt: `
 A bolha das startups trouxe, em sua ânsia de prosperar, uma nova classe de engenheiros para o mundo. Acredito que esse seja um fato bem estabelecido. Se isso é bom ou ruim, não sei dizer. É fato que eles são diferentes e que, por serem assim, trazem coisas diferentes para o mundo da engenharia — mesmo que seja uma caralhada de código JavaScript lixo para o mais novo e-commerce. Eu surgi como um deles. Fui roubado por uma empresa que prometeu me ensinar desenvolvimento web full-stack em 6 meses (6 anos depois e ainda estou tentando), mas tive a sorte de conseguir o melhor emprego que eu poderia ter na época.
@@ -112,17 +114,19 @@ Isso acabou dando origem à Física. Física é o nome do livro de Aristóteles 
 
 Francis Bacon, um filósofo não tão conhecido assim, tentando responder à famosa pergunta: "qual é essa relação entre a humanidade e a natureza?", ofereceu a solução: "a natureza é um lugar onde fazemos experimentos, avaliamos e validamos o resultado", o que acabou se tornando o que conhecemos como Ciência. Bacon lutava contra aqueles que viam na natureza algo obscuro e sagrado, como tradições e algumas expressões religiosas.
 
+Leibniz, um tipo especial de filósofo, por acaso também foi um dos maiores matemáticos que já existiram (departamentos de matemática e de filosofia do mundo inteiro ainda louvam seu nome até hoje), e fez uma pergunta matemática sobre os limites da matemática, que é profundamente filosófica: "É possível calcular com algo menor que qualquer número?" Sua resposta, alcançada independentemente de Newton, foi o cálculo infinitesimal: fatiar uma mudança em pedaços tão pequenos que quase não são nada, e depois somá-los de volta. Toda ponte que fica de pé, todo circuito que não queima e todo foguete que pousa deve algo a essa ideia. Engenheiros ainda escrevem isso na notação dele: o dy/dx e o ∫ são dele. Mas ele tinha um sonho mais estranho: uma linguagem simbólica em que qualquer disputa pudesse ser resolvida por cálculo. *Calculemus*, calculemos. Dois séculos depois, Frege retomou esse sonho.
+
 Então dá para ver a tendência aqui. Mas, para ir direto ao ponto, temos que viajar no tempo até o final do século XIX, quando Frege, outro filósofo não tão conhecido, começou a fazer uma pergunta muito diferente:
 
 "Como podemos representar o raciocínio em uma linguagem formal, onde sua estrutura lógica seja explícita o suficiente para ser avaliada por meio de regras precisas?"
 
 O projeto de Frege era construir uma ferramenta lógica capaz de avaliar qualquer frase, assim como a aritmética avalia os números. Ele queria testar se um argumento era válido puramente pelas regras de sua estrutura (sintaxe), independentemente do que as palavras realmente representavam no mundo (semântica). Frege nunca chegou totalmente lá, mas, ao propor essa separação entre sintaxe e semântica, ele forneceu a base exata para os computadores modernos.
 
-![Diagrama em pixel-art: "se chove, então a rua fica molhada" e "se o interruptor muda, então a luz acende", ambos reduzidos à forma "se A então B".](/blog/philosophy-really/if-then-1024x1024.webp)
+![Controle interativo: três frases "se, então" sobre chuva, interruptor e chave perdem o sentido e se fundem em uma só forma, "se A então B".](#if-then)
 
 Algumas décadas antes, um matemático chamado Boole havia desenvolvido seus estudos, que eram semelhantes aos de Frege, exceto pelo fato de que Boole tentava expressar frases como álgebra.
 
-E quando Claude Shannon, em sua dissertação de mestrado, mapeou o comportamento dos circuitos elétricos, ele percebeu que interruptores ligando e desligando faziam exatamente a mesma coisa que as regras de verdadeiro e falso que os filósofos haviam criado para validar a linguagem com pura lógica, fruto do trabalho de Frege, Boole e também de Whitehead e Russell.[^2]
+E quando Claude Shannon, em sua dissertação de mestrado, mapeou o comportamento dos circuitos elétricos, ele percebeu que interruptores ligando e desligando faziam exatamente a mesma coisa que as regras de verdadeiro e falso que filósofos e matemáticos haviam descoberto para validar a linguagem com pura lógica, fruto do trabalho de Frege, Boole e também de Whitehead e Russell.[^2]
 
 ![Diagrama em pixel-art: "se a corrente é alta, então o LED acende" e "se a porta lógica recebe energia, então o motor gira" ao redor de um circuito de transistor rotulado "se A então B".](/blog/philosophy-really/boole-shannon-1024x1024.webp)
 
@@ -155,7 +159,7 @@ Frege queria separar a estrutura de uma frase daquilo a que suas palavras se ref
 É uma ironia engraçada do destino. Passei seis anos tentando deixar a Filosofia para trás para me tornar um programador "de verdade" — só para as máquinas assumirem o código e me deixarem exatamente onde comecei: preocupado com o que as palavras significam.
 
 [^1]: Para o meu texto favorito sobre o assunto: *Que é isto – A Filosofia?*, Martin Heidegger (palestra de 1955).
-[^2]: Os relatos sobre Frege, Boole e Shannon foram simplificados aqui para caber neste formato, e cada um merece muito mais nuances do que um post de blog permite. Para ler mais: [Gottlob Frege](https://plato.stanford.edu/entries/frege/) e [George Boole](https://plato.stanford.edu/entries/boole/) na Stanford Encyclopedia of Philosophy; sobre Shannon, sua dissertação de mestrado, [A Symbolic Analysis of Relay and Switching Circuits](https://dspace.mit.edu/handle/1721.1/11173) (MIT, 1937), e o verbete da SEP sobre [Information](https://plato.stanford.edu/entries/information/).
+[^2]: Os relatos sobre Leibniz, Frege, Boole e Shannon foram simplificados aqui para caber neste formato, e cada um merece muito mais nuances do que um post de blog permite. Para ler mais: [Gottfried Leibniz](https://plato.stanford.edu/entries/leibniz/), [Gottlob Frege](https://plato.stanford.edu/entries/frege/) e [George Boole](https://plato.stanford.edu/entries/boole/) na Stanford Encyclopedia of Philosophy; sobre Shannon, sua dissertação de mestrado, [A Symbolic Analysis of Relay and Switching Circuits](https://dspace.mit.edu/handle/1721.1/11173) (MIT, 1937), e o verbete da SEP sobre [Information](https://plato.stanford.edu/entries/information/).
 `,
 } satisfies PostContent;
 
