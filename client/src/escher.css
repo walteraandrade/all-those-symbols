@@ -257,6 +257,10 @@
   line-height: 1.65;
 }
 .esc .blog-prose > * + * { margin-top: 1.5em; }
+@property --century-name-bg { syntax: "<color>"; inherits: true; initial-value: transparent; }
+@property --century-name-leaving-bg { syntax: "<color>"; inherits: true; initial-value: transparent; }
+.esc .blog-prose ::highlight(century-name) { background-color: var(--century-name-bg); }
+.esc .blog-prose ::highlight(century-name-leaving) { background-color: var(--century-name-leaving-bg); }
 .esc .blog-prose h2 {
   font-size: 1.85rem;
   line-height: 1.2;

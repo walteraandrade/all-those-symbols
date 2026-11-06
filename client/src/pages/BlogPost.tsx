@@ -10,6 +10,7 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
+import { CenturyTimeline } from "@/components/blog/CenturyTimeline";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
 
@@ -231,6 +232,7 @@ function BlogPostContent() {
 
           <div lang={post.activeLang}>
             <BlogContent content={content} />
+            {slug === "philosophy-really" && <CenturyTimeline content={content} />}
           </div>
 
           {(prevPost || nextPost) && (
