@@ -3,6 +3,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
 const READ_LINE = 0.6;
+const PROSE = ".blog-prose";
 const HIGHLIGHT = "century-name";
 const LEAVING_HIGHLIGHT = "century-name-leaving";
 const HIGHLIGHT_FADE_MS = 450;
@@ -129,10 +130,18 @@ export function CenturyTimeline({ content }: { content: string }) {
   const ranges = useRef<(Range | null)[]>([]);
 
   useEffect(() => {
-    const root = document.querySelector(".blog-prose");
-    const end = root && findPhrase(root, COPY[lang].end);
-    if (!root || !end) return;
+    const root = document.querySelector(PROSE);
+    if (!root) return;
+    const end = findPhrase(root, COPY[lang].end);
     ranges.current = STOPS.map((stop) => findPhrase(root, stop[lang].phrase));
+
+    if (import.meta.env.DEV) {
+      [COPY[lang].end, ...STOPS.map((stop) => stop[lang].phrase)]
+        .filter((phrase) => !findPhrase(root, phrase))
+        .forEach((phrase) => console.warn(`CenturyTimeline: phrase not found in post: "${phrase}"`));
+    }
+
+    if (!end) return;
 
     const measure = () => {
       const line = window.innerHeight * READ_LINE;
@@ -167,7 +176,7 @@ export function CenturyTimeline({ content }: { content: string }) {
 
   useEffect(() => {
     const range = view.visible ? ranges.current[view.index] : null;
-    const root = document.querySelector(".blog-prose");
+    const root = document.querySelector(PROSE);
     if (!range || !root || !("highlights" in CSS)) return;
 
     CSS.highlights.set(HIGHLIGHT, new Highlight(range));
@@ -175,9 +184,10 @@ export function CenturyTimeline({ content }: { content: string }) {
 
     return () => {
       const leaving = new Highlight(range);
+      const currentColor = getComputedStyle(root).getPropertyValue("--century-name-bg");
       CSS.highlights.delete(HIGHLIGHT);
       CSS.highlights.set(LEAVING_HIGHLIGHT, leaving);
-      fadeColor(root, "--century-name-leaving-bg", "var(--accent-dark)", "transparent").onfinish = () => {
+      fadeColor(root, "--century-name-leaving-bg", currentColor, "transparent").onfinish = () => {
         if (CSS.highlights.get(LEAVING_HIGHLIGHT) === leaving) CSS.highlights.delete(LEAVING_HIGHLIGHT);
       };
     };
