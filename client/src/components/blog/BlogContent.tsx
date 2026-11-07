@@ -1,4 +1,4 @@
-import { lazy, Suspense } from "react";
+import { lazy, memo, Suspense } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
@@ -50,7 +50,7 @@ interface BlogContentProps {
   content: string;
 }
 
-export function BlogContent({ content }: BlogContentProps) {
+export const BlogContent = memo(function BlogContent({ content }: BlogContentProps) {
   return (
     <article className="blog-prose">
       <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
@@ -58,4 +58,4 @@ export function BlogContent({ content }: BlogContentProps) {
       </ReactMarkdown>
     </article>
   );
-}
+});
