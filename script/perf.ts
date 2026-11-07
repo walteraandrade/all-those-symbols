@@ -18,14 +18,17 @@ type CruxResult = {
   p75: { lcpMs: number | null; inpMs: number | null; cls: number | null };
 } | null;
 
+type FieldP75 = { lcpMs: number | null; inpMs: number | null; cls: number | null; ttfbMs: number | null };
+
 type FieldResult = {
   source: "rum";
   windowDays: 28;
   sampleCount: number;
-  p75: { lcpMs: number | null; inpMs: number | null; cls: number | null; ttfbMs: number | null };
+  p75: FieldP75;
+  byRoute: Record<string, { sampleCount: number; p75: FieldP75 }>;
 } | null;
 
-type Violation = { scope: "bundle" | "lab" | "field"; metric: string; value: number | null; limit: number };
+type Violation = { scope: "bundle" | "lab" | "lab:blog" | "field"; metric: string; value: number | null; limit: number };
 
 const budgetSchema = z.object({
   bundle: z.object({ mainChunkKb: z.number() }),
@@ -44,6 +47,7 @@ type HistoryEntry = {
   commit: string;
   bundle: BundleResult;
   lab: LabResult;
+  labBlog: LabResult;
   field: FieldResult;
   crux: CruxResult;
   budget: { pass: boolean; violations: Violation[] };
@@ -86,6 +90,7 @@ const psiResponseSchema = z.object({
 });
 
 const SITE_URL = process.env.SITE_URL ?? "https://all-those-symbols.vercel.app";
+const BLOG_PATH = "/blog/philosophy-really";
 const ROOT = path.resolve(import.meta.dirname, "..");
 
 const round = (n: number) => Math.round(n);
@@ -108,9 +113,9 @@ async function collectBundle(): Promise<BundleResult> {
   return { mainChunkKb: Math.round(size / 10) / 100 };
 }
 
-async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
+async function collectLab(pagePath = "/"): Promise<{ lab: LabResult; crux: CruxResult }> {
   const url = new URL("https://www.googleapis.com/pagespeedonline/v5/runPagespeed");
-  url.searchParams.set("url", SITE_URL);
+  url.searchParams.set("url", new URL(pagePath, SITE_URL).toString());
   url.searchParams.set("strategy", "mobile");
   url.searchParams.set("category", "PERFORMANCE");
   if (process.env.PSI_API_KEY) url.searchParams.set("key", process.env.PSI_API_KEY);
@@ -164,6 +169,11 @@ async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
   }
 }
 
+export const routeGroup = (p: string) => {
+  const n = p.length > 1 ? p.replace(/\/+$/, "") : p;
+  return n === "/" ? "/" : n.startsWith("/blog/") ? "/blog/*" : "other";
+};
+
 function p75(values: number[]): number | null {
   if (values.length === 0) return null;
   const sorted = [...values].sort((a, b) => a - b);
@@ -184,25 +194,24 @@ async function collectField(): Promise<FieldResult> {
     });
 
     const rows = (await conn.all(
-      "SELECT metric, value FROM web_vitals WHERE created_at >= datetime('now', '-28 days')"
-    )) as { metric: string; value: number }[];
+      "SELECT metric, value, path FROM web_vitals WHERE created_at >= datetime('now', '-28 days')"
+    )) as { metric: string; value: number; path: string }[];
 
-    const byMetric = (name: string) => rows.filter((r) => r.metric === name).map((r) => r.value);
-    const lcp = p75(byMetric("LCP"));
-    const inp = p75(byMetric("INP"));
-    const cls = p75(byMetric("CLS"));
-    const ttfb = p75(byMetric("TTFB"));
+    const summarize = (rs: typeof rows) => {
+      const pick = (name: string) => p75(rs.filter((r) => r.metric === name).map((r) => r.value));
+      const ms = (n: number | null) => (n === null ? null : round(n));
+      return {
+        sampleCount: rs.length,
+        p75: { lcpMs: ms(pick("LCP")), inpMs: ms(pick("INP")), cls: pick("CLS"), ttfbMs: ms(pick("TTFB")) },
+      };
+    };
+    const groups = [...new Set(rows.map((r) => routeGroup(r.path)))];
 
     return {
       source: "rum",
       windowDays: 28,
-      sampleCount: rows.length,
-      p75: {
-        lcpMs: lcp === null ? null : round(lcp),
-        inpMs: inp === null ? null : round(inp),
-        cls,
-        ttfbMs: ttfb === null ? null : round(ttfb),
-      },
+      ...summarize(rows),
+      byRoute: Object.fromEntries(groups.map((g) => [g, summarize(rows.filter((r) => routeGroup(r.path) === g))])),
     };
   } catch (err) {
     console.error("field data query failed:", err instanceof Error ? err.message : err);
@@ -210,7 +219,14 @@ async function collectField(): Promise<FieldResult> {
   }
 }
 
-export function checkBudget(budget: Budget, bundle: BundleResult, lab: LabResult, field: FieldResult, measured = false) {
+export function checkBudget(
+  budget: Budget,
+  bundle: BundleResult,
+  lab: LabResult,
+  field: FieldResult,
+  labBlog: LabResult = null,
+  measured = false,
+) {
   const violations: Violation[] = [];
 
   if (bundle.mainChunkKb > budget.bundle.mainChunkKb) {
@@ -222,16 +238,16 @@ export function checkBudget(budget: Budget, bundle: BundleResult, lab: LabResult
     });
   }
 
-  if (!lab && measured) {
-    violations.push({ scope: "lab", metric: "unavailable", value: null, limit: 0 });
-  }
-
-  if (lab) {
+  for (const [scope, l] of [["lab", lab], ["lab:blog", labBlog]] as const) {
+    if (!l) {
+      if (measured) violations.push({ scope, metric: "unavailable", value: null, limit: 0 });
+      continue;
+    }
     const check = (metric: "performanceScore" | "lcpMs" | "tbtMs" | "cls", below = false) => {
-      const value = lab[metric];
+      const value = l[metric];
       const limit = budget.lab[metric];
       if (value === null || (below ? value < limit : value > limit)) {
-        violations.push({ scope: "lab", metric, value, limit });
+        violations.push({ scope, metric, value, limit });
       }
     };
     check("performanceScore", true);
@@ -280,6 +296,16 @@ function printSummary(entry: HistoryEntry) {
     console.log("lab: unavailable");
   }
 
+  if (entry.labBlog) {
+    console.log(`lab blog (PSI mobile, ${BLOG_PATH}):`);
+    console.log(`  performanceScore  ${entry.labBlog.performanceScore}`);
+    console.log(`  lcpMs             ${entry.labBlog.lcpMs}`);
+    console.log(`  tbtMs             ${entry.labBlog.tbtMs}`);
+    console.log(`  cls               ${entry.labBlog.cls}`);
+  } else {
+    console.log("lab blog: unavailable");
+  }
+
   console.log("");
   if (entry.crux) {
     console.log("crux p75:");
@@ -297,6 +323,9 @@ function printSummary(entry: HistoryEntry) {
     console.log(`  inpMs  ${entry.field.p75.inpMs}`);
     console.log(`  cls    ${entry.field.p75.cls}`);
     console.log(`  ttfbMs ${entry.field.p75.ttfbMs}`);
+    for (const [group, g] of Object.entries(entry.field.byRoute)) {
+      console.log(`  ${group} (n=${g.sampleCount}) lcpMs ${g.p75.lcpMs} inpMs ${g.p75.inpMs} cls ${g.p75.cls}`);
+    }
   } else {
     console.log("field: unavailable");
   }
@@ -312,18 +341,20 @@ async function main() {
   const budget = budgetSchema.parse(JSON.parse(budgetRaw));
   const gate = process.argv.includes("--gate");
   const bundle = await collectBundle();
-  const [{ lab, crux }, field] = gate
-    ? [{ lab: null, crux: null }, null]
-    : await Promise.all([collectLab(), collectField()]);
+  const none = { lab: null, crux: null };
+  const { lab, crux } = gate ? none : await collectLab();
+  const { lab: labBlog } = gate ? none : await collectLab(BLOG_PATH);
+  const field = gate ? null : await collectField();
 
   const entry: HistoryEntry = {
     date: new Date().toISOString().slice(0, 10),
     commit: getCommit(),
     bundle,
     lab,
+    labBlog,
     field,
     crux,
-    budget: checkBudget(budget, bundle, lab, field, !gate),
+    budget: checkBudget(budget, bundle, lab, field, labBlog, !gate),
   };
 
   if (!gate) {

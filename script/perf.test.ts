@@ -1,5 +1,5 @@
 import { expect, test } from "bun:test";
-import { checkBudget } from "./perf";
+import { checkBudget, routeGroup } from "./perf";
 
 const budget = {
   bundle: { mainChunkKb: 110 },
@@ -28,7 +28,17 @@ test("missing audits are violations", () => {
   expect(res.violations.map((v) => v.metric)).toEqual(["lcpMs", "tbtMs"]);
 });
 
-test("null lab is a violation in measure mode only", () => {
+test("blog lab is checked with its own scope", () => {
+  const res = checkBudget(budget, bundle, lab, null, { ...lab, lcpMs: 3000 });
+  expect(res.violations).toEqual([{ scope: "lab:blog", metric: "lcpMs", value: 3000, limit: 2000 }]);
+});
+
+test("route groups", () => {
+  expect(["/", "/blog/a", "/blog/a/", "/blog", "/blog/", "/contact"].map(routeGroup)).toEqual(["/", "/blog/*", "/blog/*", "other", "other", "other"]);
+});
+
+test("null labs are violations in measure mode only", () => {
   expect(checkBudget(budget, bundle, null, null).pass).toBe(true);
-  expect(checkBudget(budget, bundle, null, null, true).violations.map((v) => v.metric)).toEqual(["unavailable"]);
+  const res = checkBudget(budget, bundle, null, null, null, true);
+  expect(res.violations.map((v) => v.scope)).toEqual(["lab", "lab:blog"]);
 });

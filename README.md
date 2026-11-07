@@ -24,7 +24,7 @@ bun run build
 ## Other
 ```bash
 bun run check  # typecheck
-bun run perf   # PageSpeed budget
+bun run perf   # PSI (home + blog post) and field p75 by route; field budget is warn-only (~70 samples per 28 days is too noisy to gate; revisit at a few hundred)
 ```
 
 ## Structure
