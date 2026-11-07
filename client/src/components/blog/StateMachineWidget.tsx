@@ -1,4 +1,4 @@
-import { type ComponentProps, type ReactNode, useEffect, useRef, useState } from "react";
+import { type ComponentProps, type ReactNode, useEffect, useId, useRef, useState } from "react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Sprite } from "@/components/escher/sprites";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -85,13 +85,13 @@ const PHOTO = [
   "wwwwwwwwww",
 ];
 
-const NODE_W = 90;
+const NODE_W = 100;
 const NODE_H = 36;
 const NODES: Record<State, { x: number; y: number }> = {
-  idle: { x: 47, y: 115 },
+  idle: { x: 52, y: 115 },
   loading: { x: 178, y: 115 },
-  data: { x: 313, y: 30 },
-  error: { x: 313, y: 200 },
+  data: { x: 308, y: 30 },
+  error: { x: 308, y: 200 },
 };
 
 const EDGES: {
@@ -103,11 +103,11 @@ const EDGES: {
   ly: number;
   anchor: "start" | "middle" | "end";
 }[] = [
-  { from: "idle", event: "ask", to: "loading", d: "M94 115 L131 115", lx: 112, ly: 107, anchor: "middle" },
-  { from: "loading", event: "ok", to: "data", d: "M223 103 L266 42", lx: 252, ly: 88, anchor: "start" },
-  { from: "loading", event: "fail", to: "error", d: "M223 127 L266 188", lx: 252, ly: 150, anchor: "start" },
-  { from: "data", event: "ask", to: "loading", d: "M268 22 Q190 8 178 94", lx: 182, ly: 45, anchor: "end" },
-  { from: "error", event: "ask", to: "loading", d: "M268 208 Q190 222 178 136", lx: 182, ly: 195, anchor: "end" },
+  { from: "idle", event: "ask", to: "loading", d: "M102 115 L126 115", lx: 114, ly: 91, anchor: "middle" },
+  { from: "loading", event: "ok", to: "data", d: "M228 103 L256 42", lx: 255, ly: 88, anchor: "start" },
+  { from: "loading", event: "fail", to: "error", d: "M228 127 L256 188", lx: 255, ly: 150, anchor: "start" },
+  { from: "data", event: "ask", to: "loading", d: "M256 22 Q190 8 178 94", lx: 182, ly: 45, anchor: "end" },
+  { from: "error", event: "ask", to: "loading", d: "M256 208 Q190 222 178 136", lx: 182, ly: 195, anchor: "end" },
 ];
 
 const TONE = { live: "var(--bone)", dim: "var(--mid)", last: "var(--accent)" };
@@ -160,7 +160,7 @@ const Btn = ({
       cta ? "font-['League_Spartan',sans-serif] text-base" : "font-mono text-sm",
       active
         ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--ink)]"
-        : "border-[var(--dark)] bg-[var(--ink)] text-[var(--bone)]",
+        : "border-[var(--mid)] bg-[var(--ink)] text-[var(--bone)]",
       className,
     )}
   />
@@ -183,7 +183,7 @@ const Screen = ({
   return (
     <span
       className={cn(
-        "flex h-[200px] w-[136px] shrink-0 flex-col items-center justify-center gap-2 border-[3px] border-t-[10px] border-[var(--dark)] bg-[var(--ink)] p-2 text-center font-mono text-xs font-bold leading-tight text-[var(--bone)]",
+        "flex h-[200px] w-[136px] shrink-0 flex-col items-center justify-center gap-2 border-[3px] border-t-[10px] border-[var(--mid)] bg-[var(--ink)] p-2 text-center font-mono text-xs font-bold leading-tight text-[var(--bone)]",
         className,
       )}
     >
@@ -225,6 +225,7 @@ const MachineMap = ({
   copy: Copy;
 }) => {
   const reducedMotion = useReducedMotion();
+  const arrowId = useId();
   const arrows = EDGES.filter((edge) => edge.from === state)
     .map((edge) => copy.machine.arrow(copy.edges[edge.event], copy.states[edge.to]))
     .join("; ");
@@ -238,7 +239,7 @@ const MachineMap = ({
     >
       <defs>
         {Object.entries(TONE).map(([tone, color]) => (
-          <marker key={tone} id={`sm-arrow-${tone}`} markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
+          <marker key={tone} id={`${arrowId}-${tone}`} markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto">
             <path d="M0 0 L7 3.5 L0 7 z" fill={color} />
           </marker>
         ))}
@@ -247,13 +248,13 @@ const MachineMap = ({
         const tone = last === edge ? "last" : edge.from === state ? "live" : "dim";
         return (
           <g key={`${edge.from}:${edge.event}`}>
-            <path d={edge.d} fill="none" stroke={TONE[tone]} strokeWidth="2" markerEnd={`url(#sm-arrow-${tone})`} />
+            <path d={edge.d} fill="none" stroke={TONE[tone]} strokeWidth="2" markerEnd={`url(#${arrowId}-${tone})`} />
             <text
               x={edge.lx}
               y={edge.ly}
               textAnchor={edge.anchor}
-              fontSize="14"
-              fontFamily="JetBrains Mono, monospace"
+              fontSize="17"
+              fontFamily="League Spartan, sans-serif"
               fill={TONE[tone]}
             >
               {copy.edges[edge.event]}
@@ -269,7 +270,7 @@ const MachineMap = ({
           width={NODE_W}
           height={NODE_H}
           fill="var(--ink)"
-          stroke="var(--dark)"
+          stroke="var(--mid)"
           strokeWidth="3"
         />
       ))}
@@ -287,9 +288,9 @@ const MachineMap = ({
           x={NODES[s].x}
           y={NODES[s].y + 5}
           textAnchor="middle"
-          fontSize="14"
+          fontSize="17"
           fontWeight="700"
-          fontFamily="JetBrains Mono, monospace"
+          fontFamily="League Spartan, sans-serif"
           fill={s === state ? "var(--ink)" : "var(--bone)"}
           style={{ transition: reducedMotion ? undefined : "fill 0.35s" }}
         >

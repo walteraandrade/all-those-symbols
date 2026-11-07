@@ -211,6 +211,7 @@ function BlogPostContent() {
 
           {(prevPost || nextPost) && (
             <nav className="flex flex-col sm:flex-row gap-4 mt-16 pt-8 border-t-[3px] border-[#3a382f]">
+              <h2 className="sr-only">More writings</h2>
               {prevPost ? (
                 <Link href={`/blog/${prevPost.slug}`} className="esc-postcard flex-1">
                   <div className="meta"><span>Previous</span></div>
