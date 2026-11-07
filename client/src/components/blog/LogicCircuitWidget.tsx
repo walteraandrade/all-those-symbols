@@ -104,7 +104,7 @@ const Trace = ({
   const reduced = useReducedMotion();
   return (
     <motion.g initial={false} animate={{ opacity: visible ? 1 : 0 }} transition={{ duration: reduced ? 0 : 0.3 }}>
-      <path d={d} fill="none" stroke={live ? "var(--accent)" : "var(--dark)"} strokeWidth="5" />
+      <path d={d} fill="none" stroke={live ? "var(--accent)" : "var(--mid)"} strokeWidth="5" />
       {live && sparks && !reduced && (
         <motion.path
           d={d}
@@ -185,13 +185,13 @@ const Clause = ({
       transition={{ duration: reduced ? 0 : 0.45, ease: "easeInOut" }}
       role="switch"
       aria-checked={truth}
-      aria-label={text}
+      aria-label={prefix ? `${prefix} ${text}` : text}
       tabIndex={0}
       onClick={onToggle}
       onKeyDown={onPressKey(onToggle)}
-      className="cursor-pointer outline-none focus-visible:[&>.ring]:stroke-[var(--accent)]"
+      className="cursor-pointer outline-none focus-visible:[&>.clause-ring]:stroke-[var(--accent)]"
     >
-      <rect className="ring" x={-62} y={-46} width={124} height={76} fill="transparent" strokeWidth="2" />
+      <rect className="clause-ring" x={-62} y={-46} width={124} height={76} fill="transparent" strokeWidth="2" />
       <rect x={-27} y={-6} width={54} height={12} fill="var(--ink-2)" />
       <rect x={-29} y={-5} width={10} height={10} fill={metal} />
       <rect x={19} y={-5} width={10} height={10} fill={metal} />
@@ -222,7 +222,7 @@ const Clause = ({
       <text
         y={23}
         textAnchor="middle"
-        fontSize="14"
+        fontSize="17"
         fontFamily="JetBrains Mono, monospace"
         fill={truth ? "var(--accent)" : "var(--mid)"}
       >
@@ -303,7 +303,7 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
       <span className="block text-center font-['League_Spartan',sans-serif] text-lg font-bold leading-snug text-[var(--bone)] sm:text-xl">
         {copy.lead}
       </span>
-      <svg viewBox="0 -8 360 223" className="block h-auto w-full touch-manipulation select-none" role="group">
+      <svg viewBox="0 -8 360 223" className="block h-auto w-full touch-manipulation select-none" role="group" aria-label={copy.lead}>
         <Trace d="M24 112 L24 85 L330 85 L330 103" live={series && lit} visible={series} sparks={sparks} />
         <Trace d="M330 137 L330 185 L24 185 L24 128" live={series && lit} visible={series} sparks={sparks} />
         <Trace d="M24 112 L24 105 L70 105" live={!series && lit} visible={!series} sparks={sparks} />

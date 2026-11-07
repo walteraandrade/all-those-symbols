@@ -358,7 +358,7 @@ export function IfThenSlider({ label }: { label?: string }) {
           />
           <span className="flex h-2 w-full gap-[2px]">
             {Array.from({ length: TRACK_CELLS }, (_, i) => (
-              <span key={i} className="flex-1" style={{ background: i < filled ? "var(--bone)" : "var(--dark)" }} />
+              <span key={i} className="flex-1" style={{ background: i < filled ? "var(--bone)" : "var(--mid)" }} />
             ))}
           </span>
           <motion.span
