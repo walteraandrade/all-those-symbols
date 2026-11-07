@@ -48,5 +48,19 @@ const contentLoaders = {
 export const isBlogSlug = (slug: string): slug is BlogSlug =>
   Object.hasOwn(contentLoaders, slug);
 
-export const loadBlogContent = async (slug: BlogSlug): Promise<PostContent> =>
-  (await contentLoaders[slug]()).default;
+const contentCache = new Map<BlogSlug, Promise<PostContent | null>>();
+
+export const readBlogContent = (slug: BlogSlug): Promise<PostContent | null> => {
+  const cached = contentCache.get(slug);
+  if (cached) return cached;
+  const pending = contentLoaders[slug]().then(
+    (module) => module.default,
+    () => null
+  );
+  contentCache.set(slug, pending);
+  return pending;
+};
+
+export const forgetBlogContent = (slug: BlogSlug) => {
+  contentCache.delete(slug);
+};

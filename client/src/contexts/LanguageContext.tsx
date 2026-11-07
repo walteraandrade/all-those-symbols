@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useState, ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState, ReactNode } from "react";
 import type { PostLang } from "@/lib/blog/types";
 
 interface LanguageContextValue {
@@ -8,23 +8,38 @@ interface LanguageContextValue {
 
 const LanguageContext = createContext<LanguageContextValue | null>(null);
 
+const STORAGE_KEY = "blogLang";
+
 const isLang = (value: unknown): value is PostLang =>
   value === "en" || value === "pt";
 
-const getInitialLang = (): PostLang => {
-  const stored = localStorage.getItem("blogLang");
-  if (isLang(stored)) return stored;
-  return navigator.language.toLowerCase().startsWith("pt") ? "pt" : "en";
+const readStoredLang = (): PostLang | null => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    return isLang(stored) ? stored : null;
+  } catch {
+    return null;
+  }
 };
 
+const preferredLang = (): PostLang =>
+  readStoredLang() ?? (navigator.language.toLowerCase().startsWith("pt") ? "pt" : "en");
+
 export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLang] = useState<PostLang>(getInitialLang);
+  const [lang, setLangState] = useState<PostLang>("en");
 
   useEffect(() => {
-    localStorage.setItem("blogLang", lang);
-  }, [lang]);
+    setLangState(preferredLang());
+  }, []);
 
-  const value = useMemo(() => ({ lang, setLang }), [lang]);
+  const setLang = useCallback((next: PostLang) => {
+    setLangState(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {}
+  }, []);
+
+  const value = useMemo(() => ({ lang, setLang }), [lang, setLang]);
 
   return (
     <LanguageContext.Provider value={value}>

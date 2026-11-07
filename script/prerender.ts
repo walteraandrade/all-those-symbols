@@ -1,11 +1,13 @@
 import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
+import { pathToFileURL } from "url";
 import { blogPosts } from "../client/src/lib/blog/metadata";
 import { blogSlugs } from "../client/src/lib/blog/loaders";
 import type { BlogPost } from "../client/src/lib/blog/types";
 
 const BASE_URL = "https://all-those-symbols.vercel.app";
 const DIST_PATH = path.resolve(import.meta.dirname, "..", "dist", "public");
+const SERVER_ENTRY = path.resolve(import.meta.dirname, "..", "dist", "server", "entry-server.js");
 
 interface PageMeta {
   title: string;
@@ -15,6 +17,12 @@ interface PageMeta {
 }
 
 const staticPages: Record<string, PageMeta> = {
+  "/": {
+    title: "Walter Andrade | Developer & Thinker",
+    description:
+      "Software developer with a background in philosophy and logic. Building rigorous, elegant systems. Exploring ideas at the intersection of code and thought.",
+    canonical: "/",
+  },
   "/bio": {
     title: "Bio | Walter Andrade",
     description:
@@ -41,21 +49,30 @@ const staticPages: Record<string, PageMeta> = {
   },
 };
 
+const escapeHtml = (value: string): string =>
+  value
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
 const generateMetaTags = (meta: PageMeta): string => {
   const ogImage = `${BASE_URL}/opengraph.jpg`;
+  const title = escapeHtml(meta.title);
+  const description = escapeHtml(meta.description);
   return `
-    <title>${meta.title}</title>
-    <meta name="description" content="${meta.description}" />
+    <title>${title}</title>
+    <meta name="description" content="${description}" />
     <link rel="canonical" href="${BASE_URL}${meta.canonical}" />
-    <meta property="og:title" content="${meta.title}" />
-    <meta property="og:description" content="${meta.description}" />
+    <meta property="og:title" content="${title}" />
+    <meta property="og:description" content="${description}" />
     <meta property="og:type" content="${meta.ogType || "website"}" />
     <meta property="og:url" content="${BASE_URL}${meta.canonical}" />
     <meta property="og:image" content="${ogImage}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@walteraandrade" />
-    <meta name="twitter:title" content="${meta.title}" />
-    <meta name="twitter:description" content="${meta.description}" />
+    <meta name="twitter:title" content="${title}" />
+    <meta name="twitter:description" content="${description}" />
     <meta name="twitter:image" content="${ogImage}" />`;
 };
 
@@ -76,6 +93,13 @@ const injectMeta = (template: string, meta: PageMeta): string => {
   const metaTags = generateMetaTags(meta);
   html = html.replace("<!--ssr-meta-->", metaTags);
   return html;
+};
+
+const ROOT_TAG = '<div id="root"></div>';
+
+const injectBody = (html: string, body: string): string => {
+  if (!html.includes(ROOT_TAG)) throw new Error("index.html has no empty #root to fill.");
+  return html.replace(ROOT_TAG, () => `<div id="root">${body}</div>`);
 };
 
 const parseDate = (dateStr: string): Date => {
@@ -183,28 +207,35 @@ export async function prerender() {
   assertBlogDataIntegrity();
 
   const template = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
+  const { render }: { render: (url: string) => Promise<string> } = await import(
+    pathToFileURL(SERVER_ENTRY).href
+  );
+
+  const writePage = async (file: string, url: string, meta: PageMeta) => {
+    const html = injectBody(injectMeta(template, meta), await render(url));
+    await mkdir(path.dirname(file), { recursive: true });
+    await writeFile(file, html);
+    console.log(`  ${path.relative(DIST_PATH, file)}`);
+  };
 
   for (const [route, meta] of Object.entries(staticPages)) {
-    const dir = path.join(DIST_PATH, route);
-    await mkdir(dir, { recursive: true });
-    const html = injectMeta(template, meta);
-    await writeFile(path.join(dir, "index.html"), html);
-    console.log(`  ${route}/index.html`);
+    await writePage(path.join(DIST_PATH, route, "index.html"), route, meta);
   }
 
   for (const post of blogPosts) {
-    const meta: PageMeta = {
+    await writePage(path.join(DIST_PATH, "blog", post.slug, "index.html"), `/blog/${post.slug}`, {
       title: `${post.title} | Walter Andrade`,
       description: post.excerpt,
       canonical: `/blog/${post.slug}`,
       ogType: "article",
-    };
-    const dir = path.join(DIST_PATH, "blog", post.slug);
-    await mkdir(dir, { recursive: true });
-    const html = injectMeta(template, meta);
-    await writeFile(path.join(dir, "index.html"), html);
-    console.log(`  /blog/${post.slug}/index.html`);
+    });
   }
+
+  await writePage(path.join(DIST_PATH, "404.html"), "/404", {
+    title: "Not found | Walter Andrade",
+    description: "This page only exists from an angle we have not built yet.",
+    canonical: "/",
+  });
 
   const sitemap = generateSitemap(blogPosts);
   await writeFile(path.join(DIST_PATH, "sitemap.xml"), sitemap);
@@ -218,5 +249,8 @@ export async function prerender() {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  prerender().catch(console.error);
+  prerender().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
 }

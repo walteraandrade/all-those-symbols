@@ -9,6 +9,9 @@ async function buildAll() {
   console.log("building client...");
   await viteBuild();
 
+  console.log("building server renderer...");
+  await viteBuild({ build: { ssr: "src/entry-server.tsx" } });
+
   console.log("pre-rendering pages...");
   await prerender();
 }

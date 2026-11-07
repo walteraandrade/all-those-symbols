@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-export default defineConfig({
+export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
@@ -12,15 +12,17 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname, "client"),
   build: {
-    outDir: path.resolve(import.meta.dirname, "dist/public"),
+    outDir: path.resolve(import.meta.dirname, isSsrBuild ? "dist/server" : "dist/public"),
     emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          "vendor-react": ["react", "react-dom", "react-dom/client"],
+    rollupOptions: isSsrBuild
+      ? {}
+      : {
+          output: {
+            manualChunks: {
+              "vendor-react": ["react", "react-dom", "react-dom/client"],
+            },
+          },
         },
-      },
-    },
   },
   server: {
     host: "0.0.0.0",
@@ -30,4 +32,4 @@ export default defineConfig({
       deny: ["**/.*"],
     },
   },
-});
+}));

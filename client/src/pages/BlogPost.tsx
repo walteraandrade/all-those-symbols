@@ -1,9 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { use, useEffect, useMemo, useRef, useState } from "react";
 import { MotionConfig } from "framer-motion";
 import { useParams, Redirect, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
-import { isBlogSlug, loadBlogContent } from "@/lib/blog/loaders";
-import type { PostContent } from "@/lib/blog/types";
+import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
 import { slugify } from "@/lib/utils";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -12,7 +11,6 @@ import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { CenturyTimeline } from "@/components/blog/CenturyTimeline";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
-import { LoadingSpinner } from "@/components/LoadingSpinner";
 
 const extractHeadings = (markdown: string) => {
   const headingRegex = /^#{2,3}\s+(.+)$/gm;
@@ -32,14 +30,12 @@ function BlogPostContent() {
   const { lang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
-  const [loadedContent, setLoadedContent] = useState<{
-    slug: string;
-    content: PostContent;
-  } | null>(null);
-  const [loadFailed, setLoadFailed] = useState(false);
-  const [retry, setRetry] = useState(0);
+  const [, setRetry] = useState(0);
+  const shownSlug = useRef(slug);
 
   useEffect(() => {
+    if (shownSlug.current === slug) return;
+    shownSlug.current = slug;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [slug]);
 
@@ -48,24 +44,6 @@ function BlogPostContent() {
     [slug]
   );
 
-  useEffect(() => {
-    if (postIndex < 0 || !isBlogSlug(slug)) return;
-
-    let cancelled = false;
-    setLoadFailed(false);
-    loadBlogContent(slug)
-      .then((content) => {
-        if (!cancelled) setLoadedContent({ slug, content });
-      })
-      .catch(() => {
-        if (!cancelled) setLoadFailed(true);
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [postIndex, slug, retry]);
-
   const post = useMemo(
     () => (postIndex >= 0 ? localizePost(blogPosts[postIndex], lang) : null),
     [postIndex, lang]
@@ -73,10 +51,8 @@ function BlogPostContent() {
   const prevPost = postIndex > 0 ? localizePost(blogPosts[postIndex - 1], lang) : null;
   const nextPost =
     postIndex < blogPosts.length - 1 ? localizePost(blogPosts[postIndex + 1], lang) : null;
-  const content =
-    loadedContent?.slug === slug && post
-      ? loadedContent.content[post.activeLang] ?? loadedContent.content[post.lang]
-      : null;
+  const loaded = post && isBlogSlug(slug) ? use(readBlogContent(slug)) : null;
+  const content = loaded && post ? loaded[post.activeLang] ?? loaded[post.lang] : null;
   const headings = useMemo(
     () => (content ? extractHeadings(content) : []),
     [content]
@@ -114,20 +90,24 @@ function BlogPostContent() {
     return <Redirect to="/blog" />;
   }
 
-  if (loadFailed) {
+  if (!content) {
     return (
       <div className="esc-page" style={{ minHeight: "70dvh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
         <p className="esc-sub" style={{ maxWidth: 460, marginBottom: 18 }}>
           This post did not load. The connection dropped, or the page is running an older build.
         </p>
-        <button className="esc-btn" onClick={() => setRetry((n) => n + 1)}>TRY AGAIN</button>
+        <button
+          className="esc-btn"
+          onClick={() => {
+            if (isBlogSlug(slug)) forgetBlogContent(slug);
+            setRetry((n) => n + 1);
+          }}
+        >
+          TRY AGAIN
+        </button>
         <Link className="esc-sub" href="/blog" style={{ marginTop: 18 }}>Back to the blog</Link>
       </div>
     );
-  }
-
-  if (!content) {
-    return <LoadingSpinner />;
   }
 
   const image = post.image;
