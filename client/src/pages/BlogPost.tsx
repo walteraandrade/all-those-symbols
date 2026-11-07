@@ -141,7 +141,7 @@ function BlogPostContent() {
       <ReadingProgress />
       <BackToTop />
 
-      <header className="mb-12">
+      <header className="esc-pagehead">
         <Link href="/blog" className="esc-steplink" style={{ padding: "4px 0", fontSize: 22 }}>
           Back to writings
         </Link>
@@ -152,13 +152,7 @@ function BlogPostContent() {
           <span>{post.readingTime} min read</span>
         </div>
 
-        <h1
-          lang={post.activeLang}
-          className="pixfont"
-          style={{ fontSize: "clamp(1rem, 2.6vw, 1.6rem)", lineHeight: 1.7 }}
-        >
-          {post.title}
-        </h1>
+        <h1 lang={post.activeLang}>{post.title}</h1>
 
         <div className="mt-5">
           <LanguageToggle langs={postLangs(post)} />
