@@ -202,9 +202,9 @@ export function CenturyTimeline({ content }: { content: string }) {
     <aside
       aria-label={label}
       className={cn(
-        "fixed top-24 right-4 z-40 w-60 border-2 border-[var(--accent)] bg-[var(--ink-2)] px-3 py-2.5 font-mono",
+        "z-40 border-2 border-[var(--accent)] bg-[var(--ink-2)] px-3 py-2.5 font-mono lg:mt-6",
         "pointer-events-none transition-[opacity,visibility] duration-[180ms] ease-[steps(3)]",
-        "max-sm:top-auto max-sm:bottom-20 max-sm:left-4 max-sm:w-auto",
+        "max-lg:fixed max-lg:bottom-20 max-lg:left-4 max-sm:right-4",
         view.visible ? "visible opacity-100" : "invisible opacity-0",
       )}
     >
