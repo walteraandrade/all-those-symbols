@@ -1,5 +1,5 @@
-import { Fragment, useState } from "react";
-import { motion } from "framer-motion";
+import { Fragment, memo, useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import { Sprite } from "@/components/escher/sprites";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
@@ -249,6 +249,20 @@ const Chip = ({ map, mini }: { map: string[]; mini?: boolean }) => (
   </span>
 );
 
+const DissolvedChip = memo(function DissolvedChip({
+  from,
+  to,
+  morph,
+  seed,
+}: {
+  from: string[];
+  to: string[];
+  morph: number;
+  seed: number;
+}) {
+  return <Chip map={dissolve(from, to, morph, seed)} />;
+});
+
 const Word = ({ children }: { children: string }) => (
   <span className="font-['League_Spartan',sans-serif] text-lg font-extrabold leading-none tracking-wide text-[var(--bone)] sm:text-2xl">
     {children}
@@ -271,6 +285,8 @@ export function IfThenSlider({ label }: { label?: string }) {
   const copy = COPY[lang];
   const [t, setT] = useState(0);
   const [touched, setTouched] = useState(false);
+  const track = useRef<HTMLSpanElement>(null);
+  const inView = useInView(track);
   const merge = clamp(t * 2 - 1);
   const filled = Math.round(t * TRACK_CELLS);
   const bracket = clamp(merge * 5 - 4);
@@ -299,9 +315,9 @@ export function IfThenSlider({ label }: { label?: string }) {
             >
               <span className="relative flex items-center gap-2 sm:gap-3">
                 <Word>{copy.if}</Word>
-                <Chip map={dissolve(a, LETTER_A, morph, i)} />
+                <DissolvedChip from={a} to={LETTER_A} morph={morph} seed={i} />
                 <Word>{copy.then}</Word>
-                <Chip map={dissolve(b, LETTER_B, morph, i + 5)} />
+                <DissolvedChip from={b} to={LETTER_B} morph={morph} seed={i + 5} />
                 {i === 1 && (
                   <>
                     <Bracket side="left" opacity={bracket} />
@@ -326,7 +342,7 @@ export function IfThenSlider({ label }: { label?: string }) {
 
       <span className="flex w-full max-w-sm items-center gap-3">
         <Chip map={CLOUD} mini />
-        <span className="relative flex h-8 w-full items-center">
+        <span ref={track} className="relative flex h-8 w-full items-center">
           <input
             type="range"
             min={0}
@@ -349,8 +365,8 @@ export function IfThenSlider({ label }: { label?: string }) {
             aria-hidden
             className="absolute h-7 w-4 border-[3px] border-[var(--dark)] bg-[var(--bone)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--accent)]"
             style={{ left: `calc(${t} * (100% - 1rem))` }}
-            animate={touched ? { x: 0 } : { x: [0, 10, 0] }}
-            transition={touched ? { duration: 0 } : { duration: 1.2, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
+            animate={touched || !inView ? { x: 0 } : { x: [0, 10, 0] }}
+            transition={touched || !inView ? { duration: 0 } : { duration: 1.2, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
           />
         </span>
         <Chip map={LETTER_A} mini />
