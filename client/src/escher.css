@@ -91,7 +91,7 @@
 .esc-topnav .brand:hover { color: var(--accent); }
 .esc-topnav nav { display: flex; flex-wrap: wrap; gap: 26px; align-items: baseline; }
 .esc-topnav nav a { color: var(--bone); text-decoration: none; font-size: 17px; border-bottom: 3px solid transparent; }
-.esc-topnav nav a:hover, .esc-topnav nav a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); outline: none; }
+.esc-topnav nav a:hover, .esc-topnav nav a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
 .esc-topnav nav a.on { border-bottom-color: var(--accent); }
 .esc-topnav nav a.cv { color: var(--accent); }
 
@@ -102,7 +102,7 @@
   background: var(--ink); border: 2px solid var(--dark); color: var(--bone);
   padding: 6px 16px; font-size: 16px; text-decoration: none;
 }
-.esc-gemnav nav a:hover, .esc-gemnav nav a:focus-visible { border-color: var(--accent); color: var(--accent); outline: none; }
+.esc-gemnav nav a:hover, .esc-gemnav nav a:focus-visible { border-color: var(--accent); color: var(--accent); }
 .esc-gemnav > button { background: none; border: none; cursor: pointer; padding: 0; }
 .esc-gemnav > button:focus-visible { outline: 3px solid var(--accent); outline-offset: 6px; }
 
@@ -209,7 +209,7 @@
   color: var(--bone); text-decoration: none; background: rgba(20, 19, 15, 0.6);
   transition: border-color 120ms steps(2, end);
 }
-.esc-postcard:hover, .esc-postcard:focus-visible { border-color: var(--accent); outline: none; }
+.esc-postcard:hover, .esc-postcard:focus-visible { border-color: var(--accent); }
 .esc-postcard .meta { display: flex; gap: 14px; font-size: 13px; color: var(--mid); margin-bottom: 10px; }
 .esc-postcard .meta .cat { color: var(--accent); }
 .esc-postcard h3 { font-size: 21px; line-height: 1.25; margin-bottom: 10px; }
@@ -227,7 +227,7 @@
   color: var(--bone); text-decoration: none; font-size: 19px;
   border-bottom: 3px solid var(--dark);
 }
-.esc-steplink:hover, .esc-steplink:focus-visible { color: var(--accent); border-bottom-color: var(--accent); outline: none; }
+.esc-steplink:hover, .esc-steplink:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
 
 /* experience timeline */
 .esc-xp { display: flex; flex-direction: column; gap: 18px; }
@@ -245,7 +245,7 @@
   font-family: 'JetBrains Mono', monospace; font-size: 16px;
 }
 .esc-form input::placeholder, .esc-form textarea::placeholder { color: var(--mid); }
-.esc-form input:focus, .esc-form textarea:focus { outline: none; border-color: var(--accent); }
+.esc-form input:focus, .esc-form textarea:focus { border-color: var(--accent); }
 .esc-form .err { color: #c95b3d; font-size: 14px; margin-top: 6px; }
 .esc-form .status { font-size: 15px; margin: 0; padding: 12px 14px; border: 2px solid var(--accent); color: var(--bone); }
 .esc-form .status.bad { border-color: #c95b3d; color: #c95b3d; }
