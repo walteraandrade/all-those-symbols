@@ -2,6 +2,8 @@ import { lazy, memo, Suspense } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
+import { CHROME } from "@/lib/blog/chrome";
+import type { PostLang } from "@/lib/blog/types";
 
 const widgetSrcs = new Set(["#if-then", "#state-machine", "#logic-circuit", "#certainty-method"]);
 const Widget = lazy(() => import("./Widgets"));
@@ -48,12 +50,17 @@ const components: Components = {
 
 interface BlogContentProps {
   content: string;
+  lang: PostLang;
 }
 
-export const BlogContent = memo(function BlogContent({ content }: BlogContentProps) {
+export const BlogContent = memo(function BlogContent({ content, lang }: BlogContentProps) {
   return (
     <article className="blog-prose">
-      <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        remarkRehypeOptions={{ footnoteLabel: CHROME[lang].footnotes, footnoteBackLabel: CHROME[lang].footnoteBack }}
+        components={components}
+      >
         {content}
       </ReactMarkdown>
     </article>

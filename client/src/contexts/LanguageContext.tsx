@@ -48,6 +48,12 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   );
 }
 
+export function PostLanguage({ lang, children }: { lang: PostLang; children: ReactNode }) {
+  const { setLang } = useLanguage();
+  const value = useMemo(() => ({ lang, setLang }), [lang, setLang]);
+  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+}
+
 export function useLanguage() {
   const ctx = useContext(LanguageContext);
   if (!ctx) throw new Error("useLanguage must be used within LanguageProvider");
