@@ -4,10 +4,10 @@ Personal portfolio site for Walter Andrade. Logic × Philosophy × Code.
 
 ## Stack
 - React 19 + TypeScript
-- Vite + Express
+- Vite
 - Tailwind CSS 4
 - Framer Motion
-- PostgreSQL + Drizzle
+- Vercel Functions (`api/`) + Turso (web vitals)
 - Resend (email)
 
 ## Dev
@@ -19,7 +19,12 @@ bun run dev
 ## Build
 ```bash
 bun run build
-bun run start
+```
+
+## Other
+```bash
+bun run check  # typecheck
+bun run perf   # PageSpeed budget
 ```
 
 ## Structure
@@ -29,7 +34,10 @@ client/          # React frontend
     components/  # UI components
     pages/       # Route pages
     lib/         # Utils, data
-api/             # Express backend
+api/             # Vercel Functions
+script/          # Build, prerender, perf scripts
+perf/            # Perf budget and history
+.github/         # CI workflows
 dist/            # Build output
 ```
 
