@@ -6,9 +6,9 @@ import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { socialLinks } from "@/lib/data";
 
 const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Invalid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters"),
+  name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name must be at most 100 characters"),
+  email: z.string().email("Invalid email address").max(254, "Email must be at most 254 characters"),
+  message: z.string().min(10, "Message must be at least 10 characters").max(5000, "Message must be at most 5000 characters"),
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -42,6 +42,20 @@ export default function Contact() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
+      if (response.status === 429) {
+        const minutes = Math.ceil(Number(response.headers.get("Retry-After")) / 60);
+        setStatus({
+          ok: false,
+          text: `Too many messages. Try again in ${minutes > 0 ? `about ${minutes} min` : "a few minutes"}.`,
+        });
+        return;
+      }
+
+      if (response.status === 503) {
+        setStatus({ ok: false, text: `The form is unavailable right now. Please email me directly at ${socialLinks.email}.` });
+        return;
+      }
 
       if (!response.ok) {
         throw new Error("Failed to send message");
