@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir } from "fs/promises";
+import { readFile, writeFile, mkdir, rm } from "fs/promises";
 import path from "path";
 import { pathToFileURL } from "url";
 import { blogPosts } from "../client/src/lib/blog/metadata";
@@ -209,11 +209,21 @@ Allow: /
 
 Sitemap: ${BASE_URL}/sitemap.xml`;
 
+const inlineCss = async (html: string): Promise<string> => {
+  const link = html.match(/<link rel="stylesheet"[^>]*href="([^"]+)"[^>]*>/);
+  if (!link) throw new Error("stylesheet link not found in index.html");
+  const file = path.join(DIST_PATH, link[1]);
+  const css = await readFile(file, "utf-8");
+  await rm(file);
+  return html.replace(link[0], () => `<style>${css}</style>`);
+};
+
 export async function prerender() {
   console.log("Pre-rendering pages...");
   assertBlogDataIntegrity();
 
-  const template = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
+  const rawTemplate = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
+  const template = await inlineCss(rawTemplate);
   const { render }: { render: (url: string) => Promise<string> } = await import(
     pathToFileURL(SERVER_ENTRY).href
   );
