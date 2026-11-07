@@ -24,13 +24,8 @@
 - Framer Motion for animations
 - Functional components only, no class components
 
-## Theme Enforcement
-See [THEME.md](./THEME.md) for visual guidelines. Key points:
-- Cyan/teal primary (`hsl(180 80% 60%)`)
-- Gold accent (`hsl(45 90% 60%)`)
-- Dark navy background default
-- Retro-futuristic aesthetic: pixel art + modern animations
-- Fonts: Press Start 2P (headings), Space Grotesk (display), Inter (body), JetBrains Mono (code)
+## Theme
+See [THEME.md](./THEME.md) for visual guidelines.
 
 ## Don't
 - Add emojis unless asked
