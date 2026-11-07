@@ -12,9 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "3.10.0",
-    "@radix-ui/react-toast": "1.2.7",
     "@tursodatabase/serverless": "1.4.0",
-    "class-variance-authority": "0.7.1",
     "clsx": "2.1.1",
     "framer-motion": "14.9.0",
     "lucide-react": "0.545.0",

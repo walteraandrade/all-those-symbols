@@ -1,6 +1,5 @@
 import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
-import { Toaster } from "@/components/ui/toaster";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Layout } from "@/components/Layout";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
@@ -30,7 +29,6 @@ function Router() {
 function App() {
   return (
     <LanguageProvider>
-      <Toaster />
       <Layout>
         <Suspense fallback={<LoadingSpinner />}>
           <Router />
