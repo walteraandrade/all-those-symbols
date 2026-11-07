@@ -4,12 +4,10 @@ import { z } from "zod";
 import { checkRateLimit } from "./_lib/rate-limit.js";
 import { applyCors } from "./_lib/cors.js";
 
-const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "";
-
-const contactSchema = z.object({
-  name: z.string().min(2),
-  email: z.string().email(),
-  message: z.string().min(10),
+export const contactSchema = z.object({
+  name: z.string().min(2).max(100).regex(/^[^\r\n]*$/),
+  email: z.string().email().max(254),
+  message: z.string().min(10).max(5000),
 });
 
 function escapeHtml(value: string): string {
@@ -44,16 +42,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const parsed = contactSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ error: "Invalid request", details: parsed.error.flatten() });
+    return res.status(400).json({ error: "Invalid request" });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
+  const contactEmail = process.env.CONTACT_EMAIL;
+  if (!apiKey || !contactEmail) {
     return res.status(503).json({ error: "Email service not configured" });
   }
 
-  // fail open: losing a real message costs more than letting a burst through
   const rateLimit = await checkRateLimit(req, "contact");
+  if (rateLimit.status === "unavailable") {
+    return res.status(503).json({ error: "Rate limit service unavailable" });
+  }
   if (rateLimit.status === "limited") {
     res.setHeader("Retry-After", String(rateLimit.retryAfter));
     return res.status(429).json({ error: "Too many requests" });
@@ -68,7 +69,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const resend = new Resend(apiKey);
     const { error } = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
-      to: CONTACT_EMAIL,
+      to: contactEmail,
       replyTo: email,
       subject: `Contact from ${name}`,
       text: `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
