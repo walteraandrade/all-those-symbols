@@ -75,7 +75,7 @@ export function Layout({ children }: LayoutProps) {
       <main id="main-content">{children}</main>
 
       <footer className="esc-footer">
-        <p className="quote">Impossible objects, shippable software. {new Date().getFullYear()}.</p>
+        <p className="quote">Impossible objects, shippable software. {import.meta.env.VITE_BUILD_YEAR}.</p>
         <a className="esc-btn" href={`mailto:${socialLinks.email}`}>SAY HELLO</a>
       </footer>
     </div>
