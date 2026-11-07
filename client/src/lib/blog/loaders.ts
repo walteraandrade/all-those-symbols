@@ -1,27 +1,5 @@
 import type { PostContent } from "./types";
 
-export const blogSlugs = [
-  "philosophy-really",
-  "the-benefits-of-stupidity",
-  "through-a-glass-darkly-bergman",
-  "no-country-for-old-men",
-  "the-thin-red-line",
-  "the-sacrifice-tarkovsky",
-  "masculin-feminin-godard",
-  "harakiri-kobayashi",
-  "love-exposure-sono",
-  "madadayo-kurosawa",
-  "barravento-rocha",
-  "in-the-mood-for-love-wong",
-  "la-strada-fellini",
-  "agricultura-sintropica",
-  "paisagem-da-janela-milton-nascimento",
-  "aqui-e-agora-gilberto-gil",
-  "um-gilverso-para-explorar",
-] as const;
-
-export type BlogSlug = (typeof blogSlugs)[number];
-
 type ContentModule = { default: PostContent };
 type ContentLoader = () => Promise<ContentModule>;
 
@@ -43,7 +21,11 @@ const contentLoaders = {
   "paisagem-da-janela-milton-nascimento": () => import("./content/paisagem-da-janela-milton-nascimento"),
   "aqui-e-agora-gilberto-gil": () => import("./content/aqui-e-agora-gilberto-gil"),
   "um-gilverso-para-explorar": () => import("./content/um-gilverso-para-explorar"),
-} satisfies Record<BlogSlug, ContentLoader>;
+} satisfies Record<string, ContentLoader>;
+
+export type BlogSlug = keyof typeof contentLoaders;
+
+export const blogSlugs = Object.keys(contentLoaders) as BlogSlug[];
 
 export const isBlogSlug = (slug: string): slug is BlogSlug =>
   Object.hasOwn(contentLoaders, slug);

@@ -2,6 +2,7 @@ import { appendFile, mkdir, readdir, readFile, stat } from "fs/promises";
 import path from "path";
 import { gzipSync } from "zlib";
 import { z } from "zod";
+import { BASE_URL } from "../client/src/lib/site";
 
 type LabResult = {
   source: "psi";
@@ -91,7 +92,7 @@ const psiResponseSchema = z.object({
     .optional(),
 });
 
-const SITE_URL = process.env.SITE_URL ?? "https://all-those-symbols.vercel.app";
+const SITE_URL = process.env.SITE_URL ?? BASE_URL;
 const BLOG_PATH = "/blog/philosophy-really";
 const ROOT = path.resolve(import.meta.dirname, "..");
 
