@@ -110,6 +110,7 @@ function BlogPostContent() {
     );
   }
 
+  const hasTimeline = slug === "philosophy-really";
   const image = post.image;
   const imageSrcSet = image
     ? [480, 960, 1600]
@@ -206,7 +207,6 @@ function BlogPostContent() {
 
           <div lang={post.activeLang}>
             <BlogContent content={content} />
-            {slug === "philosophy-really" && <CenturyTimeline content={content} />}
           </div>
 
           {(prevPost || nextPost) && (
@@ -232,13 +232,18 @@ function BlogPostContent() {
           )}
         </div>
 
-        {headings.length > 0 && (
-          <aside className="hidden lg:block sticky top-24 w-64 shrink-0 self-start">
-            <div className="text-[19px] text-[#8b8778] mb-4">Contents</div>
-            <nav className="space-y-2">
-              {headings.map(({ id, text, level }) => tocLink(id, text, level))}
-            </nav>
-          </aside>
+        {(headings.length > 0 || hasTimeline) && (
+          <div className="max-lg:contents lg:sticky lg:top-24 lg:w-64 lg:shrink-0 lg:self-start">
+            {headings.length > 0 && (
+              <div className="hidden lg:block">
+                <div className="text-[19px] text-[#8b8778] mb-4">Contents</div>
+                <nav className="space-y-2">
+                  {headings.map(({ id, text, level }) => tocLink(id, text, level))}
+                </nav>
+              </div>
+            )}
+            {hasTimeline && <CenturyTimeline content={content} />}
+          </div>
         )}
       </div>
     </div>
