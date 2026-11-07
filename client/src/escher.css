@@ -247,6 +247,9 @@
 .esc-form input::placeholder, .esc-form textarea::placeholder { color: var(--mid); }
 .esc-form input:focus, .esc-form textarea:focus { outline: none; border-color: var(--accent); }
 .esc-form .err { color: #c95b3d; font-size: 14px; margin-top: 6px; }
+.esc-form .status { font-size: 15px; margin: 0; padding: 12px 14px; border: 2px solid var(--accent); color: var(--bone); }
+.esc-form .status.bad { border-color: #c95b3d; color: #c95b3d; }
+.esc-form .status:empty { padding: 0; border: 0; margin-top: -22px; }
 .esc-form textarea { min-height: 160px; resize: vertical; }
 
 /* article (blog post body) */

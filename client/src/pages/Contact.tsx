@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { useToast } from "@/hooks/use-toast";
 import { socialLinks } from "@/lib/data";
 
 const contactSchema = z.object({
@@ -15,8 +14,8 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 export default function Contact() {
-  const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [status, setStatus] = useState<{ ok: boolean; text: string }>();
 
   useDocumentMeta({
     title: "Contact | Walter Andrade",
@@ -36,6 +35,7 @@ export default function Contact() {
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
+    setStatus(undefined);
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -47,17 +47,10 @@ export default function Contact() {
         throw new Error("Failed to send message");
       }
 
-      toast({
-        title: "Message sent",
-        description: "Thanks for reaching out! I'll get back to you soon.",
-      });
+      setStatus({ ok: true, text: "Message sent. Thanks for reaching out! I'll get back to you soon." });
       reset();
     } catch {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
+      setStatus({ ok: false, text: "Failed to send message. Please try again." });
     } finally {
       setIsSubmitting(false);
     }
@@ -91,6 +84,10 @@ export default function Contact() {
           <textarea id="contact-message" placeholder="What are you building?" {...register("message")} />
           {errors.message && <p className="err">{errors.message.message}</p>}
         </div>
+
+        <p className={status?.ok === false ? "status bad" : "status"} role="status" aria-live="polite">
+          {status?.text}
+        </p>
 
         <div>
           <button className="esc-btn" type="submit" disabled={isSubmitting}>
