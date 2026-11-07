@@ -1,4 +1,5 @@
 import type { PostLang } from "@/lib/blog/types";
+import { CHROME } from "@/lib/blog/chrome";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const labels: Record<PostLang, string> = { en: "English", pt: "Português" };
@@ -9,7 +10,7 @@ export function LanguageToggle({ langs }: { langs: PostLang[] }) {
   if (langs.length < 2) return null;
 
   return (
-    <div className="flex gap-2" role="group" aria-label="Post language">
+    <div className="flex gap-2" role="group" aria-label={CHROME[lang].postLanguage}>
       {langs.map((l) => (
         <button
           key={l}

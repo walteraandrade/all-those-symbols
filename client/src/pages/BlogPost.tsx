@@ -1,9 +1,10 @@
 import { use, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
+import { CHROME } from "@/lib/blog/chrome";
 import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
 import { slugify } from "@/lib/utils";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { PostLanguage, useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
 import { BackToTop } from "@/components/blog/BackToTop";
@@ -94,7 +95,7 @@ function BlogPostContent() {
     return (
       <div data-load-failed className="esc-page" style={{ minHeight: "70dvh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
         <p className="esc-sub" style={{ maxWidth: 460, marginBottom: 18 }}>
-          This post did not load. The connection dropped, or the page is running an older build.
+          {CHROME[post.activeLang].loadFailed}
         </p>
         <button
           className="esc-btn"
@@ -103,13 +104,14 @@ function BlogPostContent() {
             rerender((n) => n + 1);
           }}
         >
-          TRY AGAIN
+          {CHROME[post.activeLang].tryAgain}
         </button>
-        <Link className="esc-sub" href="/blog" style={{ marginTop: 18 }}>Back to the blog</Link>
+        <Link className="esc-sub" href="/blog" style={{ marginTop: 18 }}>{CHROME[post.activeLang].backToBlog}</Link>
       </div>
     );
   }
 
+  const chrome = CHROME[post.activeLang];
   const hasTimeline = slug === "philosophy-really";
   const image = post.image;
   const imageSrcSet = image
@@ -138,115 +140,117 @@ function BlogPostContent() {
   );
 
   return (
-    <div className="esc-page" style={{ maxWidth: 1180 }}>
-      <ReadingProgress />
-      <BackToTop />
+    <PostLanguage lang={post.activeLang}>
+      <div className="esc-page" style={{ maxWidth: 1180 }}>
+        <ReadingProgress />
+        <BackToTop />
 
-      <header className="esc-pagehead">
-        <Link href="/blog" className="esc-steplink" style={{ padding: "4px 0", fontSize: 22 }}>
-          Back to writings
-        </Link>
+        <header className="esc-pagehead">
+          <Link href="/blog" className="esc-steplink" style={{ padding: "4px 0", fontSize: 22 }}>
+            {chrome.backToWritings}
+          </Link>
 
-        <div className="flex flex-wrap items-center gap-4 mb-4 mt-6 text-[19px] text-[#8b8778]">
-          <span className="text-[var(--accent)] border-2 border-[#3a382f] px-2">{post.category}</span>
-          <span>{post.date}</span>
-          <span>{post.readingTime} min read</span>
-        </div>
-
-        <h1 lang={post.activeLang}>{post.title}</h1>
-
-        <div className="mt-5">
-          <LanguageToggle langs={postLangs(post)} />
-        </div>
-
-        {post.tags && (
-          <div className="flex flex-wrap gap-3 mt-5">
-            {post.tags.map((tag) => (
-              <span key={tag} className="esc-chip">#{tag}</span>
-            ))}
+          <div className="flex flex-wrap items-center gap-4 mb-4 mt-6 text-[19px] text-[#8b8778]">
+            <span className="text-[var(--accent)] border-2 border-[#3a382f] px-2">{post.category}</span>
+            <span>{post.date}</span>
+            <span>{post.readingTime} {chrome.minRead}</span>
           </div>
-        )}
-      </header>
 
-      {image && (
-        <picture>
-          <source
-            type="image/webp"
-            srcSet={imageSrcSet}
-            sizes="(max-width: 860px) calc(100vw - 40px), calc(min(100vw, 1180px) - 12vw)"
-          />
-          <img
-            src={image}
-            alt={post.imageAlt ?? ""}
-            width={1600}
-            height={900}
-            fetchPriority="high"
-            className="w-full mb-12 border-[3px] border-[#3a382f]"
-          />
-        </picture>
-      )}
+          <h1 lang={post.activeLang}>{post.title}</h1>
 
-      <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
-        <div className="flex-1 min-w-0">
-          {headings.length > 0 && (
-            <div className="lg:hidden mb-8">
-              <button
-                onClick={() => setTocOpen(!tocOpen)}
-                className="esc-tag w-full text-left"
-                aria-expanded={tocOpen}
-              >
-                Contents {tocOpen ? "-" : "+"}
-              </button>
-              {tocOpen && (
-                <nav className="px-4 py-3 border-2 border-t-0 border-[#3a382f] space-y-2">
-                  {headings.map(({ id, text, level }) => tocLink(id, text, level, () => setTocOpen(false)))}
-                </nav>
-              )}
+          <div className="mt-5">
+            <LanguageToggle langs={postLangs(post)} />
+          </div>
+
+          {post.tags && (
+            <div className="flex flex-wrap gap-3 mt-5">
+              {post.tags.map((tag) => (
+                <span key={tag} className="esc-chip">#{tag}</span>
+              ))}
             </div>
           )}
+        </header>
 
-          <div lang={post.activeLang}>
-            <BlogContent content={content} />
-          </div>
+        {image && (
+          <picture>
+            <source
+              type="image/webp"
+              srcSet={imageSrcSet}
+              sizes="(max-width: 860px) calc(100vw - 40px), calc(min(100vw, 1180px) - 12vw)"
+            />
+            <img
+              src={image}
+              alt={post.imageAlt ?? ""}
+              width={1600}
+              height={900}
+              fetchPriority="high"
+              className="w-full mb-12 border-[3px] border-[#3a382f]"
+            />
+          </picture>
+        )}
 
-          {(prevPost || nextPost) && (
-            <nav className="flex flex-col sm:flex-row gap-4 mt-16 pt-8 border-t-[3px] border-[#3a382f]">
-              <h2 className="sr-only">More writings</h2>
-              {prevPost ? (
-                <Link href={`/blog/${prevPost.slug}`} className="esc-postcard flex-1">
-                  <div className="meta"><span>Previous</span></div>
-                  <h3>{prevPost.title}</h3>
-                </Link>
-              ) : (
-                <div className="flex-1" />
-              )}
-              {nextPost ? (
-                <Link href={`/blog/${nextPost.slug}`} className="esc-postcard flex-1 text-right items-end">
-                  <div className="meta"><span>Next</span></div>
-                  <h3>{nextPost.title}</h3>
-                </Link>
-              ) : (
-                <div className="flex-1" />
-              )}
-            </nav>
-          )}
-        </div>
-
-        {(headings.length > 0 || hasTimeline) && (
-          <div className="max-lg:contents lg:sticky lg:top-24 lg:w-64 lg:shrink-0 lg:self-start">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
+          <div className="flex-1 min-w-0">
             {headings.length > 0 && (
-              <div className="hidden lg:block">
-                <div className="text-[19px] text-[#8b8778] mb-4">Contents</div>
-                <nav className="space-y-2">
-                  {headings.map(({ id, text, level }) => tocLink(id, text, level))}
-                </nav>
+              <div className="lg:hidden mb-8">
+                <button
+                  onClick={() => setTocOpen(!tocOpen)}
+                  className="esc-tag w-full text-left"
+                  aria-expanded={tocOpen}
+                >
+                  {chrome.contents} {tocOpen ? "-" : "+"}
+                </button>
+                {tocOpen && (
+                  <nav className="px-4 py-3 border-2 border-t-0 border-[#3a382f] space-y-2">
+                    {headings.map(({ id, text, level }) => tocLink(id, text, level, () => setTocOpen(false)))}
+                  </nav>
+                )}
               </div>
             )}
-            {hasTimeline && <CenturyTimeline content={content} />}
+
+            <div lang={post.activeLang}>
+              <BlogContent content={content} lang={post.activeLang} />
+            </div>
+
+            {(prevPost || nextPost) && (
+              <nav className="flex flex-col sm:flex-row gap-4 mt-16 pt-8 border-t-[3px] border-[#3a382f]">
+                <h2 className="sr-only">{chrome.moreWritings}</h2>
+                {prevPost ? (
+                  <Link href={`/blog/${prevPost.slug}`} className="esc-postcard flex-1">
+                    <div className="meta"><span>{chrome.previous}</span></div>
+                    <h3>{prevPost.title}</h3>
+                  </Link>
+                ) : (
+                  <div className="flex-1" />
+                )}
+                {nextPost ? (
+                  <Link href={`/blog/${nextPost.slug}`} className="esc-postcard flex-1 text-right items-end">
+                    <div className="meta"><span>{chrome.next}</span></div>
+                    <h3>{nextPost.title}</h3>
+                  </Link>
+                ) : (
+                  <div className="flex-1" />
+                )}
+              </nav>
+            )}
           </div>
-        )}
+
+          {(headings.length > 0 || hasTimeline) && (
+            <div className="max-lg:contents lg:sticky lg:top-24 lg:w-64 lg:shrink-0 lg:self-start">
+              {headings.length > 0 && (
+                <div className="hidden lg:block">
+                  <div className="text-[19px] text-[#8b8778] mb-4">{chrome.contents}</div>
+                  <nav className="space-y-2">
+                    {headings.map(({ id, text, level }) => tocLink(id, text, level))}
+                  </nav>
+                </div>
+              )}
+              {hasTimeline && <CenturyTimeline content={content} />}
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </PostLanguage>
   );
 }
 
