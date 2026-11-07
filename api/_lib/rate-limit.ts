@@ -4,7 +4,7 @@ import { isIP } from "node:net";
 
 const RATE_LIMITS = {
   contact: { limit: 10, windowSeconds: 600 },
-  vitals: { limit: 600, windowSeconds: 60 },
+  vitals: { limit: 30, windowSeconds: 60 },
 } as const;
 
 const SWEEP_PROBABILITY = 0.02;
