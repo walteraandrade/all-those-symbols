@@ -1,14 +1,10 @@
-import type { BlogSlug } from "./loaders";
+export const BLOG_CATEGORIES = ["Cinema", "Philosophy", "Code", "Life", "Project", "Music"] as const;
 
-export type BlogCategory =
-  | "Cinema"
-  | "Philosophy"
-  | "Code"
-  | "Life"
-  | "Project"
-  | "Music";
+export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
 
-export type PostLang = "en" | "pt";
+export const POST_LANGS = ["en", "pt"] as const;
+
+export type PostLang = (typeof POST_LANGS)[number];
 
 export interface PostMetadata {
   title: string;
@@ -18,7 +14,7 @@ export interface PostMetadata {
 }
 
 export interface BlogPost extends PostMetadata {
-  slug: BlogSlug;
+  slug: string;
   date: string;
   category: BlogCategory;
   lang: PostLang;

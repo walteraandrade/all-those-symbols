@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Harakiri (切腹)
+date: 2012-05-23
+category: Cinema
+excerpt: Masterpiece. Losing the respect for Bushido is the theme of this movie. It shows a samurai walking on the border of this ancient code, facing it, questioning it, criticizing it.
+readingTime: 2
+tags: [samurai, bushido, kobayashi, japanese-cinema, anti-hero]
+---
 
-const content = {
-  en: `
 Masterpiece.
 
 I only have compliments for this movie, it rocks in every single aspect. Therefore I'd like to start talking about the main subject here: the samurai code and its value.
@@ -29,7 +34,3 @@ And I can't forget talking about those symbols, specially the Iyi clan symbol. I
 This movie also has one of the best—if not *the* best—samurai duels ever. Probably the best for me. It's the one between Tsugumo and the last Iyi retainer alive. Simply awesome.
 
 Nevertheless, this is a fundamental movie for those who love samurai cinema, specially those made after the war, filled with anti-heroes and this noir environment. It's on my favorite list.
-`,
-} satisfies PostContent;
-
-export default content;

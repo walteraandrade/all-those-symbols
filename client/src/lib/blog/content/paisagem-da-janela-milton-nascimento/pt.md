@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Paisagem da Janela
+date: 2026-02-11
+category: Music
+excerpt: Paisagem da Janela é sobre essa coisa de menino de se imaginar como guerreiro, e a dificuldade das meninas de entenderem esse impulso. Uma herança evolutiva impressa no corpo.
+readingTime: 2
+tags: [milton-nascimento, mpb, fantasia, masculinidade, infância, análise, cell-memory]
+---
 
-const content = {
-  pt: `
 Composição de **Lô Borges** e **Fernando Brant**.
 
 Paisagem da Janela é sobre essa coisa de menino de se imaginar como guerreiro, como alguém que luta contra monstros e passa por situações épicas, e a dificuldade das meninas de entenderem esse nosso impulso. Cada vez mais acredito que esse tipo de comportamento é uma herança dos milhares e milhares de anos que passamos sendo responsáveis por sair de casa e trazer comida, enfrentando todo tipo de perigo que pra nós hoje só pode ser traduzido por essas figuras imaginárias de dragões, vampiros e todo tipo de quimera.
@@ -17,7 +22,3 @@ Concordo que essas coisas têm um fator cultural, e essa é a explicação mais 
 ## Michael Levin e Clube da Esquina
 
 Eu não poderia chegar a essas conclusões sem ter ouvido falar do incrível **Michael Levin**, e todas essas ideias surgiram simultaneamente, enquanto ouvia incansavelmente *Clube da Esquina No. 2* e ouvia os podcasts do **Michael Levin**.
-`,
-} satisfies PostContent;
-
-export default content;

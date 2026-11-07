@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Aqui e Agora
+date: 2023-11-11
+category: Music
+excerpt: "A análise de 'Aqui e Agora' revela a maior qualidade de Gilberto Gil: a capacidade de conceber música e letra como um conjunto indissociável, transitando entre vida e morte."
+readingTime: 2
+tags: [gilberto-gil, mpb, refavela, análise]
+---
 
-const content = {
-  pt: `
 "Aqui e Agora" é a terceira música de *Refavela*, um disco onde Gilberto Gil mostra sua interpretação da música popular que permeia as regiões mais pobres das grandes cidades do Brasil, essa região que é definitivamente um dos pilares da nossa cultura. Nesse disco encontramos Gil ensaiando sambas (*Samba do Avião*), Ijexás (*Ilê Ayê*), reggae (*No Norte da Saudade*), orquestrações com forte base percussiva, especialmente inspiradas nas nossas matrizes africanas.
 
 ## Música e Letra como Conjunto Indissociável
@@ -17,7 +22,3 @@ Assim também se dá quando a letra pensa no aqui e agora como algo positivo, co
 Nos pontos da música onde ouvimos os tons menores e as dissonâncias mais acentuadas Gil canta, contrariamente, de momentos onde a vida não tem sentido: "Aqui onde indefinido / Agora que é quase quando / Quando ser leve ou pesado / deixa de fazer sentido".
 
 A música transita perfeitamente entre um momento e outro, a letra e a harmonia fazem tudo ser um só, e nos ensina a valorizar cada momento da nossa vida porque em cada momento vivemos a dualidade da vida e da morte, que só são opositoras na tibieza da lógica, escrava da linguagem.
-`,
-} satisfies PostContent;
-
-export default content;

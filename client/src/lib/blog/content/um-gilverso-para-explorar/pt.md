@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Um Gilverso para se Explorar
+date: 2023-11-11
+category: Music
+excerpt: O paradoxo é tema e ferramenta da obra de Gilberto Gil. Em Gil, os paradoxos se completam, se misturam e só podem ser entendidos na sua relação de simultânea tensão e harmonia.
+readingTime: 7
+tags: [gilberto-gil, mpb, paradoxo, taoísmo, análise]
+---
 
-const content = {
-  pt: `
 Uma das críticas mais comuns que são feitas por parte da direita conservadora, uma direita historicamente infértil para cultura, na sua forma brasileira, é a de que artistas como Chico Buarque, Caetano Veloso e Gilberto Gil falam sobre a pobreza de uma forma bastante poética e confortável, do alto dos seus apartamentos na Urca. Não é, é necessário admitir, uma crítica totalmente sem fundamento. Chico Buarque provavelmente sairia correndo com um grito estéril se o menino de *Meu Menino* pudesse abordá-lo na rua e tenho pra mim que buzinaria quando o operário de *Construção* caísse na pista, impedindo seu caminho para o futebolzinho de domingo.
 
 Mas é preciso levar adiante a crítica, e para levá-la adiante teríamos que nos perguntar: então, o que fazemos com ela? Obrigamos os artistas a passarem fome para terem "lugar de fala"? E se, ao que parece, a premissa da muito válida crítica é: "tu não deves falar daquilo que não conheces" precisamos orientá-la de volta para seu lugar de origem: e que "lugar de fala" tem essas mesmas pessoas, que nunca foram capazes de parir um só filho cultural no nosso país?
@@ -78,7 +83,3 @@ A novidade, apresentada desde o início é um paradoxo, e um paradoxo que causa 
 Aqui o paradoxo está explícito. A novidade é simultaneamente um milagre e um pesadelo medonho, ela se tornava a guerra entre o feliz poeta, o próprio Gilberto Gil, e o esfomeado. A novidade, embora não tenha e não deva ter um significado preciso, pode ser vista, de um certo ângulo, como o sofrimento, o conflito, que o poeta vê como algo universal, que ele despedaça e espalha pelo mundo, unindo-nos em torno de algo que compartilhamos. "O poeta só é grande se sofrer", já dizia Vinicius de Moraes. E que o esfomeado, por sua vez, destrói já que na sua condição ele só vê a necessidade de realizar sua fome.
 
 A novidade também pode ser vista, de outro ângulo, como o descobrimento de algo maravilhoso no mundo que é visto por alguns como fonte de encanto, onde o poeta pode ser o professor, e por outro como fonte de realização de ambições mesquinhas, onde o esfomeado por nunca ter passado fome. Em qualquer desses dois sentidos acredito que mora a leitura de Gil sobre a "crítica", o poeta observa algo e descreve como a ele lhe cabe. Isso que ele descreve pode ser uma sereia maravilhosa, que outro pode ler como uma baleia cujo rabo deve ser cortado para nossa ceia.
-`,
-} satisfies PostContent;
-
-export default content;

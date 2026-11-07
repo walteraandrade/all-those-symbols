@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: The Sacrifice (Offret)
+date: 2012-08-07
+category: Cinema
+excerpt: Although the cinematography is gorgeous, absolutely wonderful, a real proof that Nykvist was one of the best DoP ever, the screenplay was seriously damaged by Tarkovsky's own spiritual and moral beliefs.
+readingTime: 3
+tags: [tarkovsky, christianity, sacrifice, nietzsche]
+---
 
-const content = {
-  en: `
 Finally, at the end of a very educational journey started in *The Mirror*, with *Offret* - or *The Sacrifice* - I can say proudly that I've seen all Tarkovsky's.
 
 Unfortunately, I should say that *The Sacrifice* is the worst film in this talented Russian's career. Although the cinematography is gorgeous, absolutely wonderful, a real proof that Nykvist was one of the best DoP ever, the screenplay was seriously damaged by Tarkovsky's own spiritual and moral beliefs.
@@ -23,7 +28,3 @@ Otto, not by chance, says to Alexander: *"Every present is a sacrifice. What is 
 Plus, there is this reference to Nietzsche. Both by dialogues and by the scene in which the Little Man jumps into Alexander's back just like the dwarf in *Thus spoke Zarathustra*. The reference to the man who killed God's philosophy is unclear but I'll make sure I'll read *Thus spoke Zarathustra* again in attempt to understand it.
 
 In the end, even though this morality is innocent and superficial, it was defended with passion and wisdom by the hands of the most poetic of all filmmakers.
-`,
-} satisfies PostContent;
-
-export default content;

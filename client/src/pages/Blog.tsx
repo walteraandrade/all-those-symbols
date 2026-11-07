@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
 import { blogCategories, blogPosts, localizePost } from "@/lib/blog/metadata";
+import { formatPostDate } from "@/lib/blog/chrome";
 import type { BlogCategory } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -66,7 +67,7 @@ export default function Blog() {
             <div>
               <div className="meta">
                 <span className="cat">{featuredPost.category}</span>
-                <span>{featuredPost.date}</span>
+                <span>{formatPostDate(featuredPost.date)}</span>
                 <span>{featuredPost.readingTime} min</span>
               </div>
               <h3 lang={featuredPost.activeLang}>{featuredPost.title}</h3>
@@ -81,7 +82,7 @@ export default function Blog() {
           <Link key={post.slug} href={`/blog/${post.slug}`} className="esc-postcard">
             <div className="meta">
               <span className="cat">{post.category}</span>
-              <span>{post.date}</span>
+              <span>{formatPostDate(post.date)}</span>
               <span>{post.readingTime} min</span>
             </div>
             <h3 lang={post.activeLang}>{post.title}</h3>

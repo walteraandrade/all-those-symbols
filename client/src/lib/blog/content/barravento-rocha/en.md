@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Barravento
+date: 2012-05-26
+category: Cinema
+excerpt: Barravento is about tradition versus vanguard. Brazilian culture (well) represented by European ways.
+readingTime: 3
+tags: [glauber-rocha, brazilian-cinema, modernism, religion]
+---
 
-const content = {
-  en: `
 In Brazil there is some kind of cult to Glauber Rocha among Cinema lovers. I'm not one of those who thinks he was a genius or something, however, I do think he had a lot of talent.
 
 In the 20s we started an artistic movement named "Modernism". Of course, this is not a singular event at all. When the 20th century came this kind of movement occurred all around the world. For me, the problem is that trying to create a "Brazilian way to make art" they fell into a "how to depict Brazilian culture with European techniques" and that's what Glauber Rocha is: Brazilian culture (well) represented by European ways.
@@ -21,7 +26,3 @@ The great deal about this movie is that it seems to imply that all the fishermen
 Very influenced by Italian cinema (how not to remember *Stromboli* fishing sequences?), film noir and also Nouvelle Vague, the images are beautiful and the lighting work is awesome.
 
 It is a real Brazilian classic. With European techniques, of course.
-`,
-} satisfies PostContent;
-
-export default content;

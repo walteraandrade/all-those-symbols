@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Masculin Féminin
+date: 2012-06-11
+category: Cinema
+excerpt: Every single time I watch a Godard film I get more and more involved by his ability to develop cinema in all sorts of situations. His attempt to depict the life of youngsters is the best part of the film.
+readingTime: 3
+tags: [godard, french-new-wave, youth, 60s]
+---
 
-const content = {
-  en: `
 *"I wanted to use cinema to speak of youth, or else I wanted to use youth to speak of cinema."* — Jean-Luc Godard, about *Masculin, Féminin*. *Les lettres*, June 1966
 
 Impossible to describe better.
@@ -23,7 +28,3 @@ Not to forget, the mention of Truffaut's work, specially *The 400 Blows*. *Mascu
 I've read around that some people criticized the existence of man characters being the intellectual ones and the girls being the silly and superficial ones; this may be true. But you can't forget that Elizabeth is a smart girl, she just doesn't like politics. There is another point of view that puts in first place the game with the words Masculin and Féminin. Whilst "masculin" has in its composition both words "masque" (mask) and "cul" (ass), the "féminin" starts with "f" and ends with "in", which together make "fin" (end). Since the last scene is about Paul's death and both girls talking about how life is going to be, the interpretation that this trick with the word "féminin" means that females had the final word is valid.
 
 Without all that crap about communism that sometimes really pissed me off and I almost gave up watching it, the film is wonderful and really worth watching once and maybe twice.
-`,
-} satisfies PostContent;
-
-export default content;

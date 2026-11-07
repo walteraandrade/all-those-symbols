@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Through a Glass Darkly
+date: 2012-07-20
+category: Cinema
+excerpt: This must be the third or fourth time I watch Ingmar Bergman's Through a Glass Darkly and it still holds up as one of the best films I've ever seen. The paradox between human desire and sin is the key to understanding this film.
+readingTime: 3
+tags: [bergman, schizophrenia, freud, christianity, film-analysis]
+---
 
-const content = {
-  en: `
 This must be the third or fourth time I watch Ingmar Bergman's *Through a Glass Darkly* and it still holds up as one of the best films I've ever seen.
 
 Bergman's objective here was clear since the first frame after the credits, as they are walking out of the sea, they'll leave darkness and try to find their paths. Every single one of them has a particular point that needs to be freed.
@@ -29,7 +34,3 @@ The gorgeous cinematography from Sven Nykvist will interchange between light and
 The music is... indescribable. It's Bach. Played on a cello. The cello is known as the instrument whose timbre is closest to the human voice. Every time the cello starts playing we can hear a human crying.
 
 *Through a Glass Darkly* is assuredly a masterpiece. One of my favorite movies of all time.
-`,
-} satisfies PostContent;
-
-export default content;

@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Madadayo (まあだだよ)
+date: 2012-04-17
+category: Cinema
+excerpt: The last legacy from Kurosawa. A movie about how to love things in life, about how to not be afraid from your emotions.
+readingTime: 2
+tags: [kurosawa, japanese-cinema, life, farewell]
+---
 
-const content = {
-  en: `
 The last legacy that two elder Japanese left to us, Hayakken Uchida-sensei and Kurosawa Akira-san. Usually I don't like to connect artistic stories to real life, like the artistic one being some kind of goal to reach in reality. But, usually, specially in Cinema, I need to put this out and accept that art can also be some sort of advice. This movie has two kinds of advice: Hayakken's about how to love things in life, about how to not be afraid from your emotions, and for us, westerners, there are too many small things about society we should learn from the Japanese, like the huge respect for the elders and their experience.
 
 ## Pure Cinema
@@ -15,7 +20,3 @@ Tatsuo Matsumura is doing a great job as the professor, he is incredibly charmin
 Kurosawa was, again, brilliant orchestrating all the good and bad times of this story with amazing music, from Vivaldi (the four seasons' scene is specially wonderful) to popular Japanese songs that make you cry easily.
 
 Like the last message Hyakken gives to the children in the film, the film itself is Kurosawa's message to us. The last scene he drew is beautiful. Nobody but him could end his own career that way. The ending makes you really want to say: "MADADAYO!, KUROSAWA"
-`,
-} satisfies PostContent;
-
-export default content;
