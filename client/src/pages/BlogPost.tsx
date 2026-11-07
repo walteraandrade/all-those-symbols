@@ -1,7 +1,7 @@
 import { use, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, Link } from "wouter";
-import { blogPosts, localizePost, postLangs, formatPostDate } from "@/lib/blog/metadata";
-import { CHROME } from "@/lib/blog/chrome";
+import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
+import { CHROME, formatPostDate } from "@/lib/blog/chrome";
 import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
 import { BASE_URL } from "@/lib/site";
 import { slugify } from "@/lib/utils";

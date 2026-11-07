@@ -1,12 +1,10 @@
-export type BlogCategory =
-  | "Cinema"
-  | "Philosophy"
-  | "Code"
-  | "Life"
-  | "Project"
-  | "Music";
+export const BLOG_CATEGORIES = ["Cinema", "Philosophy", "Code", "Life", "Project", "Music"] as const;
 
-export type PostLang = "en" | "pt";
+export type BlogCategory = (typeof BLOG_CATEGORIES)[number];
+
+export const POST_LANGS = ["en", "pt"] as const;
+
+export type PostLang = (typeof POST_LANGS)[number];
 
 export interface PostMetadata {
   title: string;

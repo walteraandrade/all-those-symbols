@@ -1,4 +1,4 @@
-import posts from "virtual:blog-posts";
+import blogPosts from "virtual:blog-posts";
 import type { BlogCategory, BlogPost, LocalizedPost, PostLang } from "./types";
 
 export const postLangs = (post: BlogPost): PostLang[] => [
@@ -16,15 +16,7 @@ export const localizePost = (post: BlogPost, lang: PostLang): LocalizedPost => {
   };
 };
 
-export const formatPostDate = (date: string) =>
-  new Date(`${date}T00:00:00Z`).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
-
-export const blogPosts: BlogPost[] = posts;
+export { blogPosts };
 
 export const blogCategories: BlogCategory[] = [
   ...new Set(blogPosts.map((post) => post.category)),

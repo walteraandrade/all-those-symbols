@@ -20,6 +20,13 @@ test.each(routes.map((url) => [url.pathname, url] as const))("%s is fully preren
   expect(html).toContain(`<link rel="canonical" href="${url.href}"`);
 });
 
+test("blog posts have ISO lastmod", () => {
+  const entries = [...read("sitemap.xml").matchAll(/<url>([\s\S]*?)<\/url>/g)].map(([, url]) => url!);
+  const posts = entries.filter((url) => /<loc>[^<]+\/blog\/[^<]+<\/loc>/.test(url));
+  expect(posts.length).toBeGreaterThan(0);
+  for (const url of posts) expect(url).toMatch(/<lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/);
+});
+
 test("404.html exists", () => {
   expect(existsSync(`${DIST}/404.html`)).toBe(true);
 });

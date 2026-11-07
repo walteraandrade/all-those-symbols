@@ -3,14 +3,13 @@ import path from "path";
 import type { Plugin } from "vite";
 import { parse } from "yaml";
 import { z } from "zod";
-import type { BlogPost, PostLang } from "../client/src/lib/blog/types";
+import { BLOG_CATEGORIES, POST_LANGS, type BlogPost } from "../client/src/lib/blog/types";
 
 export const CONTENT_DIR = path.resolve(import.meta.dirname, "..", "client", "src", "lib", "blog", "content");
 
 const VIRTUAL_ID = "virtual:blog-posts";
 const RESOLVED_ID = `\0${VIRTUAL_ID}`;
 const SLUG = /^[a-z0-9]+(-[a-z0-9]+)*$/;
-const LANGS = ["en", "pt"] as const satisfies readonly PostLang[];
 
 const translationFields = {
   title: z.string().min(1),
@@ -25,18 +24,21 @@ const primarySchema = z
   .object({
     ...translationFields,
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).refine((d) => !Number.isNaN(Date.parse(d)), "invalid date"),
-    category: z.enum(["Cinema", "Philosophy", "Code", "Life", "Project", "Music"]),
+    category: z.enum(BLOG_CATEGORIES),
     image: z.string().startsWith("/").optional(),
     featured: z.boolean().optional(),
     tags: z.array(z.string().min(1)).optional(),
   })
   .strict();
 
-export const splitFrontmatter = (source: string, file: string) => {
-  const match = source.match(/^---\n([\s\S]*?)\n---\n/);
+export const splitFrontmatter = (raw: string, file: string) => {
+  const source = raw.replace(/\r\n/g, "\n");
+  const match = source.match(/^---\n([\s\S]*?)\n---(?:\n|$)/);
   if (!match) throw new Error(`${file}: missing frontmatter`);
   return { data: parse(match[1]) as unknown, body: source.slice(match[0].length) };
 };
+
+const visible = (names: string[]) => names.filter((name) => !name.startsWith("."));
 
 const parseOrThrow = <T>(schema: z.ZodType<T>, data: unknown, file: string): T => {
   const result = schema.safeParse(data);
@@ -45,15 +47,15 @@ const parseOrThrow = <T>(schema: z.ZodType<T>, data: unknown, file: string): T =
   throw new Error(`${file}: invalid frontmatter\n  ${issues.join("\n  ")}`);
 };
 
-const readPost = async (slug: string): Promise<BlogPost> => {
+const readPost = async (dir: string, slug: string): Promise<BlogPost> => {
   if (!SLUG.test(slug)) throw new Error(`invalid blog slug directory: ${slug}`);
-  const names = (await readdir(path.join(CONTENT_DIR, slug))).sort();
+  const names = visible(await readdir(path.join(dir, slug))).sort();
   const files = await Promise.all(
     names.map(async (name) => {
       const file = path.join(slug, name);
-      const lang = LANGS.find((l) => name === `${l}.md`);
-      if (!lang) throw new Error(`${file}: expected ${LANGS.map((l) => `${l}.md`).join(" or ")}`);
-      const source = await readFile(path.join(CONTENT_DIR, file), "utf-8");
+      const lang = POST_LANGS.find((l) => name === `${l}.md`);
+      if (!lang) throw new Error(`${file}: expected ${POST_LANGS.map((l) => `${l}.md`).join(" or ")}`);
+      const source = await readFile(path.join(dir, file), "utf-8");
       const { data, body } = splitFrontmatter(source, file);
       if (!body.trim()) throw new Error(`${file}: empty body`);
       return { file, lang, data };
@@ -62,7 +64,8 @@ const readPost = async (slug: string): Promise<BlogPost> => {
 
   const primaries = files.filter((f) => typeof f.data === "object" && f.data !== null && "date" in f.data);
   if (primaries.length !== 1) {
-    throw new Error(`${slug}: expected exactly one file with date/category (primary lang), found ${primaries.length}`);
+    const found = primaries.map((f) => f.file).join(", ") || "none";
+    throw new Error(`${slug}: expected exactly one primary lang file (the one with date, category); found: ${found}`);
   }
   const [primary] = primaries;
   const translations = files
@@ -77,11 +80,11 @@ const readPost = async (slug: string): Promise<BlogPost> => {
   };
 };
 
-export const readBlogPosts = async (): Promise<BlogPost[]> => {
-  const entries = await readdir(CONTENT_DIR, { withFileTypes: true });
+export const readBlogPosts = async (dir = CONTENT_DIR): Promise<BlogPost[]> => {
+  const entries = (await readdir(dir, { withFileTypes: true })).filter((e) => !e.name.startsWith("."));
   const stray = entries.filter((e) => !e.isDirectory()).map((e) => e.name);
   if (stray.length > 0) throw new Error(`unexpected files in blog content dir: ${stray.join(", ")}`);
-  const posts = await Promise.all(entries.map((e) => readPost(e.name)));
+  const posts = await Promise.all(entries.map((e) => readPost(dir, e.name)));
   if (posts.length === 0) throw new Error("no blog posts found");
   return posts.sort((a, b) => b.date.localeCompare(a.date) || a.slug.localeCompare(b.slug));
 };

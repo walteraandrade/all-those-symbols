@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
-import { blogCategories, blogPosts, localizePost, formatPostDate } from "@/lib/blog/metadata";
+import { blogCategories, blogPosts, localizePost } from "@/lib/blog/metadata";
+import { formatPostDate } from "@/lib/blog/chrome";
 import type { BlogCategory } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";

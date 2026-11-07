@@ -2,9 +2,9 @@ import type { PostContent, PostLang } from "./types";
 
 const bodyLoaders = import.meta.glob<string>("./content/*/*.md", { query: "?body", import: "default" });
 
-const bodies = Object.entries(bodyLoaders).map(([file, load]) => {
-  const [, slug, lang] = file.match(/^\.\/content\/([^/]+)\/([^/]+)\.md$/) ?? [];
-  return { slug, lang: lang as PostLang, load };
+const bodies = Object.entries(bodyLoaders).flatMap(([file, load]) => {
+  const match = file.match(/^\.\/content\/([^/]+)\/(en|pt)\.md$/);
+  return match ? [{ slug: match[1], lang: match[2] as PostLang, load }] : [];
 });
 
 export const isBlogSlug = (slug: string) => bodies.some((b) => b.slug === slug);
