@@ -3,12 +3,18 @@ import { z } from "zod";
 import { checkRateLimit, getDatabaseConnection } from "./_lib/rate-limit.js";
 import { applyCors } from "./_lib/cors.js";
 
-const vitalsSchema = z.object({
-  metric: z.enum(["LCP", "INP", "CLS", "TTFB"]),
-  value: z.number().finite().min(0),
-  path: z.string().max(200),
-  device: z.enum(["mobile", "desktop"]),
-});
+const RETENTION_DAYS = 90;
+const SWEEP_PROBABILITY = 0.02;
+const MAX_VALUE = { LCP: 60000, INP: 60000, TTFB: 60000, CLS: 10 } as const;
+
+export const vitalsSchema = z
+  .object({
+    metric: z.enum(["LCP", "INP", "CLS", "TTFB"]),
+    value: z.number().finite().min(0),
+    path: z.string().regex(/^\/[a-z0-9\/-]{0,120}$/),
+    device: z.enum(["mobile", "desktop"]),
+  })
+  .refine(({ metric, value }) => value <= MAX_VALUE[metric]);
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   applyCors(req, res);
@@ -23,7 +29,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   const parsed = vitalsSchema.safeParse(req.body);
   if (!parsed.success) {
-    return res.status(400).json({ error: "Invalid request", details: parsed.error.flatten() });
+    return res.status(400).json({ error: "Invalid request" });
   }
 
   const db = getDatabaseConnection();
@@ -47,6 +53,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       "INSERT INTO web_vitals (metric, value, path, device) VALUES (?, ?, ?, ?)",
       metric, value, path, device,
     );
+    if (Math.random() < SWEEP_PROBABILITY) {
+      await db
+        .run("DELETE FROM web_vitals WHERE created_at < datetime('now', ?)", `-${RETENTION_DAYS} days`)
+        .catch(() => {});
+    }
 
     return res.status(204).end();
   } catch (error) {

@@ -18,6 +18,7 @@ await conn.batch([
     created_at TEXT NOT NULL DEFAULT (datetime('now'))
   )`,
   `CREATE INDEX IF NOT EXISTS idx_web_vitals_metric_created ON web_vitals (metric, created_at)`,
+  `CREATE INDEX IF NOT EXISTS idx_web_vitals_created ON web_vitals (created_at)`,
   `CREATE TABLE IF NOT EXISTS api_rate_limits (
     bucket TEXT NOT NULL,
     ip TEXT NOT NULL,
