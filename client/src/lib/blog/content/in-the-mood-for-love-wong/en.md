@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: In the Mood for Love (花樣年華)
+date: 2012-08-16
+category: Cinema
+excerpt: One of the finest dramas about love ever. An amazing aesthetic exercise of the most fiery moment of seduction.
+readingTime: 3
+tags: [wong-kar-wai, hong-kong, romance, seduction]
+---
 
-const content = {
-  en: `
 I have to tell that I was quite afraid of rewatching it. The first time I saw it, I really liked but I was so sleepy that I couldn't understand this film completely.
 
 Well, I'm happy I've decided to watch it again because I can say for sure that this is one of the finest dramas about love ever.
@@ -25,7 +30,3 @@ If you ever try to remember one scene like these in your past, you'll find one. 
 So, basically, stylish details apart, the movie is about a man (Mr. Chow) that innocently moves to a certain building in Hong Kong with his wife; and a woman (Mrs. Chan) that is also moving to this same building with her husband; although in different apartments. Soon they'll find out that Mr. Chow's wife is betraying him with Mr. Chan. From this tragic discovery will be born a complex fellowship. However, from this fellowship, in both lonely hearts love will start to burn and they'll have to deal with it. Somehow. Moral codes will come up, the Chinese paternalistic society will try to spoil it, their own consciousness will drive them crazy.
 
 Therefore, the movie is, basically, an amazing aesthetic exercise of the most fiery moment of seduction. And Wong Kar-Wai did it more than rightly.
-`,
-} satisfies PostContent;
-
-export default content;

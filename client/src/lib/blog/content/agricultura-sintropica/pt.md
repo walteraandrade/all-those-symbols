@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Agricultura Sintrópica
+date: 2026-02-11
+category: Philosophy
+excerpt: Os sistemas de agrofloresta e agricultura sintrópica me encantam pelos seus fundamentos filosóficos. Acho que o ser humano é algo como uma célula num corpo maior.
+readingTime: 3
+tags: [agrofloresta, agricultura-sintropica, spinoza, michael-levin, ernst-gotsch, ecologia, cell-memory]
+---
 
-const content = {
-  pt: `
 Para além dos resultados incríveis especialmente em caatingas, os sistemas de **agrofloresta** e **agricultura sintrópica** me encantam pelos seus fundamentos filosóficos. Há pelo menos 6 anos venho tentando entender como podemos olhar para o mundo não do ponto de vista de seu dominador ou colonizador e sim do ponto de vista de uma parte num organismo maior que o nosso. Tenho até pensado em ler **Spinoza**, socorro. A ideia é interessantíssima porque também se relaciona com as coisas que tenho aprendido com **Michael Levin**, especialmente a conclusão dele de que não existe inteligência individual, apenas coletiva.
 
 ## Células
@@ -19,7 +24,3 @@ Pra mim a maior dificuldade de me identificar como ecologista sempre foi a de ac
 ## Ernst Götsch
 
 A ideia de **Ernst Götsch** se alinha com a desses autores — **Spinoza**, **Michael Levin** — justamente nesse ponto: ele aplica esse mesmo pensamento à natureza e, ao fazê-lo, muda o conceito de agricultura que conhecemos. Todo o tempo que passamos forçando a natureza a servir às nossas necessidades nos ensinou, entre outras coisas, que a natureza não serve a esse fim, e a ideia de Götsch é permitir que ela sirva aos próprios fins para servir aos nossos de forma secundária. O conceito de agrofloresta (em suma, o cultivo de árvores nativas em comunhão com uma cultura agrícola) já existia antes dele, mas ele introduz tanto essa visão filosófica do problema quanto técnicas de acelerar esse processo.
-`,
-} satisfies PostContent;
-
-export default content;

@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: Love Exposure (愛のむきだし)
+date: 2012-05-04
+category: Cinema
+excerpt: This is not an easy-digest movie. This vision of love this movie shows is exactly the vision we had as a child and that we lost when we became adults.
+readingTime: 5
+tags: [sion-sono, japanese-cinema, love, religion, sexuality]
+---
 
-const content = {
-  en: `
 I've just watched it and my fingers are still shaking. I don't know for sure how to start it, I just know that I need to write something so I can always remember how I felt in the very first time I watched it. And I felt wonderful.
 
 For those who didn't see it, I must say that this is not an easy-digest movie, nor a children kind of film despite the young actors. Although it sounds so cliché, it must be said: this is a movie about love. When I first heard about it, I remember that I thought: "Oh, must be a cute movie". Well, it isn't 'cute'. There is a reason for these young actors: this vision of love this movie shows is exactly the vision we had as a child and that we lost when we became adults. Teenagers are in the border of both times, that's why they are here as the main characters.
@@ -29,7 +34,3 @@ It's simply inexplicable how Sono made 237 minutes look like 90. The rhythm here
 Despite all the problems they go through, Yu's love is inflexible. And it reaches the point he guards himself in his own madness being Sasori to continue loving her. Yoko needs to know again the childhood dreams to realize that Yu is the only person for her.
 
 Yu's father needs to leave catholicism to find love. The movie is also a critic to the excess of spiritualism because the priest finds love when he accepts his own body as a part of his spirit, as a potential form of love too. This can be seen with Yu too—all along the picture he only has hard-on with Yoko. This can't be seen as a dirty thing. This is love expressing itself with the spirit and the body at the same time, purity and sexuality.
-`,
-} satisfies PostContent;
-
-export default content;

@@ -1,6 +1,6 @@
 import { use, useEffect, useMemo, useRef, useState } from "react";
 import { useParams, Link } from "wouter";
-import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
+import { blogPosts, localizePost, postLangs, formatPostDate } from "@/lib/blog/metadata";
 import { CHROME } from "@/lib/blog/chrome";
 import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
 import { BASE_URL } from "@/lib/site";
@@ -153,7 +153,7 @@ function BlogPostContent() {
 
           <div className="flex flex-wrap items-center gap-4 mb-4 mt-6 text-[19px] text-[#8b8778]">
             <span className="text-[var(--accent)] border-2 border-[#3a382f] px-2">{post.category}</span>
-            <span>{post.date}</span>
+            <span>{formatPostDate(post.date)}</span>
             <span>{post.readingTime} {chrome.minRead}</span>
           </div>
 

@@ -1,7 +1,12 @@
-import type { PostContent } from "../types";
+---
+title: No Country for Old Men
+date: 2012-08-31
+category: Cinema
+excerpt: No Country for Old Men is a film about the randomness of destiny and the inability to deal with it whether you are an experienced person or not. Or if you prefer, it's about the innocence of the idea of maturity itself.
+readingTime: 4
+tags: [coen-brothers, destiny, western, philosophy]
+---
 
-const content = {
-  en: `
 One single reason made me rewatch this film in order to make a proper review about it: I've seen that some people whose opinion I respect saying the Coen brothers are overrated. Well, I don't think they are overrated, I just think people admire them for the wrong reasons. People tend to refer to the dialogues in their films as "cool" when in fact they are indeed profound and intelligent, and "intelligent" things are often very different from "cool" things.
 
 This is, in my opinion, the greatest work of the Coen brothers. *No Country for Old Men* is a film about the randomness of destiny and the inability to deal with it whether you are an experienced person or not. Or if you prefer, *No Country for Old Men* is about the innocence of the idea of maturity itself. That's why the film starts with an old sheriff talking about the old times, when people didn't need to use guns. He is concerned that now violence is in every corner and he feels he can't handle it. He is, in fact, trying to make sense of things as he used to do when he was a kid.
@@ -23,7 +28,3 @@ In the end, sheriff Ed Tom Bell goes to his father home to say he is going to re
 ## Chigurh as Fate
 
 Every single time Chigurh appears you know something bad is going to happen. His force can be felt every time and by everyone not only because Javier Bardem made a wonderful job, but also because the character itself holds one of the biggest mysteries in life. Destiny has all the weapons (Chigurh never has to look after it, he always has weapons in his hands) and all you can do is to accept it, there is no such a thing as maturity.
-`,
-} satisfies PostContent;
-
-export default content;

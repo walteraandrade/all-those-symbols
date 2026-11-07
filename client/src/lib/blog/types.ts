@@ -1,5 +1,3 @@
-import type { BlogSlug } from "./loaders";
-
 export type BlogCategory =
   | "Cinema"
   | "Philosophy"
@@ -18,7 +16,7 @@ export interface PostMetadata {
 }
 
 export interface BlogPost extends PostMetadata {
-  slug: BlogSlug;
+  slug: string;
   date: string;
   category: BlogCategory;
   lang: PostLang;

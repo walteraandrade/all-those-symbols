@@ -1,8 +1,7 @@
 import { readFile, writeFile, mkdir, rm } from "fs/promises";
 import path from "path";
 import { pathToFileURL } from "url";
-import { blogPosts } from "../client/src/lib/blog/metadata";
-import { blogSlugs } from "../client/src/lib/blog/loaders";
+import { readBlogPosts } from "./blog-content";
 import { BASE_URL } from "../client/src/lib/site";
 import type { BlogPost } from "../client/src/lib/blog/types";
 
@@ -109,70 +108,11 @@ const injectBody = (html: string, body: string): string => {
   return html.replace(ROOT_TAG, () => `<div id="root">${body}</div>`);
 };
 
-const parseDate = (dateStr: string): Date => {
-  const months: Record<string, number> = {
-    Jan: 0,
-    Feb: 1,
-    Mar: 2,
-    Apr: 3,
-    May: 4,
-    Jun: 5,
-    Jul: 6,
-    Aug: 7,
-    Sep: 8,
-    Oct: 9,
-    Nov: 10,
-    Dec: 11,
-  };
-  const parts = dateStr.split(" ");
-  const month = months[parts[0]];
-  const day = parseInt(parts[1].replace(",", ""));
-  const year = parseInt(parts[2]);
-  return new Date(year, month, day);
-};
-
 type SitemapUrl = {
   loc: string;
   priority: string;
   changefreq: string;
   lastmod?: string;
-};
-
-const assertBlogDataIntegrity = (): void => {
-  const loaderSlugs: readonly string[] = blogSlugs;
-  if (blogPosts.length === 0) {
-    throw new Error("Blog metadata is empty; refusing to prerender.");
-  }
-  if (loaderSlugs.length === 0) {
-    throw new Error("Blog loader slugs are empty; refusing to prerender.");
-  }
-
-  const metadataSlugs: string[] = blogPosts.map((post) => post.slug);
-  const duplicateMetadataSlugs = metadataSlugs.filter(
-    (slug, index) => metadataSlugs.indexOf(slug) !== index
-  );
-  const duplicateLoaderSlugs = loaderSlugs.filter(
-    (slug, index) => loaderSlugs.indexOf(slug) !== index
-  );
-
-  if (duplicateMetadataSlugs.length > 0) {
-    throw new Error(
-      `Duplicate blog metadata slugs: ${[...new Set(duplicateMetadataSlugs)].join(", ")}`
-    );
-  }
-  if (duplicateLoaderSlugs.length > 0) {
-    throw new Error(
-      `Duplicate blog loader slugs: ${[...new Set(duplicateLoaderSlugs)].join(", ")}`
-    );
-  }
-
-  const metadataOnly = metadataSlugs.filter((slug) => !loaderSlugs.includes(slug));
-  const loadersOnly = loaderSlugs.filter((slug) => !metadataSlugs.includes(slug));
-  if (metadataOnly.length > 0 || loadersOnly.length > 0) {
-    throw new Error(
-      `Blog metadata and loaders do not match. Metadata only: ${metadataOnly.join(", ") || "none"}; loaders only: ${loadersOnly.join(", ") || "none"}.`
-    );
-  }
 };
 
 const generateSitemap = (posts: BlogPost[]): string => {
@@ -186,7 +126,7 @@ const generateSitemap = (posts: BlogPost[]): string => {
       loc: `/blog/${post.slug}`,
       priority: "0.7",
       changefreq: "monthly",
-      lastmod: parseDate(post.date).toISOString().split("T")[0],
+      lastmod: post.date,
     })),
   ];
 
@@ -220,7 +160,7 @@ const inlineCss = async (html: string): Promise<string> => {
 
 export async function prerender() {
   console.log("Pre-rendering pages...");
-  assertBlogDataIntegrity();
+  const blogPosts = await readBlogPosts();
 
   const rawTemplate = await readFile(path.join(DIST_PATH, "index.html"), "utf-8");
   const template = await inlineCss(rawTemplate);

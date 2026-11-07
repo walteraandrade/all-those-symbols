@@ -1,48 +1,29 @@
-import type { PostContent } from "./types";
+import type { PostContent, PostLang } from "./types";
 
-type ContentModule = { default: PostContent };
-type ContentLoader = () => Promise<ContentModule>;
+const bodyLoaders = import.meta.glob<string>("./content/*/*.md", { query: "?body", import: "default" });
 
-const contentLoaders = {
-  "philosophy-really": () => import("./content/philosophy-really"),
-  "the-benefits-of-stupidity": () => import("./content/the-benefits-of-stupidity"),
-  "through-a-glass-darkly-bergman": () => import("./content/through-a-glass-darkly-bergman"),
-  "no-country-for-old-men": () => import("./content/no-country-for-old-men"),
-  "the-thin-red-line": () => import("./content/the-thin-red-line"),
-  "the-sacrifice-tarkovsky": () => import("./content/the-sacrifice-tarkovsky"),
-  "masculin-feminin-godard": () => import("./content/masculin-feminin-godard"),
-  "harakiri-kobayashi": () => import("./content/harakiri-kobayashi"),
-  "love-exposure-sono": () => import("./content/love-exposure-sono"),
-  "madadayo-kurosawa": () => import("./content/madadayo-kurosawa"),
-  "barravento-rocha": () => import("./content/barravento-rocha"),
-  "in-the-mood-for-love-wong": () => import("./content/in-the-mood-for-love-wong"),
-  "la-strada-fellini": () => import("./content/la-strada-fellini"),
-  "agricultura-sintropica": () => import("./content/agricultura-sintropica"),
-  "paisagem-da-janela-milton-nascimento": () => import("./content/paisagem-da-janela-milton-nascimento"),
-  "aqui-e-agora-gilberto-gil": () => import("./content/aqui-e-agora-gilberto-gil"),
-  "um-gilverso-para-explorar": () => import("./content/um-gilverso-para-explorar"),
-} satisfies Record<string, ContentLoader>;
+const bodies = Object.entries(bodyLoaders).map(([file, load]) => {
+  const [, slug, lang] = file.match(/^\.\/content\/([^/]+)\/([^/]+)\.md$/) ?? [];
+  return { slug, lang: lang as PostLang, load };
+});
 
-export type BlogSlug = keyof typeof contentLoaders;
+export const isBlogSlug = (slug: string) => bodies.some((b) => b.slug === slug);
 
-export const blogSlugs = Object.keys(contentLoaders) as BlogSlug[];
+const contentCache = new Map<string, Promise<PostContent | null>>();
 
-export const isBlogSlug = (slug: string): slug is BlogSlug =>
-  Object.hasOwn(contentLoaders, slug);
-
-const contentCache = new Map<BlogSlug, Promise<PostContent | null>>();
-
-export const readBlogContent = (slug: BlogSlug): Promise<PostContent | null> => {
+export const readBlogContent = (slug: string): Promise<PostContent | null> => {
   const cached = contentCache.get(slug);
   if (cached) return cached;
-  const pending = contentLoaders[slug]().then(
-    (module) => module.default,
+  const pending = Promise.all(
+    bodies.filter((b) => b.slug === slug).map(async (b) => [b.lang, await b.load()] as const)
+  ).then(
+    (entries): PostContent => Object.fromEntries(entries),
     () => null
   );
   contentCache.set(slug, pending);
   return pending;
 };
 
-export const forgetBlogContent = (slug: BlogSlug) => {
+export const forgetBlogContent = (slug: string) => {
   contentCache.delete(slug);
 };
