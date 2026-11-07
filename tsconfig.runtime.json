@@ -1,5 +1,5 @@
 {
-  "include": ["api/**/*.ts", "script/**/*.ts"],
+  "include": ["script/**/*.ts"],
   "exclude": ["node_modules"],
   "compilerOptions": {
     "incremental": true,

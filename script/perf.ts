@@ -5,10 +5,10 @@ import { z } from "zod";
 type LabResult = {
   source: "psi";
   strategy: "mobile";
-  performanceScore: number;
-  lcpMs: number;
-  tbtMs: number;
-  cls: number;
+  performanceScore: number | null;
+  lcpMs: number | null;
+  tbtMs: number | null;
+  cls: number | null;
   fcpMs: number;
   speedIndexMs: number;
   ttfbMs: number;
@@ -25,13 +25,15 @@ type FieldResult = {
   p75: { lcpMs: number | null; inpMs: number | null; cls: number | null; ttfbMs: number | null };
 } | null;
 
-type Violation = { scope: "bundle" | "lab" | "field"; metric: string; value: number; limit: number };
+type Violation = { scope: "bundle" | "lab" | "field"; metric: string; value: number | null; limit: number };
 
-type Budget = {
-  bundle: { mainChunkKb: number };
-  lab: { performanceScore: number; lcpMs: number; tbtMs: number; cls: number };
-  field: { lcpMs: number; inpMs: number; cls: number };
-};
+const budgetSchema = z.object({
+  bundle: z.object({ mainChunkKb: z.number() }),
+  lab: z.object({ performanceScore: z.number(), lcpMs: z.number(), tbtMs: z.number(), cls: z.number() }),
+  field: z.object({ lcpMs: z.number(), inpMs: z.number(), cls: z.number() }),
+});
+
+type Budget = z.infer<typeof budgetSchema>;
 
 type BundleResult = {
   mainChunkKb: number;
@@ -128,13 +130,16 @@ async function collectLab(): Promise<{ lab: LabResult; crux: CruxResult }> {
     }
 
     const audits = data.lighthouseResult?.audits ?? {};
+    const score = data.lighthouseResult?.categories?.performance?.score;
+    const lcp = audits["largest-contentful-paint"]?.numericValue;
+    const tbt = audits["total-blocking-time"]?.numericValue;
     const lab: LabResult = {
       source: "psi",
       strategy: "mobile",
-      performanceScore: round((data.lighthouseResult?.categories?.performance?.score ?? 0) * 100),
-      lcpMs: round(audits["largest-contentful-paint"]?.numericValue ?? 0),
-      tbtMs: round(audits["total-blocking-time"]?.numericValue ?? 0),
-      cls: audits["cumulative-layout-shift"]?.numericValue ?? 0,
+      performanceScore: score === null || score === undefined ? null : round(score * 100),
+      lcpMs: lcp === undefined ? null : round(lcp),
+      tbtMs: tbt === undefined ? null : round(tbt),
+      cls: audits["cumulative-layout-shift"]?.numericValue ?? null,
       fcpMs: round(audits["first-contentful-paint"]?.numericValue ?? 0),
       speedIndexMs: round(audits["speed-index"]?.numericValue ?? 0),
       ttfbMs: round(audits["server-response-time"]?.numericValue ?? 0),
@@ -205,7 +210,7 @@ async function collectField(): Promise<FieldResult> {
   }
 }
 
-function checkBudget(budget: Budget, bundle: BundleResult, lab: LabResult, field: FieldResult) {
+export function checkBudget(budget: Budget, bundle: BundleResult, lab: LabResult, field: FieldResult, measured = false) {
   const violations: Violation[] = [];
 
   if (bundle.mainChunkKb > budget.bundle.mainChunkKb) {
@@ -217,19 +222,22 @@ function checkBudget(budget: Budget, bundle: BundleResult, lab: LabResult, field
     });
   }
 
+  if (!lab && measured) {
+    violations.push({ scope: "lab", metric: "unavailable", value: null, limit: 0 });
+  }
+
   if (lab) {
-    if (lab.performanceScore < budget.lab.performanceScore) {
-      violations.push({ scope: "lab", metric: "performanceScore", value: lab.performanceScore, limit: budget.lab.performanceScore });
-    }
-    if (lab.lcpMs > budget.lab.lcpMs) {
-      violations.push({ scope: "lab", metric: "lcpMs", value: lab.lcpMs, limit: budget.lab.lcpMs });
-    }
-    if (lab.tbtMs > budget.lab.tbtMs) {
-      violations.push({ scope: "lab", metric: "tbtMs", value: lab.tbtMs, limit: budget.lab.tbtMs });
-    }
-    if (lab.cls > budget.lab.cls) {
-      violations.push({ scope: "lab", metric: "cls", value: lab.cls, limit: budget.lab.cls });
-    }
+    const check = (metric: "performanceScore" | "lcpMs" | "tbtMs" | "cls", below = false) => {
+      const value = lab[metric];
+      const limit = budget.lab[metric];
+      if (value === null || (below ? value < limit : value > limit)) {
+        violations.push({ scope: "lab", metric, value, limit });
+      }
+    };
+    check("performanceScore", true);
+    check("lcpMs");
+    check("tbtMs");
+    check("cls");
   }
 
   if (field) {
@@ -301,7 +309,7 @@ function printSummary(entry: HistoryEntry) {
 
 async function main() {
   const budgetRaw = await readFile(path.join(ROOT, "perf/budget.json"), "utf-8");
-  const budget: Budget = JSON.parse(budgetRaw);
+  const budget = budgetSchema.parse(JSON.parse(budgetRaw));
   const gate = process.argv.includes("--gate");
   const bundle = await collectBundle();
   const [{ lab, crux }, field] = gate
@@ -315,7 +323,7 @@ async function main() {
     lab,
     field,
     crux,
-    budget: checkBudget(budget, bundle, lab, field),
+    budget: checkBudget(budget, bundle, lab, field, !gate),
   };
 
   if (!gate) {
@@ -330,4 +338,9 @@ async function main() {
   process.exit(0);
 }
 
-main();
+if (import.meta.main) {
+  main().catch((err) => {
+    console.error(err instanceof Error ? err.message : err);
+    process.exit(1);
+  });
+}
