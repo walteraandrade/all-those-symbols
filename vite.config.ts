@@ -5,6 +5,9 @@ import path from "path";
 
 export default defineConfig(({ isSsrBuild }) => ({
   plugins: [react(), tailwindcss()],
+  define: {
+    "import.meta.env.VITE_BUILD_YEAR": JSON.stringify(String(new Date().getFullYear())),
+  },
   resolve: {
     alias: {
       "@": path.resolve(import.meta.dirname, "client", "src"),

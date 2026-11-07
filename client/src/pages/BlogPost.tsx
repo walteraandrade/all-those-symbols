@@ -1,6 +1,6 @@
 import { use, useEffect, useMemo, useRef, useState } from "react";
 import { MotionConfig } from "framer-motion";
-import { useParams, Redirect, Link } from "wouter";
+import { useParams, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
 import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
 import { slugify } from "@/lib/utils";
@@ -11,6 +11,7 @@ import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { CenturyTimeline } from "@/components/blog/CenturyTimeline";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
+import NotFound from "@/pages/not-found";
 
 const extractHeadings = (markdown: string) => {
   const headingRegex = /^#{2,3}\s+(.+)$/gm;
@@ -30,7 +31,7 @@ function BlogPostContent() {
   const { lang } = useLanguage();
   const [activeId, setActiveId] = useState<string>("");
   const [tocOpen, setTocOpen] = useState(false);
-  const [, setRetry] = useState(0);
+  const [, rerender] = useState(0);
   const shownSlug = useRef(slug);
 
   useEffect(() => {
@@ -87,12 +88,12 @@ function BlogPostContent() {
   }, [headings]);
 
   if (!post) {
-    return <Redirect to="/blog" />;
+    return <NotFound />;
   }
 
   if (!content) {
     return (
-      <div className="esc-page" style={{ minHeight: "70dvh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
+      <div data-load-failed className="esc-page" style={{ minHeight: "70dvh", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", textAlign: "center" }}>
         <p className="esc-sub" style={{ maxWidth: 460, marginBottom: 18 }}>
           This post did not load. The connection dropped, or the page is running an older build.
         </p>
@@ -100,7 +101,7 @@ function BlogPostContent() {
           className="esc-btn"
           onClick={() => {
             if (isBlogSlug(slug)) forgetBlogContent(slug);
-            setRetry((n) => n + 1);
+            rerender((n) => n + 1);
           }}
         >
           TRY AGAIN

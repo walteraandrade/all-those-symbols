@@ -12,7 +12,8 @@ const SERVER_ENTRY = path.resolve(import.meta.dirname, "..", "dist", "server", "
 interface PageMeta {
   title: string;
   description: string;
-  canonical: string;
+  canonical?: string;
+  noindex?: boolean;
   ogType?: string;
 }
 
@@ -60,20 +61,26 @@ const generateMetaTags = (meta: PageMeta): string => {
   const ogImage = `${BASE_URL}/opengraph.jpg`;
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
-  return `
-    <title>${title}</title>
-    <meta name="description" content="${description}" />
-    <link rel="canonical" href="${BASE_URL}${meta.canonical}" />
-    <meta property="og:title" content="${title}" />
-    <meta property="og:description" content="${description}" />
-    <meta property="og:type" content="${meta.ogType || "website"}" />
-    <meta property="og:url" content="${BASE_URL}${meta.canonical}" />
-    <meta property="og:image" content="${ogImage}" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@walteraandrade" />
-    <meta name="twitter:title" content="${title}" />
-    <meta name="twitter:description" content="${description}" />
-    <meta name="twitter:image" content="${ogImage}" />`;
+  const url = meta.canonical ? `${BASE_URL}${meta.canonical}` : null;
+  return [
+    `<title>${title}</title>`,
+    `<meta name="description" content="${description}" />`,
+    url && `<link rel="canonical" href="${url}" />`,
+    meta.noindex && `<meta name="robots" content="noindex" />`,
+    `<meta property="og:title" content="${title}" />`,
+    `<meta property="og:description" content="${description}" />`,
+    `<meta property="og:type" content="${meta.ogType || "website"}" />`,
+    url && `<meta property="og:url" content="${url}" />`,
+    `<meta property="og:image" content="${ogImage}" />`,
+    `<meta name="twitter:card" content="summary_large_image" />`,
+    `<meta name="twitter:site" content="@walteraandrade" />`,
+    `<meta name="twitter:title" content="${title}" />`,
+    `<meta name="twitter:description" content="${description}" />`,
+    `<meta name="twitter:image" content="${ogImage}" />`,
+  ]
+    .filter(Boolean)
+    .map((tag) => `\n    ${tag}`)
+    .join("");
 };
 
 const injectMeta = (template: string, meta: PageMeta): string => {
@@ -91,7 +98,7 @@ const injectMeta = (template: string, meta: PageMeta): string => {
   html = html.replace(/<meta name="twitter:description"[^>]*>\n?/, "");
   html = html.replace(/<meta name="twitter:image"[^>]*>\n?/, "");
   const metaTags = generateMetaTags(meta);
-  html = html.replace("<!--ssr-meta-->", metaTags);
+  html = html.replace("<!--ssr-meta-->", () => metaTags);
   return html;
 };
 
@@ -212,7 +219,9 @@ export async function prerender() {
   );
 
   const writePage = async (file: string, url: string, meta: PageMeta) => {
-    const html = injectBody(injectMeta(template, meta), await render(url));
+    const body = await render(url);
+    if (body.includes("data-load-failed")) throw new Error(`${url} rendered the load-failed screen.`);
+    const html = injectBody(injectMeta(template, meta), body);
     await mkdir(path.dirname(file), { recursive: true });
     await writeFile(file, html);
     console.log(`  ${path.relative(DIST_PATH, file)}`);
@@ -234,7 +243,7 @@ export async function prerender() {
   await writePage(path.join(DIST_PATH, "404.html"), "/404", {
     title: "Not found | Walter Andrade",
     description: "This page only exists from an angle we have not built yet.",
-    canonical: "/",
+    noindex: true,
   });
 
   const sitemap = generateSitemap(blogPosts);
