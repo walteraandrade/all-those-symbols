@@ -1,10 +1,10 @@
+import { lazy, Suspense } from "react";
 import ReactMarkdown, { type Components } from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { slugify } from "@/lib/utils";
-import { CertaintyMethod } from "./CertaintyMethod";
-import { IfThenSlider } from "./IfThenSlider";
-import { LogicCircuitWidget } from "./LogicCircuitWidget";
-import { StateMachineWidget } from "./StateMachineWidget";
+
+const widgetSrcs = new Set(["#if-then", "#state-machine", "#logic-circuit", "#certainty-method"]);
+const Widget = lazy(() => import("./Widgets"));
 
 const sizeFromSrc = (src?: string) => {
   const match = src?.match(/-(\d+)x(\d+)\.\w+$/);
@@ -13,14 +13,10 @@ const sizeFromSrc = (src?: string) => {
 
 const components: Components = {
   img: ({ src, alt }) =>
-    src === "#if-then" ? (
-      <IfThenSlider label={alt} />
-    ) : src === "#state-machine" ? (
-      <StateMachineWidget label={alt} />
-    ) : src === "#logic-circuit" ? (
-      <LogicCircuitWidget label={alt} />
-    ) : src === "#certainty-method" ? (
-      <CertaintyMethod label={alt} />
+    src && widgetSrcs.has(src) ? (
+      <Suspense fallback={<span className="block min-h-64" />}>
+        <Widget src={src} label={alt} />
+      </Suspense>
     ) : (
       <img
         src={typeof src === "string" ? src : undefined}

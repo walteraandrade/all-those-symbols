@@ -1,5 +1,6 @@
 import { appendFile, mkdir, readdir, readFile, stat } from "fs/promises";
 import path from "path";
+import { gzipSync } from "zlib";
 import { z } from "zod";
 
 type LabResult = {
@@ -31,7 +32,7 @@ type FieldResult = {
 type Violation = { scope: "bundle" | "lab" | "lab:blog" | "field"; metric: string; value: number | null; limit: number };
 
 const budgetSchema = z.object({
-  bundle: z.object({ mainChunkKb: z.number() }),
+  bundle: z.object({ mainChunkKb: z.number(), blogPostChunkGzipKb: z.number() }),
   lab: z.object({ performanceScore: z.number(), lcpMs: z.number(), tbtMs: z.number(), cls: z.number() }),
   field: z.object({ lcpMs: z.number(), inpMs: z.number(), cls: z.number() }),
 });
@@ -40,6 +41,7 @@ type Budget = z.infer<typeof budgetSchema>;
 
 type BundleResult = {
   mainChunkKb: number;
+  blogPostChunkGzipKb: number;
 };
 
 type HistoryEntry = {
@@ -95,22 +97,24 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 
 const round = (n: number) => Math.round(n);
 
+async function chunkKb(files: string[], pattern: RegExp, label: string, gzip = false) {
+  const matches = files.filter((file) => pattern.test(file));
+  if (matches.length !== 1) {
+    throw new Error(`Expected one ${label} JavaScript chunk, found ${matches.length}; run \`bun run build\` first`);
+  }
+  const file = path.join(ROOT, "dist/public/assets", matches[0]);
+  const size = gzip ? gzipSync(await readFile(file)).length : (await stat(file)).size;
+  return Math.round(size / 10) / 100;
+}
+
 async function collectBundle(): Promise<BundleResult> {
-  const assetsDir = path.join(ROOT, "dist/public/assets");
-  let entries: string[];
-
-  try {
-    entries = (await readdir(assetsDir)).filter((file) => /^index-[\w-]+\.js$/.test(file));
-  } catch {
+  const files = await readdir(path.join(ROOT, "dist/public/assets")).catch(() => {
     throw new Error("Entry JavaScript chunk not found; run `bun run build` first");
-  }
-
-  if (entries.length !== 1) {
-    throw new Error(`Expected one entry JavaScript chunk, found ${entries.length}`);
-  }
-
-  const { size } = await stat(path.join(assetsDir, entries[0]));
-  return { mainChunkKb: Math.round(size / 10) / 100 };
+  });
+  return {
+    mainChunkKb: await chunkKb(files, /^index-[\w-]+\.js$/, "entry"),
+    blogPostChunkGzipKb: await chunkKb(files, /^BlogPost-[\w-]+\.js$/, "BlogPost", true),
+  };
 }
 
 async function collectLab(pagePath = "/"): Promise<{ lab: LabResult; crux: CruxResult }> {
@@ -238,6 +242,15 @@ export function checkBudget(
     });
   }
 
+  if (bundle.blogPostChunkGzipKb > budget.bundle.blogPostChunkGzipKb) {
+    violations.push({
+      scope: "bundle",
+      metric: "blogPostChunkGzipKb",
+      value: bundle.blogPostChunkGzipKb,
+      limit: budget.bundle.blogPostChunkGzipKb,
+    });
+  }
+
   for (const [scope, l] of [["lab", lab], ["lab:blog", labBlog]] as const) {
     if (!l) {
       if (measured) violations.push({ scope, metric: "unavailable", value: null, limit: 0 });
@@ -282,6 +295,7 @@ function printSummary(entry: HistoryEntry) {
 
   console.log(`bundle:`);
   console.log(`  mainChunkKb       ${entry.bundle.mainChunkKb} kB`);
+  console.log(`  blogPostChunkGzipKb ${entry.bundle.blogPostChunkGzipKb} kB`);
   console.log("");
   if (entry.lab) {
     console.log("lab (PSI mobile):");

@@ -2,11 +2,11 @@ import { expect, test } from "bun:test";
 import { checkBudget, routeGroup } from "./perf";
 
 const budget = {
-  bundle: { mainChunkKb: 110 },
+  bundle: { mainChunkKb: 110, blogPostChunkGzipKb: 70 },
   lab: { performanceScore: 95, lcpMs: 2000, tbtMs: 200, cls: 0.1 },
   field: { lcpMs: 2500, inpMs: 200, cls: 0.1 },
 };
-const bundle = { mainChunkKb: 100 };
+const bundle = { mainChunkKb: 100, blogPostChunkGzipKb: 60 };
 const lab = {
   source: "psi" as const,
   strategy: "mobile" as const,
