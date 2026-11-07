@@ -360,6 +360,8 @@
   .esc-fall { grid-template-columns: 1fr; }
   .esc-page { padding: 40px 20px 64px; }
   .esc-steplink { margin-left: 0 !important; }
+  .esc { position: relative; }
+  .esc-gemnav { position: absolute; right: 16px; }
 }
 @media (max-width: 560px) {
   .esc-grid { grid-template-columns: 1fr; }
