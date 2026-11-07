@@ -2,6 +2,7 @@ import { type ComponentProps, type ReactNode, useEffect, useId, useRef, useState
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Sprite } from "@/components/escher/sprites";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { WIDGET_BOX } from "./widgetBox";
 import { cn } from "@/lib/utils";
 
 type State = "idle" | "loading" | "data" | "error";
@@ -446,7 +447,7 @@ export function StateMachineWidget({ label }: { label?: string }) {
     <span
       role="group"
       aria-label={label}
-      className="mx-auto my-8 flex max-w-[560px] flex-col items-center gap-5 border-[3px] border-[var(--dark)] bg-[var(--ink-2)] px-4 py-6"
+      className={WIDGET_BOX}
     >
       {machine ? (
         <Machine copy={copy} onBack={swap} />

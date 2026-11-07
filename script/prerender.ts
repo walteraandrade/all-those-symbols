@@ -3,9 +3,9 @@ import path from "path";
 import { pathToFileURL } from "url";
 import { blogPosts } from "../client/src/lib/blog/metadata";
 import { blogSlugs } from "../client/src/lib/blog/loaders";
+import { BASE_URL } from "../client/src/lib/site";
 import type { BlogPost } from "../client/src/lib/blog/types";
 
-const BASE_URL = "https://all-those-symbols.vercel.app";
 const DIST_PATH = path.resolve(import.meta.dirname, "..", "dist", "public");
 const SERVER_ENTRY = path.resolve(import.meta.dirname, "..", "dist", "server", "entry-server.js");
 
@@ -147,7 +147,7 @@ const assertBlogDataIntegrity = (): void => {
     throw new Error("Blog loader slugs are empty; refusing to prerender.");
   }
 
-  const metadataSlugs = blogPosts.map((post) => post.slug);
+  const metadataSlugs: string[] = blogPosts.map((post) => post.slug);
   const duplicateMetadataSlugs = metadataSlugs.filter(
     (slug, index) => metadataSlugs.indexOf(slug) !== index
   );

@@ -3,6 +3,7 @@ import { useParams, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
 import { CHROME } from "@/lib/blog/chrome";
 import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
+import { BASE_URL } from "@/lib/site";
 import { slugify } from "@/lib/utils";
 import { PostLanguage, useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
@@ -64,7 +65,7 @@ function BlogPostContent() {
     description: post?.excerpt,
     canonical: post ? `/blog/${post.slug}` : "/blog",
     ogType: "article",
-    ogImage: post?.image ? `https://all-those-symbols.vercel.app${post.image}` : undefined,
+    ogImage: post?.image ? `${BASE_URL}${post.image}` : undefined,
   });
 
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { type KeyboardEvent, useRef, useState } from "react";
 import { motion, useInView, useReducedMotion } from "framer-motion";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { WIDGET_BOX } from "./widgetBox";
 
 type Mode = "and" | "or" | "if";
 
@@ -298,7 +299,7 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
       ref={root}
       role="group"
       aria-label={label}
-      className="mx-auto my-8 flex max-w-[560px] flex-col items-center gap-5 border-[3px] border-[var(--dark)] bg-[var(--ink-2)] px-4 py-6"
+      className={WIDGET_BOX}
     >
       <span className="block text-center font-['League_Spartan',sans-serif] text-lg font-bold leading-snug text-[var(--bone)] sm:text-xl">
         {copy.lead}

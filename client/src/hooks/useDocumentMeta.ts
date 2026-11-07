@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BASE_URL } from "@/lib/site";
 
 interface DocumentMeta {
   title: string;
@@ -8,7 +9,6 @@ interface DocumentMeta {
   ogImage?: string;
 }
 
-const BASE_URL = "https://all-those-symbols.vercel.app";
 const DEFAULT_OG_IMAGE = `${BASE_URL}/opengraph.jpg`;
 
 export function useDocumentMeta({
