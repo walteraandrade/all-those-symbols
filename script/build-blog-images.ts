@@ -1,10 +1,10 @@
 import { readdir, stat } from "node:fs/promises";
-import { extname, join, parse } from "node:path";
+import { extname, join, parse, resolve } from "node:path";
 import sharp from "sharp";
 
 console.log("building blog images...");
 
-const blogDir = "client/public/blog";
+const blogDir = resolve(import.meta.dirname, "../client/public/blog");
 const widths = [480, 960, 1600];
 const images = (await readdir(blogDir))
   .filter((file) => [".jpg", ".jpeg"].includes(extname(file).toLowerCase()))

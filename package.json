@@ -7,7 +7,7 @@
     "dev": "bun run build:images && bunx vite dev --port 5000",
     "build": "bun run script/build.ts",
     "build:images": "bun run script/build-blog-images.ts",
-    "check": "bunx tsc -p tsconfig.json && bunx tsc -p tsconfig.runtime.json",
+    "check": "bunx tsc -p tsconfig.json && bunx tsc -p tsconfig.runtime.json && bunx tsc -p tsconfig.api.json",
     "perf": "bun run script/perf.ts"
   },
   "dependencies": {
