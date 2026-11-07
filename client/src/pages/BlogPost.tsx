@@ -1,5 +1,4 @@
 import { use, useEffect, useMemo, useRef, useState } from "react";
-import { MotionConfig } from "framer-motion";
 import { useParams, Link } from "wouter";
 import { blogPosts, localizePost, postLangs } from "@/lib/blog/metadata";
 import { forgetBlogContent, isBlogSlug, readBlogContent } from "@/lib/blog/loaders";
@@ -253,8 +252,6 @@ function BlogPostContent() {
 
 export default function BlogPost() {
   return (
-    <MotionConfig reducedMotion="user">
-      <BlogPostContent />
-    </MotionConfig>
+    <BlogPostContent />
   );
 }
