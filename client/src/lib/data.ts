@@ -15,7 +15,7 @@ export interface Experience {
 
 export const cvUrl = "/Walter-Andrade-Resume-2026.pdf";
 
-export const bio = `I build things end-to-end: AI-powered interview bots, fintech platforms, e-learning systems, mobile apps. At SmartHow I own DevOps, define architecture, and lead technical decisions while shipping features daily.
+export const bio = `I build things end-to-end: AI-powered interview bots, fintech platforms, e-learning systems, mobile apps. At SmartHow I owned DevOps, defined architecture, and led technical decisions while shipping features daily.
 
 Philosophy degree in logic taught me to find clarity in complexity. I care about why we're building something, not just how.`;
 
@@ -24,7 +24,7 @@ export const projects: Project[] = [
     title: "SmartHow Workspace Agent",
     role: "Senior Software Engineer",
     description:
-      "Agentic chat that writes and edits long-form technical documents. Rebuilt the orchestration loop for cross-turn memory, parallel tool calls and pause/resume, moved tools to a per-tool registry, replaced the blind spinner with a live activity stream over WebSockets, and added voice dictation through Whisper.",
+      "Agentic chat that writes and edits long-form technical documents. Designed and built the agent loop from scratch, chosen over LangGraph and Temporal: parallel tool calls, cross-turn memory, pause/resume and a stop policy with a cost cap. Moved tools to a per-tool registry, replaced the blind spinner with a live activity stream over WebSockets, reached ~76% prompt-cache reads with a per-session HMAC delimiter, and added voice dictation through Whisper.",
     tech: [
       "TypeScript",
       "NestJS",
@@ -40,7 +40,7 @@ export const projects: Project[] = [
     title: "Document Asset Ingestion",
     role: "Architect & Developer",
     description:
-      "Retrieval layer that turns uploaded PDFs and audio transcripts into dependable context for the writing agent. Parsing, chunking and full-text search over Postgres, assets scoped per document with per-library permissions, and binary storage on an RBAC-only Azure Blob port with no public URLs.",
+      "Retrieval layer that turns uploaded PDFs and audio transcripts into dependable context for the writing agent. Parsing, chunking and full-text search over Postgres, assets scoped per document with per-library permissions (the isolation eval showed zero cross-document leakage), and binary storage on an RBAC-only Azure Blob port with no public URLs.",
     tech: [
       "TypeScript",
       "NestJS",
@@ -55,7 +55,7 @@ export const projects: Project[] = [
     title: "Monorepo CI/CD Hardening",
     role: "DevOps Lead",
     description:
-      "Audited and rebuilt delivery for a multi-app monorepo. Restored the Azure OIDC federation that had silently broken every deploy, made quality gates required on protected branches, and added CodeQL, dependency and image scanning, SHA-pinned actions, and mutation testing.",
+      "Audited and rebuilt delivery for a multi-app monorepo. Restored the Azure OIDC federation that had silently broken every deploy, rebuilt the dev deploy as blue-green, made quality gates required on protected branches, and added CodeQL, dependency audits, SHA-pinned actions and mutation testing. CI unit tests went from 44 to 254 and high+ advisories from 10 to 0.",
     tech: [
       "GitHub Actions",
       "Azure",
@@ -70,7 +70,7 @@ export const projects: Project[] = [
     title: "Azure Cost Program",
     role: "DevOps & Infrastructure Owner",
     description:
-      "Cloud cost initiative across 17 resource groups: mapped the full spend, decommissioned the staging environment and a superseded production stack, purged and downgraded container registries, right-sized app plans, and rerouted expensive model traffic to cheaper deployments.",
+      "Cloud cost initiative across ~127 resources in 17 resource groups, saving about US$0.9–1.07k/month at list price: mapped the full spend, decommissioned the staging environment and a superseded production stack, purged and downgraded container registries, right-sized app plans, and rerouted expensive model traffic to cheaper deployments.",
     tech: [
       "Azure",
       "Terraform",
@@ -84,7 +84,7 @@ export const projects: Project[] = [
     title: "Modulart System",
     role: "Full Stack Developer & Product Owner",
     description:
-      "Full-stack event sales and management platform with responsive webpage, robust PostgreSQL backend, and comprehensive admin panel.",
+      "Event sales and management platform. Product owner and lead developer; sole author of the Payload CMS 3 backend on Next.js 15 and PostgreSQL (data model, 17 migrations, editor hooks, Cloud Build to Cloud Run deploys), 151 commits and 54 PRs from v1.1.0 to v1.5.1.",
     tech: [
       "Next.js",
       "Node.js",
@@ -114,10 +114,10 @@ export const projects: Project[] = [
     ],
   },
   {
-    title: "Payssego Payment System",
-    role: "Full-Stack Developer & Architect",
+    title: "Payssego Platform",
+    role: "Project Lead & Full-Stack Developer",
     description:
-      "Node.js platform for employee salary advances with rigorous API security requirements and secure client integrations.",
+      "Salary-advance platform for a fintech client, in Node.js and TypeScript under strict API security requirements, with Retool internal tools and a coordinated onboarding launch that put 1,100+ users live on day one.",
     tech: ["Node.js", "Retool", "API Security", "PostgreSQL", "AWS"],
   },
   {
@@ -192,23 +192,23 @@ export const experience: Experience[] = [
   {
     role: "Senior Software Engineer",
     company: "SmartHow",
-    period: "September 2025 - Present",
+    period: "September 2025 - August 2026",
     description:
-      "Own DevOps and infrastructure on Azure. Define architecture and lead technical decisions. Built AI interview automation with Recall.ai and ElevenLabs. Ship features across Node.js/NestJS, Next.js, Python/FastAPI, PostgreSQL/MongoDB.",
+      "Owned DevOps and infrastructure on Azure. Defined architecture and led technical decisions. Release manager for production. Built voice agents on Recall.ai and ElevenLabs that handled 724 interactions (447 phone calls, 277 video meetings). Shipped features across Node.js/NestJS, Next.js, Python/FastAPI, PostgreSQL/MongoDB.",
   },
   {
     role: "Senior Full Stack Developer",
     company: "Instaq – Instituto Taqtile",
     period: "October 2023 - September 2025",
     description:
-      "Led Modulart platform as Full Stack Dev & Product Owner. Built NaPorta landing page (won national competition). Architected Payssego payment system. Deployed Vivenda on AWS. Led Pence culture analytics platform with Neo4j.",
+      "Led Modulart platform as Full Stack Dev & Product Owner. Built NaPorta landing page (won national competition). Led Payssego salary-advance platform (1,100+ users on day one). Deployed Vivenda on AWS. Led Pence culture analytics platform with Neo4j.",
   },
   {
     role: "Software Engineer",
     company: "Taqtile Brasil",
     period: "September 2020 - May 2023",
     description:
-      "Built ioP Pet mobile app with Bluetooth, released on App Store & Play Store. Created Timesheet platform replacing Redmine (React, GraphQL, BigQuery, Looker). Led Gentelab e-learning with React, Relay, Firebase.",
+      "Worked on the frontend of Grupo BIG's retail app for Sam's Club, Walmart and Bompreço (Sam's Club Brasil: 1M+ Google Play downloads). Built ioP Pet mobile app with Bluetooth, released on App Store & Play Store. Created Timesheet platform replacing Redmine (React, GraphQL, BigQuery, Looker). Led Gentelab e-learning with React, Relay, Firebase.",
   },
 ];
 
