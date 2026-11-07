@@ -27,4 +27,4 @@ await conn.batch([
   )`,
 ]);
 
-console.log("web_vitals table ready");
+console.log("web_vitals and api_rate_limits tables ready");

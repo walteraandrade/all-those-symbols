@@ -1,18 +1,14 @@
 import { connect, type Connection } from "@tursodatabase/serverless";
 import type { VercelRequest } from "@vercel/node";
+import { isIP } from "node:net";
 
 const RATE_LIMITS = {
   contact: { limit: 10, windowSeconds: 600 },
   vitals: { limit: 600, windowSeconds: 60 },
 } as const;
 
-const CREATE_TABLE_SQL = `CREATE TABLE IF NOT EXISTS api_rate_limits (
-  bucket TEXT NOT NULL,
-  ip TEXT NOT NULL,
-  window_start INTEGER NOT NULL,
-  request_count INTEGER NOT NULL,
-  PRIMARY KEY (bucket, ip)
-)`;
+const SWEEP_PROBABILITY = 0.02;
+const SWEEP_AGE_SECONDS = 86400;
 
 const INCREMENT_SQL = `INSERT INTO api_rate_limits (bucket, ip, window_start, request_count)
 VALUES (?, ?, (unixepoch() / ?) * ?, 1)
@@ -40,7 +36,6 @@ export type RateLimitResult =
   | { status: "unavailable" };
 
 let connection: Connection | undefined;
-let tableReady: Promise<void> | undefined;
 
 export function getDatabaseConnection(): Connection | undefined {
   if (!process.env.TURSO_DATABASE_URL) return undefined;
@@ -53,20 +48,41 @@ export function getDatabaseConnection(): Connection | undefined {
   return connection;
 }
 
-function getForwardedIp(req: VercelRequest): string | undefined {
-  const forwardedFor = req.headers["x-forwarded-for"];
-  const value = Array.isArray(forwardedFor) ? forwardedFor[0] : forwardedFor;
-  return value?.split(",")[0]?.trim() || undefined;
+const unmapIpv4 = (ip: string): string => {
+  const match = ip.match(/^::ffff:(?:(\d+\.\d+\.\d+\.\d+)|([0-9a-f]{1,4}):([0-9a-f]{1,4}))$/i);
+  if (!match) return ip;
+  if (match[1]) return match[1];
+  const [high, low] = [parseInt(match[2]!, 16), parseInt(match[3]!, 16)];
+  return [high >> 8, high & 255, low >> 8, low & 255].join(".");
+};
+
+export function clientKey(value: string | undefined): string | undefined {
+  const raw = value?.split(",")[0]?.trim();
+  if (!raw) return undefined;
+  const ip = unmapIpv4(
+    raw
+      .replace(/^\[([^\]]+)\](?::\d+)?$/, "$1")
+      .replace(/%.*$/, "")
+      .replace(/^(\d+\.\d+\.\d+\.\d+):\d+$/, "$1"),
+  );
+  if (isIP(ip) !== 6) return ip;
+  const [head = "", tail = ""] = ip.split("::");
+  const headGroups = head ? head.split(":") : [];
+  const tailGroups = tail ? tail.split(":") : [];
+  const groups = [
+    ...headGroups,
+    ...Array(Math.max(0, 8 - headGroups.length - tailGroups.length)).fill("0"),
+    ...tailGroups,
+  ];
+  return `${groups
+    .slice(0, 4)
+    .map((group) => group.toLowerCase().replace(/^0+(?=.)/, ""))
+    .join(":")}::/64`;
 }
 
-async function ensureTable(db: Connection): Promise<void> {
-  if (!tableReady) {
-    tableReady = db.run(CREATE_TABLE_SQL).then(() => undefined).catch((error: unknown) => {
-      tableReady = undefined;
-      throw error;
-    });
-  }
-  return tableReady;
+function getClientKey(req: VercelRequest): string | undefined {
+  const header = req.headers["x-vercel-forwarded-for"] ?? req.headers["x-forwarded-for"];
+  return clientKey(Array.isArray(header) ? header[0] : header);
 }
 
 export async function checkRateLimit(
@@ -74,13 +90,12 @@ export async function checkRateLimit(
   bucket: RateLimitBucket,
 ): Promise<RateLimitResult> {
   const db = getDatabaseConnection();
-  const ip = getForwardedIp(req);
+  const ip = getClientKey(req);
   if (!db || !ip) return { status: "unavailable" };
 
   const { limit, windowSeconds } = RATE_LIMITS[bucket];
 
   try {
-    await ensureTable(db);
     const row: unknown = await db.get(
       INCREMENT_SQL,
       bucket,
@@ -100,14 +115,15 @@ export async function checkRateLimit(
       return { status: "unavailable" };
     }
 
-    if (row.request_count > limit) {
-      return {
-        status: "limited",
-        retryAfter: row.retry_after,
-      };
+    if (Math.random() < SWEEP_PROBABILITY) {
+      await db
+        .run("DELETE FROM api_rate_limits WHERE window_start < unixepoch() - ?", SWEEP_AGE_SECONDS)
+        .catch(() => {});
     }
 
-    return { status: "allowed" };
+    return row.request_count > limit
+      ? { status: "limited", retryAfter: row.retry_after }
+      : { status: "allowed" };
   } catch (error) {
     console.error("Rate limiter unavailable:", error);
     return { status: "unavailable" };
