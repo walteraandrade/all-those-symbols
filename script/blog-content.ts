@@ -49,7 +49,7 @@ const parseOrThrow = <T>(schema: z.ZodType<T>, data: unknown, file: string): T =
 
 const readPost = async (dir: string, slug: string): Promise<BlogPost> => {
   if (!SLUG.test(slug)) throw new Error(`invalid blog slug directory: ${slug}`);
-  const names = visible(await readdir(path.join(dir, slug))).sort();
+  const names = visible(await readdir(path.join(dir, slug))).sort((a, b) => a.localeCompare(b));
   const files = await Promise.all(
     names.map(async (name) => {
       const file = path.join(slug, name);
@@ -72,11 +72,14 @@ const readPost = async (dir: string, slug: string): Promise<BlogPost> => {
     .filter((f) => f !== primary)
     .map((f) => [f.lang, parseOrThrow(translationSchema, f.data, f.file)] as const);
 
+  const primaryData = parseOrThrow(primarySchema, primary.data, primary.file);
+  const translationsField = translations.length > 0 ? { translations: Object.fromEntries(translations) } : {};
+
   return {
     slug,
     lang: primary.lang,
-    ...parseOrThrow(primarySchema, primary.data, primary.file),
-    ...(translations.length > 0 && { translations: Object.fromEntries(translations) }),
+    ...primaryData,
+    ...translationsField,
   };
 };
 

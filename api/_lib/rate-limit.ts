@@ -52,7 +52,7 @@ const unmapIpv4 = (ip: string): string => {
   const match = ip.match(/^::ffff:(?:(\d+\.\d+\.\d+\.\d+)|([0-9a-f]{1,4}):([0-9a-f]{1,4}))$/i);
   if (!match) return ip;
   if (match[1]) return match[1];
-  const [high, low] = [parseInt(match[2]!, 16), parseInt(match[3]!, 16)];
+  const [high, low] = [Number.parseInt(match[2]!, 16), Number.parseInt(match[3]!, 16)];
   return [high >> 8, high & 255, low >> 8, low & 255].join(".");
 };
 
@@ -62,7 +62,7 @@ export function clientKey(value: string | undefined): string | undefined {
   const ip = unmapIpv4(
     raw
       .replace(/^\[([^\]]+)\](?::\d+)?$/, "$1")
-      .replace(/%.*$/, "")
+      .split("%", 1)[0]!
       .replace(/^(\d+\.\d+\.\d+\.\d+):\d+$/, "$1"),
   );
   if (isIP(ip) !== 6) return ip;

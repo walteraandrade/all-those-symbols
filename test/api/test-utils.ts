@@ -2,7 +2,7 @@ import { mock } from "bun:test";
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
 export const mockReq = (method: string, body?: unknown, headers: Record<string, string> = {}) =>
-  ({ method, body, headers: { "x-vercel-forwarded-for": "1.2.3.4", ...headers } }) as unknown as VercelRequest;
+  ({ method, body, headers: { "x-vercel-forwarded-for": "192.0.2.1", ...headers } }) as unknown as VercelRequest;
 
 export const mockRes = () => {
   const out: { code?: number; body?: unknown; headers: Record<string, string> } = { headers: {} };

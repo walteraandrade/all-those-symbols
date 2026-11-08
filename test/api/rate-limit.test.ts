@@ -31,6 +31,7 @@ test("missing ip", () => {
 test("brackets, zone id, port and v4-mapped forms", () => {
   expect(clientKey("[2001:db8:1:2::9]:443")).toBe("2001:db8:1:2::/64");
   expect(clientKey("fe80::1%eth0")).toBe("fe80:0:0:0::/64");
+  expect(clientKey("fe80::1%eth0%x")).toBe("fe80:0:0:0::/64");
   expect(clientKey("1.2.3.4:5678")).toBe("1.2.3.4");
   expect(clientKey("::ffff:1.2.3.4")).toBe("1.2.3.4");
   expect(clientKey("::ffff:102:304")).toBe("1.2.3.4");
