@@ -174,8 +174,14 @@ async function collectLab(pagePath = "/"): Promise<{ lab: LabResult; crux: CruxR
   }
 }
 
+const stripTrailingSlashes = (p: string): string => {
+  let end = p.length;
+  while (end > 0 && p[end - 1] === "/") end--;
+  return p.slice(0, end);
+};
+
 export const routeGroup = (p: string) => {
-  const n = p.length > 1 ? p.replace(/\/+$/, "") : p;
+  const n = p.length > 1 ? stripTrailingSlashes(p) : p;
   return n === "/" ? "/" : n.startsWith("/blog/") ? "/blog/*" : "other";
 };
 

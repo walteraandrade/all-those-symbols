@@ -42,7 +42,7 @@ export function Sprite({ map, palette, scale = 4, style, className }: SpriteProp
       width={cols}
       height={rows}
       className={className}
-      aria-hidden
+      role="presentation"
       style={{
         width: cols * scale,
         maxWidth: "100%",

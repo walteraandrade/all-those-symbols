@@ -15,7 +15,7 @@ import { LanguageToggle } from "@/components/blog/LanguageToggle";
 import NotFound from "@/pages/not-found";
 
 const extractHeadings = (markdown: string) => {
-  const headingRegex = /^#{2,3}\s+(.+)$/gm;
+  const headingRegex = /^#{2,3}[ \t]+(\S.*)$/gm;
   const headings: { id: string; text: string; level: number }[] = [];
   let match;
   while ((match = headingRegex.exec(markdown)) !== null) {

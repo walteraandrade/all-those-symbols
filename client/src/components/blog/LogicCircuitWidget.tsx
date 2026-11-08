@@ -15,7 +15,7 @@ const COPY = {
     yes: "true",
     no: "false",
     words: { and: "AND", or: "OR", if: "IF" },
-    then: "THEN",
+    consequent: "THEN",
     opens: "true → opens",
     closes: "false → closes",
     rewire: "Change the connective",
@@ -34,7 +34,7 @@ const COPY = {
     yes: "verdadeiro",
     no: "falso",
     words: { and: "E", or: "OU", if: "SE" },
-    then: "ENTÃO",
+    consequent: "ENTÃO",
     opens: "verdadeiro → abre",
     closes: "falso → fecha",
     rewire: "Trocar o conectivo",
@@ -289,7 +289,7 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
   const truthWord = (on: boolean) => (on ? copy.yes : copy.no);
   const note = !conditional ? copy.legend : !a ? copy.notes.idle : b ? copy.notes.kept : copy.notes.broken;
   const sentence = (
-    conditional ? `${copy.words.if} ${copy.a}, ${copy.then} ${copy.b}` : `${copy.a} ${copy.words[mode]} ${copy.b}`
+    conditional ? `${copy.words.if} ${copy.a}, ${copy.consequent} ${copy.b}` : `${copy.a} ${copy.words[mode]} ${copy.b}`
   ).toLowerCase();
   const root = useRef<HTMLSpanElement>(null);
   const sparks = useInView(root);
@@ -329,7 +329,7 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
           truth={b}
           live={lit && b}
           text={copy.b}
-          prefix={conditional ? copy.then : undefined}
+          prefix={conditional ? copy.consequent : undefined}
           state={truthWord(b)}
           onToggle={() => setB(!b)}
         />
