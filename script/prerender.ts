@@ -1,4 +1,4 @@
-import { readFile, writeFile, mkdir, rm } from "fs/promises";
+import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { pathToFileURL } from "url";
 import { readBlogPosts } from "./blog-content";
@@ -154,7 +154,6 @@ const inlineCss = async (html: string): Promise<string> => {
   if (!link) throw new Error("stylesheet link not found in index.html");
   const file = path.join(DIST_PATH, link[1]);
   const css = await readFile(file, "utf-8");
-  await rm(file);
   return html.replace(link[0], () => `<style>${css}</style>`);
 };
 
