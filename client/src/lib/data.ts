@@ -138,8 +138,9 @@ export const projects: Project[] = [
     title: "AI Decco Assistant",
     role: "Creator",
     description:
-      "AI-powered assistant for interior decoration recommendations.",
-    tech: ["HTML", "CSS", "JavaScript"],
+      "Web app to try decoration and layout ideas on a photo of your office. Upload a picture, describe the change, get AI-generated variations, and pick any of them as the base for the next round.",
+    tech: ["Next.js", "TypeScript", "LangGraph", "OpenRouter", "Tailwind CSS"],
+    link: "https://github.com/walteraandrade/ai-decor-assistant",
   },
   {
     title: "HTML to DOCX Converter",
@@ -151,8 +152,9 @@ export const projects: Project[] = [
   {
     title: "Aetheria",
     role: "Creator",
-    description: "Game project built with Phaser.js and TypeScript.",
-    tech: ["Phaser.js", "TypeScript"],
+    description:
+      "Top-down action RPG where sound is world information: doors sing intervals, bells answer them, enemies telegraph attacks by singing. Ear training through play, with no quiz mechanics. Plain canvas and Web Audio, no engine, with sounds synthesized at runtime from random roots.",
+    tech: ["JavaScript", "Canvas", "Web Audio", "Vite"],
     link: "https://github.com/walteraandrade/aetheria",
   },
   {
@@ -185,6 +187,150 @@ export const projects: Project[] = [
       "Terminal process monitor for Claude Code instances. Displays a live dashboard with process trees, CPU/memory usage, sparkline history, and aggregated totals by reading the Linux /proc filesystem directly.",
     tech: ["TypeScript", "Bun", "Ink", "React", "Linux"],
     link: "https://github.com/walteraandrade/mr-argus",
+  },
+  {
+    title: "Chrono Digger",
+    role: "Creator",
+    description:
+      "History sim where students question source-grounded AI witnesses frozen on a Sarajevo street on 28 June 1914. Each character turn retrieves passages, builds the prompt and streams the answer with its sources under one deadline, with per-player and global daily quotas, an investigation diary, and a fidelity eval with a judge.",
+    tech: [
+      "TypeScript",
+      "Cloudflare Workers",
+      "Durable Objects",
+      "Workers AI",
+      "Vectorize",
+      "Effect",
+      "WebSockets",
+    ],
+    link: "https://github.com/walteraandrade/chrono-digger",
+  },
+  {
+    title: "Desafinado",
+    role: "Creator",
+    description:
+      "Markdown editor with an AI co-author, for prose and agent Skills. Every suggestion sits in the text as a tracked change with a rationale until you accept, reject or refine it, and a timeline keeps a version after each step. Ships as an Electron app with a Skills library and evals, and as a web app.",
+    tech: [
+      "TypeScript",
+      "React",
+      "Electron",
+      "CodeMirror",
+      "Vercel AI SDK",
+      "OpenRouter",
+      "Tailwind CSS",
+    ],
+    link: "https://github.com/walteraandrade/desafinado",
+  },
+  {
+    title: "Rashomon",
+    role: "Creator",
+    description:
+      "Shows which words stick to 27 Brazilian public figures across ten sources, from Bluesky and Google News to GDELT, the press and both houses of Congress. One collector per source, term extraction, and PMI computed in SQL, so every number opens to the texts behind it.",
+    tech: ["TypeScript", "SvelteKit", "Hono", "PGlite", "PostgreSQL", "Effect"],
+    link: "https://github.com/walteraandrade/rashomon",
+  },
+  {
+    title: "Anamnesis",
+    role: "Creator",
+    description:
+      "Chromium side panel that answers job application questions from your own story bank of Markdown files. Semantic search with EmbeddingGemma and an optional WebLLM rewrite both run in the browser, so nothing about you leaves the machine, and it never submits a form.",
+    tech: [
+      "TypeScript",
+      "Browser Extension",
+      "WXT",
+      "React",
+      "WebLLM",
+      "Transformers.js",
+      "WebGPU",
+    ],
+    link: "https://github.com/walteraandrade/anamnesis",
+  },
+  {
+    title: "Estante",
+    role: "Creator",
+    description:
+      "Shared shelf of album and track recommendations for a psychoacoustics study group. Installs as a share target, so a link sent on WhatsApp lands on the shelf with the form filled in, and filters live in the URL so any view can be shared.",
+    tech: ["TypeScript", "SvelteKit", "Hono", "libSQL", "Turso", "Vercel"],
+    link: "https://github.com/walteraandrade/estante",
+  },
+  {
+    title: "Integrated Task Manager",
+    role: "Creator",
+    description:
+      "The triage layer Linear's free plan lacks. Ingests the error backlog from Linear, enriches each item from Sentry and PostHog, proposes verdicts with an embedded Claude agent, and writes back to Linear only on confirmation. One Deno process with a SQLite overlay serves a React SPA, and it boots with zero credentials on fixture adapters.",
+    tech: ["TypeScript", "Deno", "SQLite", "React", "TanStack", "Claude", "MCP"],
+    link: "https://github.com/walteraandrade/integrated-task-manager",
+  },
+  {
+    title: "Keystone",
+    role: "Creator",
+    description:
+      "Backend that ingests audit documents (FMEA, IPAR), extracts structured knowledge with an LLM and stores it in Neo4j as the single source of truth, with Qdrant for semantic retrieval. The graph is authoritative, vectors are disposable, and entities are immutable with versions linked by SUPERSEDES.",
+    tech: ["TypeScript", "Bun", "Fastify", "Neo4j", "Qdrant", "Docker"],
+    link: "https://github.com/walteraandrade/keystone-v0",
+  },
+  {
+    title: "Azure for Dummies",
+    role: "Creator",
+    description:
+      "Full-screen terminal UI for browsing Azure resources, like k9s for Azure. Container Apps, PostgreSQL Flexible Servers and Storage Accounts with detail tabs, live log streaming, metrics sparklines and firewall rules, on a stack-based router where each service is a self-contained module.",
+    tech: ["Go", "TUI", "Azure"],
+    link: "https://github.com/walteraandrade/azure-for-dummies",
+  },
+  {
+    title: "Homer",
+    role: "Creator",
+    description:
+      "Git chronicle TUI, third sibling to Mr. Argus and Arachne. Watches a repository, groups new commits into narrative units (bursts, singles, merges) and writes them as prose through a pluggable narrator, either an LLM over OpenRouter or a template heuristic.",
+    tech: ["Go", "TUI", "Bubble Tea", "Git", "SQLite", "OpenRouter"],
+    link: "https://github.com/walteraandrade/homer",
+  },
+  {
+    title: "Cerberus",
+    role: "Creator",
+    description:
+      "Local-only TUI password manager with a single encrypted vault file. Envelope encryption with XChaCha20-Poly1305 and Argon2id, key material held in memguard, a password and diceware passphrase generator, and a clipboard that clears itself.",
+    tech: ["Go", "TUI", "Bubble Tea", "Cryptography"],
+    link: "https://github.com/walteraandrade/cerberus",
+  },
+  {
+    title: "Apollo",
+    role: "Creator",
+    description:
+      "Local-first terminal app for commit review triage. Detects new commits in a local repository, notifies that they might need a review, tracks their status in SQLite and surfaces the unreviewed queue in a keyboard-first TUI.",
+    tech: ["Go", "TUI", "Git", "SQLite"],
+    link: "https://github.com/walteraandrade/claude-apollo",
+  },
+  {
+    title: "Plutio Manager",
+    role: "Creator",
+    description:
+      "CLI and TUI that sync JSON sprint plans to Plutio task boards. Push and pull, status drift detection, an interactive kanban board, OAuth2 with token caching, and rate limiting through a token bucket, with ID mappings kept in SQLite so plan files stay clean.",
+    tech: ["Go", "TUI", "Bubble Tea", "SQLite", "OAuth2"],
+    link: "https://github.com/walteraandrade/plutio-manager",
+  },
+  {
+    title: "Quest",
+    role: "Creator",
+    description:
+      "Sprint gamification CLI that turns dev work into an RPG. Syncs merged PRs, code reviews and tasks from GitHub, then computes XP, levels, streaks and achievements, with a terminal summary and a self-contained HTML dashboard.",
+    tech: ["TypeScript", "Bun", "CLI", "GitHub API"],
+    link: "https://github.com/walteraandrade/quest",
+  },
+  {
+    title: "Review Summarizer AI",
+    role: "Creator",
+    description:
+      "Summarizes public opinion on any movie, album, song, artist, book or series with Gemini and Google Search grounding, with technical details tailored to the media type and an interactive influence map to follow the connections between works.",
+    tech: ["Next.js", "TypeScript", "Gemini", "Tailwind CSS"],
+    link: "https://github.com/walteraandrade/review-summarizer-ai",
+  },
+  {
+    title: "Interactive Digital Catalogue",
+    role: "Creator",
+    description:
+      "Turns a static PDF catalogue of dental products into a clickable page. Hotspots on the product images pick variations and fill a cart, and the order goes out as a pre-filled WhatsApp message.",
+    tech: ["React", "Vite", "Zustand", "Tailwind CSS"],
+    link: "https://github.com/walteraandrade/interactive-digital-catalogue",
   },
 ];
 
