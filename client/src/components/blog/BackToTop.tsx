@@ -20,9 +20,7 @@ export function BackToTop() {
       onClick={scrollToTop}
       tabIndex={visible ? 0 : -1}
       aria-hidden={!visible}
-      className={`fixed bottom-6 left-4 z-40 p-3 bg-[#1d1c16] text-[#ece6d4] border-2 border-[#3a382f] hover:border-[var(--accent)] hover:text-[var(--accent)] transition-[opacity,transform,visibility,color,border-color] duration-200 ${
-        visible ? "opacity-100 scale-100 visible" : "opacity-0 scale-80 invisible"
-      }`}
+      className={`esc-totop ${visible ? "on" : ""}`}
       aria-label={CHROME[lang].backToTop}
     >
       <ChevronUp className="w-5 h-5" />
