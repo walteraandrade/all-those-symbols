@@ -138,9 +138,8 @@ export const projects: Project[] = [
     title: "AI Decco Assistant",
     role: "Creator",
     description:
-      "Web app to try decoration and layout ideas on a photo of your office. Upload a picture, describe the change, get AI-generated variations, and pick any of them as the base for the next round.",
-    tech: ["Next.js", "TypeScript", "LangGraph", "OpenRouter", "Tailwind CSS"],
-    link: "https://github.com/walteraandrade/ai-decor-assistant",
+      "AI-powered assistant for interior decoration recommendations.",
+    tech: ["HTML", "CSS", "JavaScript"],
   },
   {
     title: "HTML to DOCX Converter",
@@ -152,9 +151,8 @@ export const projects: Project[] = [
   {
     title: "Aetheria",
     role: "Creator",
-    description:
-      "Top-down action RPG where sound is world information: doors sing intervals, bells answer them, enemies telegraph attacks by singing. Ear training through play, with no quiz mechanics. Plain canvas and Web Audio, no engine, with sounds synthesized at runtime from random roots.",
-    tech: ["JavaScript", "Canvas", "Web Audio", "Vite"],
+    description: "Game project built with Phaser.js and TypeScript.",
+    tech: ["Phaser.js", "TypeScript"],
     link: "https://github.com/walteraandrade/aetheria",
   },
   {
