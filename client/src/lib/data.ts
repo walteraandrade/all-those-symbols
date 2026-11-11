@@ -186,6 +186,94 @@ export const projects: Project[] = [
     tech: ["TypeScript", "Bun", "Ink", "React", "Linux"],
     link: "https://github.com/walteraandrade/mr-argus",
   },
+  {
+    title: "Chrono Digger",
+    role: "Creator",
+    description:
+      "History sim where students question source-grounded AI witnesses frozen on a Sarajevo street on 28 June 1914. Each character turn retrieves passages, builds the prompt and streams the answer with its sources under one deadline, with per-player and global daily quotas, an investigation diary, and a fidelity eval with a judge.",
+    tech: [
+      "TypeScript",
+      "Cloudflare Workers",
+      "Durable Objects",
+      "Workers AI",
+      "Vectorize",
+      "Effect",
+      "WebSockets",
+    ],
+    link: "https://github.com/walteraandrade/chrono-digger",
+  },
+  {
+    title: "Desafinado",
+    role: "Creator",
+    description:
+      "Markdown editor with an AI co-author, for prose and agent Skills. Every suggestion sits in the text as a tracked change with a rationale until you accept, reject or refine it, and a timeline keeps a version after each step. Ships as an Electron app with a Skills library and evals, and as a web app.",
+    tech: [
+      "TypeScript",
+      "React",
+      "Electron",
+      "CodeMirror",
+      "Vercel AI SDK",
+      "OpenRouter",
+      "Tailwind CSS",
+    ],
+    link: "https://github.com/walteraandrade/desafinado",
+  },
+  {
+    title: "Rashomon",
+    role: "Creator",
+    description:
+      "Shows which words stick to 27 Brazilian public figures across ten sources, from Bluesky and Google News to GDELT, the press and both houses of Congress. One collector per source, term extraction, and PMI computed in SQL, so every number opens to the texts behind it.",
+    tech: ["TypeScript", "SvelteKit", "Hono", "PGlite", "PostgreSQL", "Effect"],
+    link: "https://github.com/walteraandrade/rashomon",
+  },
+  {
+    title: "Anamnesis",
+    role: "Creator",
+    description:
+      "Chromium side panel that answers job application questions from your own story bank of Markdown files. Semantic search with EmbeddingGemma and an optional WebLLM rewrite both run in the browser, so nothing about you leaves the machine, and it never submits a form.",
+    tech: [
+      "TypeScript",
+      "Browser Extension",
+      "WXT",
+      "React",
+      "WebLLM",
+      "Transformers.js",
+      "WebGPU",
+    ],
+    link: "https://github.com/walteraandrade/anamnesis",
+  },
+  {
+    title: "Estante",
+    role: "Creator",
+    description:
+      "Shared shelf of album and track recommendations for a psychoacoustics study group. Installs as a share target, so a link sent on WhatsApp lands on the shelf with the form filled in, and filters live in the URL so any view can be shared.",
+    tech: ["TypeScript", "SvelteKit", "Hono", "libSQL", "Turso", "Vercel"],
+    link: "https://github.com/walteraandrade/estante",
+  },
+  {
+    title: "Homer",
+    role: "Creator",
+    description:
+      "Git chronicle TUI, third sibling to Mr. Argus and Arachne. Watches a repository, groups new commits into narrative units (bursts, singles, merges) and writes them as prose through a pluggable narrator, either an LLM over OpenRouter or a template heuristic.",
+    tech: ["Go", "TUI", "Bubble Tea", "Git", "SQLite", "OpenRouter"],
+    link: "https://github.com/walteraandrade/homer",
+  },
+  {
+    title: "Cerberus",
+    role: "Creator",
+    description:
+      "Local-only TUI password manager with a single encrypted vault file. Envelope encryption with XChaCha20-Poly1305 and Argon2id, key material held in memguard, a password and diceware passphrase generator, and a clipboard that clears itself.",
+    tech: ["Go", "TUI", "Bubble Tea", "Cryptography"],
+    link: "https://github.com/walteraandrade/cerberus",
+  },
+  {
+    title: "Apollo",
+    role: "Creator",
+    description:
+      "Local-first terminal app for commit review triage. Detects new commits in a local repository, notifies that they might need a review, tracks their status in SQLite and surfaces the unreviewed queue in a keyboard-first TUI.",
+    tech: ["Go", "TUI", "Git", "SQLite"],
+    link: "https://github.com/walteraandrade/claude-apollo",
+  },
 ];
 
 export const experience: Experience[] = [
