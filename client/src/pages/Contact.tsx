@@ -71,7 +71,7 @@ export default function Contact() {
   };
 
   return (
-    <div className="esc-page" style={{ maxWidth: 760 }}>
+    <div className="esc-page">
       <header className="esc-pagehead">
         <h1>Send a letter</h1>
         <p className="sub">
@@ -80,23 +80,24 @@ export default function Contact() {
         </p>
       </header>
 
-      <form className="esc-form" onSubmit={handleSubmit(onSubmit)}>
+      <div className="esc-split">
+      <form className="esc-form" onSubmit={handleSubmit(onSubmit)} noValidate>
         <div>
           <label htmlFor="contact-name">Name</label>
-          <input id="contact-name" type="text" placeholder="Your name" {...register("name")} />
-          {errors.name && <p className="err">{errors.name.message}</p>}
+          <input id="contact-name" type="text" autoComplete="name" placeholder="Your name" aria-invalid={Boolean(errors.name)} aria-describedby={errors.name ? "contact-name-err" : undefined} {...register("name")} />
+          {errors.name && <p id="contact-name-err" className="err">{errors.name.message}</p>}
         </div>
 
         <div>
           <label htmlFor="contact-email">Email</label>
-          <input id="contact-email" type="email" placeholder="your@email.com" {...register("email")} />
-          {errors.email && <p className="err">{errors.email.message}</p>}
+          <input id="contact-email" type="email" autoComplete="email" inputMode="email" placeholder="your@email.com" aria-invalid={Boolean(errors.email)} aria-describedby={errors.email ? "contact-email-err" : undefined} {...register("email")} />
+          {errors.email && <p id="contact-email-err" className="err">{errors.email.message}</p>}
         </div>
 
         <div>
           <label htmlFor="contact-message">Message</label>
-          <textarea id="contact-message" placeholder="What are you building?" {...register("message")} />
-          {errors.message && <p className="err">{errors.message.message}</p>}
+          <textarea id="contact-message" placeholder="What are you building?" aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? "contact-message-err" : undefined} {...register("message")} />
+          {errors.message && <p id="contact-message-err" className="err">{errors.message.message}</p>}
         </div>
 
         <p className={status?.ok === false ? "status bad" : "status"} role="status" aria-live="polite">
@@ -110,12 +111,14 @@ export default function Contact() {
         </div>
       </form>
 
-      <p className="esc-sub" style={{ marginTop: 40, marginBottom: 0 }}>
-        Or write directly:{" "}
-        <a className="esc-link" style={{ fontSize: 22 }} href={`mailto:${socialLinks.email}`}>
-          {socialLinks.email}
-        </a>
-      </p>
+      <aside className="esc-aside" aria-labelledby="contact-direct-h">
+        <h2 id="contact-direct-h" className="esc-card-title">Or write directly</h2>
+        <p>No form, no queue. I read everything that arrives.</p>
+        <a className="esc-link" href={`mailto:${socialLinks.email}`}>{socialLinks.email}</a>
+        <a className="esc-link" href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a className="esc-link" href={`https://github.com/${socialLinks.github.replace("@", "")}`} target="_blank" rel="noopener noreferrer">GitHub</a>
+      </aside>
+      </div>
     </div>
   );
 }

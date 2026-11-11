@@ -32,18 +32,14 @@ const components: Components = {
     const text = String(children);
     const id = slugify(text);
     return (
-      <h2 id={id} className="scroll-mt-24">
-        <span className="text-[var(--accent)]">&gt;</span> {children}
-      </h2>
+      <h2 id={id}>{children}</h2>
     );
   },
   h3: ({ children }) => {
     const text = String(children);
     const id = slugify(text);
     return (
-      <h3 id={id} className="scroll-mt-24">
-        {children}
-      </h3>
+      <h3 id={id}>{children}</h3>
     );
   },
 };

@@ -1,7 +1,8 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { projects } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { Sprite, WIRECUBE, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { slugify } from "@/lib/utils";
+import { Sprite, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
 export default function Projects() {
   useDocumentMeta({
@@ -12,6 +13,14 @@ export default function Projects() {
 
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
   const [showAll, setShowAll] = useState(false);
+  const [picked, setPicked] = useState("");
+
+  useEffect(() => {
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) return;
+    setPicked(id);
+    document.getElementById(id)?.scrollIntoView({ block: "center" });
+  }, []);
 
   const counts = useMemo(() => {
     const m = new Map<string, number>();
@@ -53,13 +62,14 @@ export default function Projects() {
       </header>
 
       <div className="esc-tagrow" role="group" aria-label="Filter by technology">
-        <button className={`esc-tag ${activeFilter === null ? "on" : ""}`} onClick={() => setActiveFilter(null)}>
+        <button className={`esc-tag ${activeFilter === null ? "on" : ""}`} aria-pressed={activeFilter === null} onClick={() => setActiveFilter(null)}>
           All
         </button>
         {visible.map((cat) => (
           <button
             key={cat}
             className={`esc-tag ${activeFilter === cat ? "on" : ""}`}
+            aria-pressed={activeFilter === cat}
             onClick={() => setActiveFilter(cat)}
           >
             {cat}
@@ -74,30 +84,40 @@ export default function Projects() {
         </button>
       </div>
 
+      <p className="esc-count" role="status">
+        {activeFilter
+          ? `${filtered.length} of ${projects.length} constructions use ${activeFilter}`
+          : `${projects.length} constructions`}
+      </p>
+
       <div className="esc-projgrid">
-        {filtered.map((p, i) => (
-          <article key={p.title} className="esc-projcard">
-            <Sprite map={WIRECUBE} palette={POLY_PAL_ACCENT} scale={2} className="gem" />
+        {filtered.map((p) => {
+          const id = slugify(p.title);
+          return (
+          <article key={p.title} id={id} className={`esc-projcard ${p.link ? "linked" : ""} ${picked === id ? "on" : ""}`}>
+            <Sprite map={WIRECUBE} palette={p.link ? POLY_PAL_ACCENT : POLY_PAL} scale={2} className="gem" />
             <div>
-              <h3>{p.title}</h3>
-              <p className="role">{p.role}</p>
-              <p className="desc">{p.description}</p>
-              <div className="chips">
+              <h2 className="esc-card-title">{p.title}</h2>
+              <p className="esc-card-kicker">{p.role}</p>
+              <p className="esc-card-body">{p.description}</p>
+              <div className="esc-chips">
                 {p.tech.map((t) => (
                   <span key={t} className="esc-chip">{t}</span>
                 ))}
               </div>
+              {p.link && <span className="src" aria-hidden="true">Source on GitHub &#8599;</span>}
             </div>
             {p.link && (
               <a
                 href={p.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Open ${p.title}`}
+                aria-label={`${p.title}: source on GitHub (opens in a new tab)`}
               />
             )}
           </article>
-        ))}
+          );
+        })}
       </div>
 
       {filtered.length === 0 && (

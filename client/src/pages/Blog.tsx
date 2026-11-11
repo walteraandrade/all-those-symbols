@@ -46,13 +46,14 @@ export default function Blog() {
       </header>
 
       <div className="esc-tagrow" role="group" aria-label="Filter by category">
-        <button className={`esc-tag ${activeCategory === null ? "on" : ""}`} onClick={() => setActiveCategory(null)}>
+        <button className={`esc-tag ${activeCategory === null ? "on" : ""}`} aria-pressed={activeCategory === null} onClick={() => setActiveCategory(null)}>
           All
         </button>
         {blogCategories.map((cat) => (
           <button
             key={cat}
             className={`esc-tag ${activeCategory === cat ? "on" : ""}`}
+            aria-pressed={activeCategory === cat}
             onClick={() => setActiveCategory(cat)}
           >
             {cat}
@@ -60,18 +61,24 @@ export default function Blog() {
         ))}
       </div>
 
+      <p className="esc-count" role="status">
+        {activeCategory
+          ? `${filteredPosts.length} of ${blogPosts.length} essays in ${activeCategory}`
+          : `${blogPosts.length} essays`}
+      </p>
+
       <div className="esc-postgrid">
         {featuredPost && activeCategory === null && (
           <Link href={`/blog/${featuredPost.slug}`} className="esc-postcard esc-featured">
             <Sprite map={MINI_TRIBAR} palette={POLY_PAL_ACCENT} scale={2} className="gem" />
             <div>
-              <div className="meta">
-                <span className="cat">{featuredPost.category}</span>
+              <div className="esc-card-meta">
+                <span className="esc-cat">{featuredPost.category}</span>
                 <span>{formatPostDate(featuredPost.date)}</span>
                 <span>{featuredPost.readingTime} min</span>
               </div>
-              <h3 lang={featuredPost.activeLang}>{featuredPost.title}</h3>
-              <p className="excerpt" lang={featuredPost.activeLang}>
+              <h2 className="esc-card-title" lang={featuredPost.activeLang}>{featuredPost.title}</h2>
+              <p className="esc-card-body" lang={featuredPost.activeLang}>
                 {featuredPost.excerpt}
               </p>
             </div>
@@ -80,13 +87,13 @@ export default function Blog() {
 
         {regularPosts.map((post) => (
           <Link key={post.slug} href={`/blog/${post.slug}`} className="esc-postcard">
-            <div className="meta">
-              <span className="cat">{post.category}</span>
+            <div className="esc-card-meta">
+              <span className="esc-cat">{post.category}</span>
               <span>{formatPostDate(post.date)}</span>
               <span>{post.readingTime} min</span>
             </div>
-            <h3 lang={post.activeLang}>{post.title}</h3>
-            <p className="excerpt" lang={post.activeLang}>
+            <h2 className="esc-card-title" lang={post.activeLang}>{post.title}</h2>
+            <p className="esc-card-body" lang={post.activeLang}>
               {post.excerpt}
             </p>
           </Link>

@@ -21,7 +21,8 @@ export function ReadingProgress() {
   return (
     <div
       ref={bar}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-[var(--accent)] origin-left z-50"
+      className="esc-progress"
+      aria-hidden="true"
       style={{ transform: "scaleX(0)" }}
     />
   );

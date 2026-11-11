@@ -225,7 +225,7 @@ export function CenturyTimeline({ content }: { content: string }) {
           />
         ))}
       </span>
-      <span aria-hidden="true" className="mt-0.5 flex justify-between text-[10px] text-[var(--mid)]">
+      <span aria-hidden="true" className="mt-0.5 flex justify-between text-[0.75rem] text-[var(--mid)]">
         <span>{COPY[lang].oldest}</span>
         <span>{COPY[lang].now}</span>
       </span>

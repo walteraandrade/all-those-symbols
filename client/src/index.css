@@ -3,6 +3,10 @@
 
 @theme inline {
   --font-mono: 'JetBrains Mono', monospace;
+  --text-xs: 0.8125rem;
+  --text-sm: 0.9375rem;
+  --text-lg: 1.0625rem;
+  --text-xl: 1.25rem;
 }
 
 @layer base {

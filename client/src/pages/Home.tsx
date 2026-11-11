@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { projects } from "@/lib/data";
 import { blogPosts } from "@/lib/blog/metadata";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { slugify } from "@/lib/utils";
 import { Sprite, TribarScene, MINI_TRIBAR, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
 const FEATURED_TITLES = [
@@ -28,18 +29,23 @@ export default function Home() {
   return (
     <div>
       <section className="esc-hero">
-        <Sprite map={MINI_TRIBAR} palette={POLY_PAL} scale={3} className="floatcube" style={{ top: "12%", right: "8%" }} />
-        <Sprite map={WIRECUBE} palette={POLY_PAL} scale={4} className="floatcube" style={{ bottom: "16%", right: "30%", animationDelay: "1.2s" }} />
+        <Sprite map={MINI_TRIBAR} palette={POLY_PAL} scale={3} className="floatcube one" />
+        <Sprite map={WIRECUBE} palette={POLY_PAL} scale={4} className="floatcube two" />
         <h1>
-          Code is a staircase<br />
-          that <span className="accent">only goes up</span>,<br />
+          Code is a staircase <br />
+          that <span className="accent">only goes up</span>, <br />
           seen from the right angle.
         </h1>
         <p className="tagline">Walter Andrade. Logic / Philosophy / Code.</p>
+        <div className="esc-actions">
+          <Link className="esc-btn ghost" href="/projects">See the work</Link>
+          <Link className="esc-btn ghost" href="/blog">Read the essays</Link>
+        </div>
       </section>
 
-      <section className="esc-fall" aria-labelledby="home-fall-h">
-        <TribarScene />
+      <section className="esc-section" aria-labelledby="home-fall-h">
+        <div className="esc-fall">
+        <div className="art"><TribarScene /></div>
         <div>
           <h2 id="home-fall-h">The waterfall</h2>
           <p>
@@ -54,9 +60,10 @@ export default function Home() {
           </p>
           <Link className="esc-link" href="/bio">The full story</Link>
         </div>
+        </div>
       </section>
 
-      <section className="esc-page" aria-labelledby="home-work-h" style={{ paddingTop: 0 }}>
+      <section className="esc-section" aria-labelledby="home-work-h">
         <h2 id="home-work-h" className="esc-h2">Constructions</h2>
         <p className="esc-sub">Selected structures, each one solid from every side you look at it.</p>
         <div className="esc-grid">
@@ -68,32 +75,32 @@ export default function Home() {
               </div>
               <h3>{p.title}</h3>
               <p className="note">{p.role}</p>
-              <Link href="/projects" aria-label={`See ${p.title} in projects`} />
+              <Link href={`/projects#${slugify(p.title)}`} aria-label={`See ${p.title} in projects`} />
             </article>
           ))}
         </div>
-        <p style={{ marginTop: 48 }}>
+        <p className="esc-more">
           <Link className="esc-link" href="/projects">All constructions</Link>
         </p>
       </section>
 
-      <section className="esc-page" aria-labelledby="home-read-h" style={{ paddingTop: 0 }}>
+      <section className="esc-section" aria-labelledby="home-read-h">
         <h2 id="home-read-h" className="esc-h2">Ascending readings</h2>
         <p className="esc-sub">Essays on film and thought. Each step is higher than the last, forever.</p>
-        <ul style={{ listStyle: "none", maxWidth: 700 }}>
+        <ul className="esc-steps">
           {readings.map((post, i) => (
             <li key={post.slug}>
               <Link
                 href={`/blog/${post.slug}`}
                 className="esc-steplink"
-                style={{ marginLeft: Math.min(i * 48, 144) }}
+                style={{ "--i": Math.min(i, 3) } as React.CSSProperties}
               >
                 {post.title}
               </Link>
             </li>
           ))}
         </ul>
-        <p style={{ marginTop: 28 }}>
+        <p className="esc-more">
           <Link className="esc-link" href="/blog">All writings</Link>
         </p>
       </section>

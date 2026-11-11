@@ -343,7 +343,7 @@ export function IfThenSlider({ label }: { label?: string }) {
 
       <span className="flex w-full max-w-sm items-center gap-3">
         <Chip map={CLOUD} mini />
-        <span ref={track} className="relative flex h-8 w-full items-center">
+        <span ref={track} className="relative flex h-11 w-full items-center">
           <input
             type="range"
             min={0}
