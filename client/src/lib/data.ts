@@ -251,30 +251,6 @@ export const projects: Project[] = [
     link: "https://github.com/walteraandrade/estante",
   },
   {
-    title: "Integrated Task Manager",
-    role: "Creator",
-    description:
-      "The triage layer Linear's free plan lacks. Ingests the error backlog from Linear, enriches each item from Sentry and PostHog, proposes verdicts with an embedded Claude agent, and writes back to Linear only on confirmation. One Deno process with a SQLite overlay serves a React SPA, and it boots with zero credentials on fixture adapters.",
-    tech: ["TypeScript", "Deno", "SQLite", "React", "TanStack", "Claude", "MCP"],
-    link: "https://github.com/walteraandrade/integrated-task-manager",
-  },
-  {
-    title: "Keystone",
-    role: "Creator",
-    description:
-      "Backend that ingests audit documents (FMEA, IPAR), extracts structured knowledge with an LLM and stores it in Neo4j as the single source of truth, with Qdrant for semantic retrieval. The graph is authoritative, vectors are disposable, and entities are immutable with versions linked by SUPERSEDES.",
-    tech: ["TypeScript", "Bun", "Fastify", "Neo4j", "Qdrant", "Docker"],
-    link: "https://github.com/walteraandrade/keystone-v0",
-  },
-  {
-    title: "Azure for Dummies",
-    role: "Creator",
-    description:
-      "Full-screen terminal UI for browsing Azure resources, like k9s for Azure. Container Apps, PostgreSQL Flexible Servers and Storage Accounts with detail tabs, live log streaming, metrics sparklines and firewall rules, on a stack-based router where each service is a self-contained module.",
-    tech: ["Go", "TUI", "Azure"],
-    link: "https://github.com/walteraandrade/azure-for-dummies",
-  },
-  {
     title: "Homer",
     role: "Creator",
     description:
@@ -297,38 +273,6 @@ export const projects: Project[] = [
       "Local-first terminal app for commit review triage. Detects new commits in a local repository, notifies that they might need a review, tracks their status in SQLite and surfaces the unreviewed queue in a keyboard-first TUI.",
     tech: ["Go", "TUI", "Git", "SQLite"],
     link: "https://github.com/walteraandrade/claude-apollo",
-  },
-  {
-    title: "Plutio Manager",
-    role: "Creator",
-    description:
-      "CLI and TUI that sync JSON sprint plans to Plutio task boards. Push and pull, status drift detection, an interactive kanban board, OAuth2 with token caching, and rate limiting through a token bucket, with ID mappings kept in SQLite so plan files stay clean.",
-    tech: ["Go", "TUI", "Bubble Tea", "SQLite", "OAuth2"],
-    link: "https://github.com/walteraandrade/plutio-manager",
-  },
-  {
-    title: "Quest",
-    role: "Creator",
-    description:
-      "Sprint gamification CLI that turns dev work into an RPG. Syncs merged PRs, code reviews and tasks from GitHub, then computes XP, levels, streaks and achievements, with a terminal summary and a self-contained HTML dashboard.",
-    tech: ["TypeScript", "Bun", "CLI", "GitHub API"],
-    link: "https://github.com/walteraandrade/quest",
-  },
-  {
-    title: "Review Summarizer AI",
-    role: "Creator",
-    description:
-      "Summarizes public opinion on any movie, album, song, artist, book or series with Gemini and Google Search grounding, with technical details tailored to the media type and an interactive influence map to follow the connections between works.",
-    tech: ["Next.js", "TypeScript", "Gemini", "Tailwind CSS"],
-    link: "https://github.com/walteraandrade/review-summarizer-ai",
-  },
-  {
-    title: "Interactive Digital Catalogue",
-    role: "Creator",
-    description:
-      "Turns a static PDF catalogue of dental products into a clickable page. Hotspots on the product images pick variations and fill a cart, and the order goes out as a pre-filled WhatsApp message.",
-    tech: ["React", "Vite", "Zustand", "Tailwind CSS"],
-    link: "https://github.com/walteraandrade/interactive-digital-catalogue",
   },
 ];
 
