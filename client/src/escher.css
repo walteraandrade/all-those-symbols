@@ -347,6 +347,14 @@
 .esc-article > * { max-width: 42rem; margin-left: auto; margin-right: auto; }
 .esc-article .esc-postbody { display: block; }
 .esc-article picture { display: block; }
+.esc-floatrail { position: fixed; left: 16px; bottom: 88px; width: 256px; z-index: 40; }
+.esc-floatrail aside { margin-top: 0; }
+@media (min-width: 1280px) {
+  .esc-floatrail { left: calc(50% + 21rem + 48px); top: 120px; bottom: auto; }
+}
+@media (max-width: 1023px) {
+  .esc-floatrail { position: static; width: auto; }
+}
 .esc-rail { position: sticky; top: 96px; width: 256px; flex: none; align-self: flex-start; }
 .esc-toc-label { font-size: var(--fs-xs); color: var(--mid); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
 .esc-toc a {

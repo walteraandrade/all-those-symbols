@@ -105,7 +105,7 @@ function BlogPostContent() {
 
   const chrome = CHROME[post.activeLang];
   const hasTimeline = slug === "philosophy-really";
-  const hasRail = headings.length > 0 || hasTimeline;
+  const hasRail = headings.length > 0;
   const image = post.image;
   const imageSrcSet = image
     ? [480, 960, 1440]
@@ -235,7 +235,11 @@ function BlogPostContent() {
                   </nav>
                 </div>
               )}
-              {hasTimeline && <CenturyTimeline content={content} />}
+            </div>
+          )}
+          {hasTimeline && (
+            <div className="esc-floatrail">
+              <CenturyTimeline content={content} />
             </div>
           )}
         </div>
