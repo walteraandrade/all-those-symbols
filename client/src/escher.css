@@ -544,6 +544,12 @@
   .esc-rail { display: contents; }
   .esc-rail .esc-toc-desktop { display: none; }
   .esc-toc-mobile { display: block; }
+  .esc-tlbar {
+    position: fixed; left: 0; right: 0; bottom: 0;
+    border-width: 2px 0 0;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px)) 80px;
+  }
+  .esc:has(.esc-tlbar.visible) .esc-totop { bottom: calc(18px + env(safe-area-inset-bottom, 0px)); z-index: 41; }
 }
 @media (max-width: 860px) {
   .esc-topnav nav { gap: 0 4px; }

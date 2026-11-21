@@ -204,7 +204,7 @@ export function CenturyTimeline({ content }: { content: string }) {
       className={cn(
         "z-40 border-2 border-[var(--accent)] bg-[var(--ink-2)] px-3 py-2.5 font-mono lg:mt-6",
         "pointer-events-none transition-[opacity,visibility] duration-[180ms] ease-[steps(3)]",
-        "max-lg:fixed max-lg:bottom-20 max-lg:left-4 max-sm:right-4",
+        "esc-tlbar",
         view.visible ? "visible opacity-100" : "invisible opacity-0",
       )}
     >
