@@ -1,18 +1,16 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "wouter";
-import { queryClient } from "./lib/queryClient";
-import { QueryClientProvider } from "@tanstack/react-query";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { ThemeProvider } from "@/contexts/ThemeContext";
-import { MotionProvider } from "@/contexts/MotionContext";
-import { AudioProvider } from "@/contexts/AudioContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import { Layout } from "@/components/Layout";
+import { LoadingSpinner } from "@/components/LoadingSpinner";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
-import Bio from "@/pages/Bio";
-import Projects from "@/pages/Projects";
-import Music from "@/pages/Music";
-import Blog from "@/pages/Blog";
+
+const Bio = lazy(() => import("@/pages/Bio"));
+const Projects = lazy(() => import("@/pages/Projects"));
+const Blog = lazy(() => import("@/pages/Blog"));
+const BlogPost = lazy(() => import("@/pages/BlogPost"));
+const Contact = lazy(() => import("@/pages/Contact"));
 
 function Router() {
   return (
@@ -20,8 +18,9 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/bio" component={Bio} />
       <Route path="/projects" component={Projects} />
-      <Route path="/music" component={Music} />
       <Route path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={BlogPost} />
+      <Route path="/contact" component={Contact} />
       <Route component={NotFound} />
     </Switch>
   );
@@ -29,20 +28,13 @@ function Router() {
 
 function App() {
   return (
-    <ThemeProvider>
-      <MotionProvider>
-        <AudioProvider>
-          <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <Toaster />
-              <Layout>
-                <Router />
-              </Layout>
-            </TooltipProvider>
-          </QueryClientProvider>
-        </AudioProvider>
-      </MotionProvider>
-    </ThemeProvider>
+    <LanguageProvider>
+      <Layout>
+        <Suspense fallback={<LoadingSpinner />}>
+          <Router />
+        </Suspense>
+      </Layout>
+    </LanguageProvider>
   );
 }
 

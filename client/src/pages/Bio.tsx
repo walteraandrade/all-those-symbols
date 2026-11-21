@@ -1,92 +1,83 @@
-import { motion } from "framer-motion";
-import { Terminal, Github, Linkedin, Mail } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { bio, experience, skills, socialLinks } from "@/lib/data";
+import { bio, cvUrl, experience, skills, socialLinks } from "@/lib/data";
+import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { NeckerScene } from "@/components/escher/sprites";
 
 export default function Bio() {
+  useDocumentMeta({
+    title: "Bio | Walter Andrade",
+    description: "Software developer with a background in philosophy and logic. Building rigorous, elegant systems.",
+    canonical: "/bio",
+  });
+
   return (
-    <div className="container mx-auto px-4 max-w-3xl">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="space-y-12"
-      >
-        <header>
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
-            Bio <span className="text-primary">/</span> Philosophy
-          </h1>
-          <p className="text-lg leading-relaxed text-muted-foreground">
-            {bio}
+    <div className="esc-page">
+      <header className="esc-pagehead">
+        <h1>Two readings</h1>
+        <p className="sub">
+          Philosophy first, code second. Like the cube, the same career reads
+          two ways: a leap from one field to another, or one line that never
+          broke.
+        </p>
+      </header>
+
+      <section className="esc-fall esc-block" aria-label="About">
+        <div className="art"><NeckerScene flip /></div>
+        <div>
+          {bio.split("\n\n").map((paragraph) => (
+            <p key={paragraph.slice(0, 24)}>{paragraph}</p>
+          ))}
+          <p className="dim">
+            Bahia, Brazil. Degree in philosophy with a focus on logic.
+            One figure, two readings, like the cube.
           </p>
-        </header>
+          <a className="esc-btn" href={cvUrl} download>DOWNLOAD CV</a>
+        </div>
+      </section>
 
-        <section>
-          <h2 className="text-2xl font-display font-bold mb-6 flex items-center gap-2">
-            <Terminal className="w-6 h-6 text-accent" aria-hidden="true" />
-            Experience
-          </h2>
-          <div className="space-y-6">
-            {experience.map((exp, i) => (
-              <article key={i} className="border-l-2 border-primary/20 pl-4 py-1">
-                <h3 className="font-bold text-foreground">{exp.role}</h3>
-                <p className="text-sm text-accent mb-2">
-                  {exp.company} | {exp.period}
-                </p>
-                <p className="text-sm text-muted-foreground">{exp.description}</p>
-              </article>
-            ))}
-          </div>
-        </section>
+      <section className="esc-block" aria-labelledby="bio-xp-h">
+        <h2 id="bio-xp-h" className="esc-h2">Where the work happened</h2>
+        <p className="esc-sub">Experience, most recent first.</p>
+        <div className="esc-xp">
+          {experience.map((exp) => (
+            <article key={`${exp.company}-${exp.period}`}>
+              <h3 className="esc-card-title">{exp.role}</h3>
+              <p className="esc-card-kicker">{exp.company} · {exp.period}</p>
+              <p className="esc-card-body">{exp.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-        <section>
-          <h2 className="text-2xl font-display font-bold mb-4">Tech Stack</h2>
-          <div className="flex flex-wrap gap-2">
-            {[...skills.languages, ...skills.frontend, ...skills.backend, ...skills.cloud].map(
-              (skill) => (
-                <Badge
-                  key={skill}
-                  variant="outline"
-                  className="bg-primary/5 hover:bg-primary/10 transition-colors"
-                >
-                  {skill}
-                </Badge>
-              )
-            )}
-          </div>
-        </section>
+      <section className="esc-block" aria-labelledby="bio-skills-h">
+        <h2 id="bio-skills-h" className="esc-h2">Tools of the trade</h2>
+        <p className="esc-sub">Languages, frameworks, and platforms in active use.</p>
+        <dl className="esc-skills">
+          {Object.entries(skills).map(([group, items]) => (
+            <div key={group} className="contents">
+              <dt>{group}</dt>
+              <dd className="esc-chips">
+                {items.map((skill) => (
+                  <span key={skill} className="esc-chip">{skill}</span>
+                ))}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
-        <section className="pt-6 border-t border-border">
-          <h2 className="sr-only">Contact</h2>
-          <div className="flex gap-4">
-            <Button variant="outline" size="icon" asChild>
-              <a href={`mailto:${socialLinks.email}`} aria-label="Email Walter">
-                <Mail className="w-4 h-4" aria-hidden="true" />
-              </a>
-            </Button>
-            <Button variant="outline" size="icon" asChild>
-              <a
-                href={`https://linkedin.com${socialLinks.linkedin}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Walter's LinkedIn profile"
-              >
-                <Linkedin className="w-4 h-4" aria-hidden="true" />
-              </a>
-            </Button>
-            <Button variant="outline" size="icon" asChild>
-              <a
-                href={`https://github.com/${socialLinks.github.replace("@", "")}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Walter's GitHub profile"
-              >
-                <Github className="w-4 h-4" aria-hidden="true" />
-              </a>
-            </Button>
-          </div>
-        </section>
-      </motion.div>
+      <section className="esc-block" aria-labelledby="bio-connect-h">
+        <h2 id="bio-connect-h" className="esc-h2">Connect</h2>
+        <p className="esc-sub">Email is the fastest way in. I answer within a few days.</p>
+        <div className="esc-linkrow">
+          <a className="esc-link" href={`mailto:${socialLinks.email}`}>Email</a>
+          <a className="esc-link" href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+          <a className="esc-link" href={`https://github.com/${socialLinks.github.replace("@", "")}`} target="_blank" rel="noopener noreferrer">
+            GitHub
+          </a>
+        </div>
+      </section>
     </div>
   );
 }

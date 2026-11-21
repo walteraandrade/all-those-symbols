@@ -1,0 +1,64 @@
+import { lazy, memo, Suspense } from "react";
+import ReactMarkdown, { type Components } from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { slugify } from "@/lib/utils";
+import { CHROME } from "@/lib/blog/chrome";
+import type { PostLang } from "@/lib/blog/types";
+
+const widgetSrcs = new Set(["#if-then", "#state-machine", "#logic-circuit", "#certainty-method"]);
+const Widget = lazy(() => import("./Widgets"));
+
+const sizeFromSrc = (src?: string) => {
+  const match = src?.match(/-(\d+)x(\d+)\.\w+$/);
+  return match ? { width: Number(match[1]), height: Number(match[2]) } : {};
+};
+
+const components: Components = {
+  img: ({ src, alt }) =>
+    src && widgetSrcs.has(src) ? (
+      <Suspense fallback={<span className="block min-h-64" />}>
+        <Widget src={src} label={alt} />
+      </Suspense>
+    ) : (
+      <img
+        src={typeof src === "string" ? src : undefined}
+        alt={alt ?? ""}
+        loading="lazy"
+        decoding="async"
+        {...sizeFromSrc(typeof src === "string" ? src : undefined)}
+      />
+    ),
+  h2: ({ children }) => {
+    const text = String(children);
+    const id = slugify(text);
+    return (
+      <h2 id={id}>{children}</h2>
+    );
+  },
+  h3: ({ children }) => {
+    const text = String(children);
+    const id = slugify(text);
+    return (
+      <h3 id={id}>{children}</h3>
+    );
+  },
+};
+
+interface BlogContentProps {
+  content: string;
+  lang: PostLang;
+}
+
+export const BlogContent = memo(function BlogContent({ content, lang }: BlogContentProps) {
+  return (
+    <article className="blog-prose">
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        remarkRehypeOptions={{ footnoteLabel: CHROME[lang].footnotes, footnoteBackLabel: CHROME[lang].footnoteBack }}
+        components={components}
+      >
+        {content}
+      </ReactMarkdown>
+    </article>
+  );
+});
