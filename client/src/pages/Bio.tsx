@@ -12,29 +12,30 @@ export default function Bio() {
   return (
     <div className="esc-page">
       <header className="esc-pagehead">
-        <h1>The waterfall</h1>
+        <h1>Two readings</h1>
         <p className="sub">
-          Philosophy first, code second. From the outside it looks like water
-          flowing uphill; from the inside it was always the same stream.
+          Philosophy first, code second. Like the cube, the same career reads
+          two ways: a leap from one field to another, or one line that never
+          broke.
         </p>
       </header>
 
       <section className="esc-fall esc-block" aria-label="About">
-        <div className="art"><NeckerScene /></div>
+        <div className="art"><NeckerScene flip /></div>
         <div>
           {bio.split("\n\n").map((paragraph) => (
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
           <p className="dim">
             Bahia, Brazil. Degree in philosophy with a focus on logic.
-            One figure, two readings, like the cube.
+            Click the cube to choose its front face yourself.
           </p>
           <a className="esc-btn" href={cvUrl} download>DOWNLOAD CV</a>
         </div>
       </section>
 
       <section className="esc-block" aria-labelledby="bio-xp-h">
-        <h2 id="bio-xp-h" className="esc-h2">Where the water ran</h2>
+        <h2 id="bio-xp-h" className="esc-h2">Where the work happened</h2>
         <p className="esc-sub">Experience, most recent first.</p>
         <div className="esc-xp">
           {experience.map((exp) => (

@@ -362,6 +362,14 @@ export function IfThenSlider({ label }: { label?: string }) {
               <span key={i} className="flex-1" style={{ background: i < filled ? "var(--bone)" : "var(--mid)" }} />
             ))}
           </span>
+          {[0, 0.5, 1].map((stop) => (
+            <span
+              key={stop}
+              aria-hidden
+              className="absolute bottom-0 h-2 w-[3px]"
+              style={{ left: `calc(${stop} * (100% - 1rem) + 0.5rem - 1px)`, background: t >= stop ? "var(--accent)" : "var(--mid)" }}
+            />
+          ))}
           <motion.span
             aria-hidden
             className="absolute h-7 w-4 border-[3px] border-[var(--dark)] bg-[var(--bone)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--accent)]"

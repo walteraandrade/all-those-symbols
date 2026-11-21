@@ -4,6 +4,7 @@ import { blogPosts } from "@/lib/blog/metadata";
 import { cvUrl, projects, socialLinks } from "@/lib/data";
 import { slugify } from "@/lib/utils";
 import { Sprite, MARK, CUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { BackToTop } from "@/components/blog/BackToTop";
 
 interface LayoutProps {
   children: ReactNode;
@@ -73,7 +74,7 @@ function GemNav() {
   const items = [
     { label: "A random essay", run: () => go(`/blog/${pick(blogPosts).slug}`) },
     { label: "A random construction", run: () => go(`/projects#${slugify(pick(projects).title)}`) },
-    { label: "Back to the top", run: () => { setOpen(false); window.scrollTo({ top: 0 }); } },
+    { label: "Flip the Necker cube", run: () => go("/bio") },
   ];
 
   return (
@@ -89,7 +90,7 @@ function GemNav() {
         </div>
       )}
       <button className="gem" aria-expanded={open} aria-label="Detours" onClick={() => setOpen(!open)}>
-        <Sprite map={CUBE} palette={open ? POLY_PAL_ACCENT : POLY_PAL} scale={2} />
+        <Sprite map={CUBE} palette={open ? POLY_PAL : POLY_PAL_ACCENT} scale={2} />
       </button>
     </div>
   );
@@ -127,6 +128,7 @@ export function Layout({ children }: LayoutProps) {
       <GemNav />
 
       <main id="main-content" ref={main} tabIndex={-1}>{children}</main>
+      <BackToTop />
 
       <footer className="esc-footer">
         <p className="quote">Impossible objects, shippable software. {import.meta.env.VITE_BUILD_YEAR}.</p>

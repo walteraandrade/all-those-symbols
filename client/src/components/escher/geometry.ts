@@ -34,7 +34,7 @@ const fillPoly = (g: string[][], poly: Pt[], paint: (x: number, y: number) => vo
 // With `channel`, a groove W runs down the middle of the vertical bar's wall
 // and back along the tops of the two slanted bars. `flow` gives each groove
 // cell its distance (in voxels) along that closed loop, for animating water.
-export function makePenrose(len: number, thick: number, cell: number, channel: boolean) {
+export function makePenrose(len: number, thick: number, cell: number, channel: boolean, shadow = 0) {
   const P = (x: number, y: number, z: number): Pt => [(x - y) * cell, ((x + y) * cell) / 2 - z * cell];
   const span = len + thick;
   const bars: { p: V; groove: number }[][] = [[], [], []];
@@ -57,7 +57,23 @@ export function makePenrose(len: number, thick: number, cell: number, channel: b
   bars.forEach((bar) => bar.sort((p, q) => depth(p) - depth(q)));
   const order = [...bars[2], ...bars[0], ...bars[1]];
 
-  const corners = order.flatMap(({ p: [x, y, z] }) => [P(x, y + 1, z), P(x + 1, y, z), P(x, y, z + 1), P(x + 1, y + 1, z), P(x, y + 1, z + 1), P(x + 1, y, z + 1)]);
+  // the cast shadow: every voxel slid along the light onto the ground (z = 0)
+  const ground = new Map<string, [number, number]>();
+  if (shadow) {
+    for (const { p: [x, y, z] } of order) {
+      for (let k = 0; k <= z * shadow; k++) {
+        const gx = x + k;
+        const gy = y - Math.floor(k / 2);
+        ground.set(`${gx},${gy}`, [gx, gy]);
+      }
+    }
+  }
+  const shade = [...ground.values()];
+
+  const corners = [
+    ...order.flatMap(({ p: [x, y, z] }) => [P(x, y + 1, z), P(x + 1, y, z), P(x, y, z + 1), P(x + 1, y + 1, z), P(x, y + 1, z + 1), P(x + 1, y, z + 1)]),
+    ...shade.flatMap(([x, y]) => [P(x, y, 0), P(x + 1, y, 0), P(x, y + 1, 0), P(x + 1, y + 1, 0)]),
+  ];
   const minX = Math.min(...corners.map((p) => p[0]));
   const minY = Math.min(...corners.map((p) => p[1]));
   const w = Math.ceil(Math.max(...corners.map((p) => p[0])) - minX);
@@ -68,6 +84,10 @@ export function makePenrose(len: number, thick: number, cell: number, channel: b
     const [px, py] = P(x, y, z);
     return [px - minX, py - minY];
   };
+
+  for (const [x, y] of shade) {
+    fillPoly(g, [at(x, y, 0), at(x + 1, y, 0), at(x + 1, y + 1, 0), at(x, y + 1, 0)], (px, py) => { g[py][px] = "D"; });
+  }
 
   for (const { p: [x, y, z], groove } of order) {
     const faces: [string, Pt[]][] = [
@@ -123,9 +143,9 @@ const line = (g: string[][], x0: number, y0: number, x1: number, y1: number, ch:
 // picks which square reads as nearer: its face is filled (F) and its edges
 // drawn light (A); the other square's edges go mid (M). Swap it and the
 // cube turns inside out without a pixel of the outline moving.
-export function makeNecker(size: number, depth: number, front: 0 | 1): PixelMap {
-  const w = size + depth + 1;
-  const h = size + depth + 1;
+export function makeNecker(size: number, depth: number, front: 0 | 1, weight = 1): PixelMap {
+  const w = size + depth + weight;
+  const h = size + depth + weight;
   const g: string[][] = Array.from({ length: h }, () => Array(w).fill("."));
   const sq = [
     { x: 0, y: depth },
@@ -136,15 +156,18 @@ export function makeNecker(size: number, depth: number, front: 0 | 1): PixelMap 
   for (let y = near.y + 1; y < near.y + size; y++) {
     for (let x = near.x + 1; x < near.x + size; x++) g[y][x] = "F";
   }
+  const stroke = (x0: number, y0: number, x1: number, y1: number, ch: string) => {
+    for (let o = 0; o < weight; o++) line(g, x0 + o, y0 + o, x1 + o, y1 + o, ch);
+  };
   const square = (s: { x: number; y: number }, ch: string) => {
-    line(g, s.x, s.y, s.x + size, s.y, ch);
-    line(g, s.x + size, s.y, s.x + size, s.y + size, ch);
-    line(g, s.x + size, s.y + size, s.x, s.y + size, ch);
-    line(g, s.x, s.y + size, s.x, s.y, ch);
+    stroke(s.x, s.y, s.x + size, s.y, ch);
+    stroke(s.x + size, s.y, s.x + size, s.y + size, ch);
+    stroke(s.x + size, s.y + size, s.x, s.y + size, ch);
+    stroke(s.x, s.y + size, s.x, s.y, ch);
   };
   square(far, "M");
   for (const [dx, dy] of [[0, 0], [size, 0], [0, size], [size, size]]) {
-    line(g, far.x + dx, far.y + dy, near.x + dx, near.y + dy, "M");
+    stroke(far.x + dx, far.y + dy, near.x + dx, near.y + dy, "M");
   }
   square(near, "A");
   return g.map((r) => r.join(""));
@@ -192,5 +215,33 @@ export function makeWheel(radius: number, turn: number): PixelMap {
   ring(cx, cy, radius - 2.2, radius, "R");
   ring(cx, cy, 0, 3.2, "R");
   ring(cx, cy, 0, 1.4, "H");
+  return g.map((r) => r.join(""));
+}
+
+// Free voxel models in the tribar's projection, drawn back to front.
+// Stone voxels take T/L/R, accent voxels X/Y/Z (top, y+ wall, x+ wall).
+export type Voxel = [number, number, number, 0 | 1];
+
+export function makeVoxels(voxels: Voxel[], cell: number): PixelMap {
+  const P = (x: number, y: number, z: number): Pt => [(x - y) * cell, ((x + y) * cell) / 2 - z * cell];
+  const corners = voxels.flatMap(([x, y, z]) => [P(x, y + 1, z), P(x + 1, y, z), P(x, y, z + 1), P(x + 1, y + 1, z), P(x, y + 1, z + 1), P(x + 1, y, z + 1)]);
+  const minX = Math.min(...corners.map((p) => p[0]));
+  const minY = Math.min(...corners.map((p) => p[1]));
+  const w = Math.ceil(Math.max(...corners.map((p) => p[0])) - minX);
+  const h = Math.ceil(Math.max(...corners.map((p) => p[1])) - minY);
+  const g: string[][] = Array.from({ length: h }, () => Array(w).fill("."));
+  const at = (x: number, y: number, z: number): Pt => {
+    const [px, py] = P(x, y, z);
+    return [px - minX, py - minY];
+  };
+  const sorted = [...voxels].sort((a, b) => a[0] + a[1] + a[2] - (b[0] + b[1] + b[2]) || a[2] - b[2]);
+  for (const [x, y, z, m] of sorted) {
+    const faces: [string, Pt[]][] = [
+      [m ? "X" : "T", [at(x, y, z + 1), at(x + 1, y, z + 1), at(x + 1, y + 1, z + 1), at(x, y + 1, z + 1)]],
+      [m ? "Z" : "R", [at(x + 1, y, z), at(x + 1, y + 1, z), at(x + 1, y + 1, z + 1), at(x + 1, y, z + 1)]],
+      [m ? "Y" : "L", [at(x, y + 1, z), at(x + 1, y + 1, z), at(x + 1, y + 1, z + 1), at(x, y + 1, z + 1)]],
+    ];
+    for (const [face, poly] of faces) fillPoly(g, poly, (px, py) => { g[py][px] = face; });
+  }
   return g.map((r) => r.join(""));
 }

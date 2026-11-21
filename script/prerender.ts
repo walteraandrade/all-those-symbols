@@ -15,7 +15,6 @@ interface PageMeta {
   noindex?: boolean;
   ogType?: string;
   ogImage?: string;
-  preload?: string[];
 }
 
 const staticPages: Record<string, PageMeta> = {
@@ -78,7 +77,6 @@ const generateMetaTags = (meta: PageMeta): string => {
     `<meta name="twitter:title" content="${title}" />`,
     `<meta name="twitter:description" content="${description}" />`,
     `<meta name="twitter:image" content="${ogImage}" />`,
-    ...(meta.preload ?? []).map((href) => `<link rel="preload" href="${href}" as="font" type="font/woff2" crossorigin>`),
   ]
     .filter(Boolean)
     .map((tag) => `\n    ${tag}`)
@@ -190,7 +188,6 @@ export async function prerender() {
       canonical: `/blog/${post.slug}`,
       ogType: "article",
       ogImage: post.image?.replace(/\.jpe?g$/i, "-1440.jpg"),
-      preload: ["/fonts/literata.woff2"],
     });
   }
 

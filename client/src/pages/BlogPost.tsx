@@ -8,7 +8,6 @@ import { slugify } from "@/lib/utils";
 import { PostLanguage, useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
-import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { CenturyTimeline } from "@/components/blog/CenturyTimeline";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
@@ -133,7 +132,6 @@ function BlogPostContent() {
     <PostLanguage lang={post.activeLang}>
       <div className={`esc-page ${hasRail ? "" : "esc-article"}`}>
         <ReadingProgress />
-        <BackToTop />
 
         <header className="esc-pagehead">
           <Link href="/blog" className="esc-back">

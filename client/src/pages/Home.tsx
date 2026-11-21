@@ -2,8 +2,11 @@ import { Link } from "wouter";
 import { isOwn, projects } from "@/lib/data";
 import { blogPosts } from "@/lib/blog/metadata";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
+import { localizePost } from "@/lib/blog/metadata";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { slugify } from "@/lib/utils";
-import { Sprite, WheelScene, WaterfallScene, MARK, CUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { Sprite, WheelScene, WaterfallScene, MARK, CUBE, POLY_PAL } from "@/components/escher/sprites";
+import { CONSTRUCTIONS } from "@/components/escher/constructions";
 import { KindLegend } from "@/components/escher/KindLegend";
 
 const FEATURED_TITLES = [
@@ -25,7 +28,8 @@ export default function Home() {
   const featured = FEATURED_TITLES
     .map((t) => projects.find((p) => p.title === t))
     .filter((p): p is (typeof projects)[number] => Boolean(p));
-  const readings = blogPosts.slice(0, 4);
+  const { lang } = useLanguage();
+  const readings = blogPosts.slice(0, 4).map((p) => localizePost(p, lang));
 
   return (
     <div>
@@ -37,9 +41,12 @@ export default function Home() {
           that <span className="accent">only goes up</span>, <br />
           seen from the right angle.
         </h1>
-        <p className="tagline">Walter Andrade. Logic / Philosophy / Code.</p>
+        <p className="tagline">
+          I'm Walter Andrade, a senior software engineer who ships AI agents
+          and full-stack products. Philosophy degree in logic.
+        </p>
         <div className="esc-actions">
-          <Link className="esc-btn ghost" href="/projects">See the work</Link>
+          <Link className="esc-btn" href="/projects">See the work</Link>
           <Link className="esc-btn ghost" href="/blog">Read the essays</Link>
         </div>
         </div>
@@ -67,17 +74,19 @@ export default function Home() {
 
       <section className="esc-section" aria-labelledby="home-work-h">
         <h2 id="home-work-h" className="esc-h2">Constructions</h2>
-        <p className="esc-sub">Selected work, marked by how it was built.</p>
+        <p className="esc-sub">Selected work, each drawn as what it does and marked by how it was built.</p>
         <KindLegend />
         <div className="esc-grid">
           {featured.map((p) => (
             <article key={p.title} className="esc-cell">
               <div className="cube">
-                <Sprite map={isOwn(p) ? CUBE : MARK} palette={POLY_PAL} scale={3} className="bonecube" />
-                <Sprite map={isOwn(p) ? CUBE : MARK} palette={POLY_PAL_ACCENT} scale={3} className="accentcube" />
+                <Sprite map={CONSTRUCTIONS[p.title] ?? (isOwn(p) ? CUBE : MARK)} palette={POLY_PAL} scale={3} />
               </div>
               <h3>{p.title}</h3>
-              <p className="note">{p.role}</p>
+              <p className="note">
+                <Sprite map={isOwn(p) ? CUBE : MARK} palette={POLY_PAL} scale={1} />
+                <span><span className="sr-only">{isOwn(p) ? "Built on my own. " : "Shipped with a team. "}</span>{p.role}</span>
+              </p>
               <Link href={`/projects#${slugify(p.title)}`} aria-label={`See ${p.title} in projects`} />
             </article>
           ))}
@@ -96,9 +105,10 @@ export default function Home() {
               <Link
                 href={`/blog/${post.slug}`}
                 className="esc-steplink"
-                style={{ "--i": Math.min(i, 3) } as React.CSSProperties}
+                style={{ "--i": readings.length - 1 - i } as React.CSSProperties}
               >
-                {post.title}
+                <span lang={post.activeLang}>{post.title}</span>
+                {post.activeLang !== lang && <span className="esc-lang"><span className="sr-only">Language: </span>{post.activeLang.toUpperCase()}</span>}
               </Link>
             </li>
           ))}

@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { isOwn, projects, type Project } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { slugify } from "@/lib/utils";
 import { Sprite, MARK, CUBE, POLY_PAL } from "@/components/escher/sprites";
 
-const TOP_TAGS = 8;
+const FILTERS = ["TypeScript", "React", "Next.js", "NestJS", "PostgreSQL", "Python", "Go", "Rust", "Azure", "TUI"];
 
 export default function Projects() {
   useDocumentMeta({
@@ -14,7 +14,6 @@ export default function Projects() {
   });
 
   const [activeFilter, setActiveFilter] = useState<string | null>(null);
-  const [showAll, setShowAll] = useState(false);
   const [picked, setPicked] = useState("");
 
   useEffect(() => {
@@ -24,39 +23,17 @@ export default function Projects() {
     document.getElementById(id)?.scrollIntoView({ block: "center" });
   }, []);
 
-  const counts = useMemo(() => {
-    const m = new Map<string, number>();
-    projects.forEach((p) => p.tech.forEach((t) => m.set(t, (m.get(t) ?? 0) + 1)));
-    return m;
-  }, []);
-
-  const categories = useMemo(
-    () =>
-      Array.from(counts.keys()).sort(
-        (a, b) => counts.get(b)! - counts.get(a)! || a.localeCompare(b),
-      ),
-    [counts],
-  );
-
-  const shared = useMemo(() => categories.slice(0, TOP_TAGS), [categories]);
-
-  const visible = showAll
-    ? categories
-    : activeFilter && !shared.includes(activeFilter)
-      ? [...shared, activeFilter]
-      : shared;
-
   const filtered = activeFilter
     ? projects.filter((p) => p.tech.includes(activeFilter))
     : projects;
 
   return (
-    <div className="esc-page">
+    <div className="esc-page wide">
       <header className="esc-pagehead">
         <h1>Constructions</h1>
         <p className="sub">
-          Products shipped with teams for clients and employers, and tools I
-          built on my own. Most of the second kind are open on GitHub.
+          Products I shipped with teams for clients and employers, and tools I
+          built on my own. Most of the solo tools are open source on GitHub.
         </p>
       </header>
 
@@ -64,7 +41,7 @@ export default function Projects() {
         <button className={`esc-tag ${activeFilter === null ? "on" : ""}`} aria-pressed={activeFilter === null} onClick={() => setActiveFilter(null)}>
           All
         </button>
-        {visible.map((cat) => (
+        {FILTERS.map((cat) => (
           <button
             key={cat}
             className={`esc-tag ${activeFilter === cat ? "on" : ""}`}
@@ -74,13 +51,6 @@ export default function Projects() {
             {cat}
           </button>
         ))}
-        <button
-          className="esc-tag more"
-          aria-expanded={showAll}
-          onClick={() => setShowAll((v) => !v)}
-        >
-          {showAll ? "Show less" : `+${categories.length - shared.length} more`}
-        </button>
       </div>
 
       <p className="esc-count" role="status">
@@ -122,8 +92,14 @@ function ProjectCard({ p, picked }: { p: Project; picked: string }) {
   return (
     <article id={id} className={`esc-projcard ${p.link ? "linked" : ""} ${picked === id ? "on" : ""}`}>
       <div>
-        <h3 className="esc-card-title">{p.title}</h3>
-        <p className="esc-card-kicker">{p.role}</p>
+        <div className="head">
+          <div>
+            <h3 className="esc-card-title">{p.title}</h3>
+            <p className="esc-card-kicker">{p.role}</p>
+          </div>
+          <Sprite map={isOwn(p) ? CUBE : MARK} palette={POLY_PAL} scale={1} className="kind" />
+        </div>
+        {p.lead && <p className="esc-card-lead">{p.lead}</p>}
         <p className="esc-card-body">{p.description}</p>
         <div className="esc-chips">
           {p.tech.map((t) => (
