@@ -343,7 +343,7 @@ export function LogicCircuitWidget({ label }: { label?: string }) {
         >
           {lit ? copy.result.on : copy.result.off}
         </span>
-        <span className="block min-h-[2.5em] font-mono text-xs leading-snug text-[var(--mid)]">{note}</span>
+        <span className="block min-h-[2.5em] font-mono text-sm leading-snug text-[var(--soft)]">{note}</span>
       </span>
     </span>
   );

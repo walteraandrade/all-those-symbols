@@ -1,4 +1,4 @@
-import { MINI_TRIBAR, POLY_PAL, Sprite, WIRECUBE } from "@/components/escher/sprites";
+import { CUBE, MARK, POLY_PAL, Sprite } from "@/components/escher/sprites";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { cn } from "@/lib/utils";
 
@@ -71,7 +71,7 @@ const Entry = ({
       {columnLabel}
     </span>
     <span className={cn("block text-xl leading-tight", DISPLAY)}>{term}</span>
-    <span className="mt-1 block font-mono text-sm leading-snug text-[var(--mid)]">{text}</span>
+    <span className="mt-1 block font-mono text-sm leading-snug text-[var(--soft)]">{text}</span>
   </span>
 );
 
@@ -92,11 +92,11 @@ export function CertaintyMethod({ label }: { label?: string }) {
       <span role="row" className={cn(GRID, "hidden border-t-[3px] border-[var(--dark)] sm:grid")}>
         <span role="presentation" />
         <Heading>
-          <Sprite map={MINI_TRIBAR} palette={POLY_PAL} scale={1} />
+          <Sprite map={MARK} palette={POLY_PAL} scale={1} />
           {copy.geometry}
         </Heading>
         <Heading className="border-l-2 border-[var(--dark)]">
-          <Sprite map={WIRECUBE} palette={POLY_PAL} scale={3} />
+          <Sprite map={CUBE} palette={POLY_PAL} scale={1} />
           {copy.philosophy}
         </Heading>
       </span>

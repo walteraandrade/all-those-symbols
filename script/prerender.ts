@@ -14,6 +14,7 @@ interface PageMeta {
   canonical?: string;
   noindex?: boolean;
   ogType?: string;
+  ogImage?: string;
 }
 
 const staticPages: Record<string, PageMeta> = {
@@ -57,7 +58,7 @@ const escapeHtml = (value: string): string =>
     .replace(/>/g, "&gt;");
 
 const generateMetaTags = (meta: PageMeta): string => {
-  const ogImage = `${BASE_URL}/opengraph.jpg`;
+  const ogImage = `${BASE_URL}${meta.ogImage ?? "/opengraph.jpg"}`;
   const title = escapeHtml(meta.title);
   const description = escapeHtml(meta.description);
   const url = meta.canonical ? `${BASE_URL}${meta.canonical}` : null;
@@ -186,6 +187,7 @@ export async function prerender() {
       description: post.excerpt,
       canonical: `/blog/${post.slug}`,
       ogType: "article",
+      ogImage: post.image?.replace(/\.jpe?g$/i, "-1440.jpg"),
     });
   }
 

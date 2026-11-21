@@ -8,7 +8,6 @@ import { slugify } from "@/lib/utils";
 import { PostLanguage, useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { ReadingProgress } from "@/components/blog/ReadingProgress";
-import { BackToTop } from "@/components/blog/BackToTop";
 import { BlogContent } from "@/components/blog/BlogContent";
 import { CenturyTimeline } from "@/components/blog/CenturyTimeline";
 import { LanguageToggle } from "@/components/blog/LanguageToggle";
@@ -58,7 +57,7 @@ function BlogPostContent() {
     description: post?.excerpt,
     canonical: post ? `/blog/${post.slug}` : "/blog",
     ogType: "article",
-    ogImage: post?.image ? `${BASE_URL}${post.image}` : undefined,
+    ogImage: post?.image ? `${BASE_URL}${post.image.replace(/\.jpe?g$/i, "-1440.jpg")}` : undefined,
   });
 
   useEffect(() => {
@@ -105,9 +104,10 @@ function BlogPostContent() {
 
   const chrome = CHROME[post.activeLang];
   const hasTimeline = slug === "philosophy-really";
+  const hasRail = headings.length > 0;
   const image = post.image;
   const imageSrcSet = image
-    ? [480, 960, 1600]
+    ? [480, 960, 1440]
         .map((width) => `${image.replace(/\.jpe?g$/i, `-${width}.webp`)} ${width}w`)
         .join(", ")
     : undefined;
@@ -130,9 +130,8 @@ function BlogPostContent() {
 
   return (
     <PostLanguage lang={post.activeLang}>
-      <div className="esc-page">
+      <div className={`esc-page ${hasRail ? "" : "esc-article"}`}>
         <ReadingProgress />
-        <BackToTop />
 
         <header className="esc-pagehead">
           <Link href="/blog" className="esc-back">
@@ -165,13 +164,13 @@ function BlogPostContent() {
             <source
               type="image/webp"
               srcSet={imageSrcSet}
-              sizes="(max-width: 860px) calc(100vw - 40px), calc(min(100vw, 1180px) - 12vw)"
+              sizes="(max-width: 860px) calc(100vw - 40px), 46rem"
             />
             <img
-              src={image}
+              src={image.replace(/\.jpe?g$/i, "-960.webp")}
               alt={post.imageAlt ?? ""}
-              width={1600}
-              height={900}
+              width={1440}
+              height={810}
               fetchPriority="high"
               className="esc-postcover"
             />
@@ -224,7 +223,7 @@ function BlogPostContent() {
             )}
           </div>
 
-          {(headings.length > 0 || hasTimeline) && (
+          {hasRail && (
             <div className="esc-rail">
               {headings.length > 0 && (
                 <div className="esc-toc-desktop">
@@ -234,7 +233,11 @@ function BlogPostContent() {
                   </nav>
                 </div>
               )}
-              {hasTimeline && <CenturyTimeline content={content} />}
+            </div>
+          )}
+          {hasTimeline && (
+            <div className="esc-floatrail">
+              <CenturyTimeline content={content} />
             </div>
           )}
         </div>

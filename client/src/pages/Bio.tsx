@@ -1,6 +1,6 @@
 import { bio, cvUrl, experience, skills, socialLinks } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { TribarScene } from "@/components/escher/sprites";
+import { NeckerScene } from "@/components/escher/sprites";
 
 export default function Bio() {
   useDocumentMeta({
@@ -12,29 +12,30 @@ export default function Bio() {
   return (
     <div className="esc-page">
       <header className="esc-pagehead">
-        <h1>The waterfall</h1>
+        <h1>Two readings</h1>
         <p className="sub">
-          Philosophy first, code second. From the outside it looks like water
-          flowing uphill; from the inside it was always the same stream.
+          Philosophy first, code second. Like the cube, the same career reads
+          two ways: a leap from one field to another, or one line that never
+          broke.
         </p>
       </header>
 
       <section className="esc-fall esc-block" aria-label="About">
-        <div className="art"><TribarScene /></div>
+        <div className="art"><NeckerScene flip /></div>
         <div>
           {bio.split("\n\n").map((paragraph) => (
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
           <p className="dim">
             Bahia, Brazil. Degree in philosophy with a focus on logic.
-            The wheel has been turning the whole time.
+            One figure, two readings, like the cube.
           </p>
           <a className="esc-btn" href={cvUrl} download>DOWNLOAD CV</a>
         </div>
       </section>
 
       <section className="esc-block" aria-labelledby="bio-xp-h">
-        <h2 id="bio-xp-h" className="esc-h2">Where the water ran</h2>
+        <h2 id="bio-xp-h" className="esc-h2">Where the work happened</h2>
         <p className="esc-sub">Experience, most recent first.</p>
         <div className="esc-xp">
           {experience.map((exp) => (
@@ -66,7 +67,7 @@ export default function Bio() {
 
       <section className="esc-block" aria-labelledby="bio-connect-h">
         <h2 id="bio-connect-h" className="esc-h2">Connect</h2>
-        <p className="esc-sub">The next train leaves whenever you write.</p>
+        <p className="esc-sub">Email is the fastest way in. I answer within a few days.</p>
         <div className="esc-linkrow">
           <a className="esc-link" href={`mailto:${socialLinks.email}`}>Email</a>
           <a className="esc-link" href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">

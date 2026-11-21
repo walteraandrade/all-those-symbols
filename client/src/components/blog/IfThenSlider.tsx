@@ -20,6 +20,7 @@ const COPY = {
       { article: { from: "the", to: "the" }, word: { from: "meaning", to: "semantics" }, verb: "leaves," },
       { article: { from: "the", to: "the" }, word: { from: "form", to: "syntax" }, verb: "stays." },
     ],
+    ticks: ["meaning", "syntax", "form"],
     stages: {
       sentences: "Three if-then sentences: about rain, a switch and a key.",
       dissolving: "The meaning is leaving the sentences.",
@@ -41,6 +42,7 @@ const COPY = {
       { article: { from: "o", to: "a" }, word: { from: "sentido", to: "semântica" }, verb: "sai," },
       { article: { from: "a", to: "a" }, word: { from: "forma", to: "sintaxe" }, verb: "fica." },
     ],
+    ticks: ["sentido", "sintaxe", "forma"],
     stages: {
       sentences: "Três frases \"se, então\": sobre chuva, interruptor e chave.",
       dissolving: "O sentido está saindo das frases.",
@@ -327,7 +329,7 @@ export function IfThenSlider({ label }: { label?: string }) {
                 )}
                 <span
                   aria-hidden
-                  className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-pre font-['League_Spartan',sans-serif] text-xs font-bold leading-4 text-[var(--bone)] sm:text-sm"
+                  className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-pre font-['League_Spartan',sans-serif] text-sm font-bold leading-4 text-[var(--bone)]"
                 >
                   {[...copy.sentences[i]].map((ch, j) => (
                     <span key={j} style={{ visibility: morph > pixelOrder(j + 1, j * 2 + i, i) ? "hidden" : "visible" }}>
@@ -341,7 +343,7 @@ export function IfThenSlider({ label }: { label?: string }) {
         })}
       </span>
 
-      <span className="flex w-full max-w-sm items-center gap-3">
+      <span className="flex w-full max-w-sm items-center gap-3 pb-6">
         <Chip map={CLOUD} mini />
         <span ref={track} className="relative flex h-11 w-full items-center">
           <input
@@ -362,6 +364,20 @@ export function IfThenSlider({ label }: { label?: string }) {
               <span key={i} className="flex-1" style={{ background: i < filled ? "var(--bone)" : "var(--mid)" }} />
             ))}
           </span>
+          {[0, 0.5, 1].map((stop, i) => (
+            <span key={stop} aria-hidden>
+              <span
+                className="absolute bottom-0 h-2 w-[3px]"
+                style={{ left: `calc(${stop} * (100% - 1rem) + 0.5rem - 1px)`, background: t >= stop ? "var(--accent)" : "var(--mid)" }}
+              />
+              <span
+                className="absolute top-full mt-1 -translate-x-1/2 font-mono text-xs"
+                style={{ left: `calc(${stop} * (100% - 1rem) + 0.5rem)`, color: t >= stop ? "var(--accent)" : "var(--mid)" }}
+              >
+                {copy.ticks[i]}
+              </span>
+            </span>
+          ))}
           <motion.span
             aria-hidden
             className="absolute h-7 w-4 border-[3px] border-[var(--dark)] bg-[var(--bone)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-[var(--accent)]"

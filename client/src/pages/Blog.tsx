@@ -5,7 +5,8 @@ import { formatPostDate } from "@/lib/blog/chrome";
 import type { BlogCategory } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { Sprite, MINI_TRIBAR, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { Sprite, POLY_PAL } from "@/components/escher/sprites";
+import { QUESTION_MAP } from "@/components/escher/constructions";
 
 export default function Blog() {
   useDocumentMeta({
@@ -70,12 +71,13 @@ export default function Blog() {
       <div className="esc-postgrid">
         {featuredPost && activeCategory === null && (
           <Link href={`/blog/${featuredPost.slug}`} className="esc-postcard esc-featured">
-            <Sprite map={MINI_TRIBAR} palette={POLY_PAL_ACCENT} scale={2} className="gem" />
+            <Sprite map={QUESTION_MAP} palette={POLY_PAL} scale={3} className="gem" />
             <div>
               <div className="esc-card-meta">
                 <span className="esc-cat">{featuredPost.category}</span>
                 <span>{formatPostDate(featuredPost.date)}</span>
                 <span>{featuredPost.readingTime} min</span>
+                {featuredPost.activeLang !== lang && <span className="esc-lang"><span className="sr-only">Language: </span>{featuredPost.activeLang.toUpperCase()}</span>}
               </div>
               <h2 className="esc-card-title" lang={featuredPost.activeLang}>{featuredPost.title}</h2>
               <p className="esc-card-body" lang={featuredPost.activeLang}>
@@ -91,6 +93,7 @@ export default function Blog() {
               <span className="esc-cat">{post.category}</span>
               <span>{formatPostDate(post.date)}</span>
               <span>{post.readingTime} min</span>
+              {post.activeLang !== lang && <span className="esc-lang"><span className="sr-only">Language: </span>{post.activeLang.toUpperCase()}</span>}
             </div>
             <h2 className="esc-card-title" lang={post.activeLang}>{post.title}</h2>
             <p className="esc-card-body" lang={post.activeLang}>
