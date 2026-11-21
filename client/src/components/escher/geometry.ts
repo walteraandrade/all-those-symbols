@@ -121,6 +121,13 @@ export function standUp(map: PixelMap): PixelMap {
   return out;
 }
 
+const ink = (g: string[][], x: number, y: number, ch: string) => {
+  const cur = g[y]?.[x];
+  if (cur === undefined) return;
+  if (ch !== "M" || cur === ".") g[y][x] = ch;
+  else if (cur === "F") g[y][x] = "H";
+};
+
 const line = (g: string[][], x0: number, y0: number, x1: number, y1: number, ch: string) => {
   const dx = Math.abs(x1 - x0);
   const dy = -Math.abs(y1 - y0);
@@ -128,12 +135,12 @@ const line = (g: string[][], x0: number, y0: number, x1: number, y1: number, ch:
   const sy = y0 < y1 ? 1 : -1;
   let err = dx + dy;
   for (;;) {
-    if (g[y0]?.[x0] !== undefined && (g[y0][x0] === "." || ch !== "M")) g[y0][x0] = ch;
+    ink(g, x0, y0, ch);
     if (x0 === x1 && y0 === y1) break;
     const e2 = 2 * err;
     // a diagonal step also inks the corner cell, so lines stay solid
     // staircases instead of dotted chains when scaled up
-    if (e2 >= dy && e2 <= dx && g[y0]?.[x0 + sx] !== undefined && (g[y0][x0 + sx] === "." || ch !== "M")) g[y0][x0 + sx] = ch;
+    if (e2 >= dy && e2 <= dx) ink(g, x0 + sx, y0, ch);
     if (e2 >= dy) { err += dy; x0 += sx; }
     if (e2 <= dx) { err += dx; y0 += sy; }
   }
@@ -141,7 +148,8 @@ const line = (g: string[][], x0: number, y0: number, x1: number, y1: number, ch:
 
 // A Necker cube: all twelve edges, so it has no single reading. `front`
 // picks which square reads as nearer: its face is filled (F) and its edges
-// drawn light (A); the other square's edges go mid (M). Swap it and the
+// drawn light (A); the other square's edges go mid (M), and where they
+// cross the filled face they stay visible as H. Swap it and the
 // cube turns inside out without a pixel of the outline moving.
 export function makeNecker(size: number, depth: number, front: 0 | 1, weight = 1): PixelMap {
   const w = size + depth + weight;

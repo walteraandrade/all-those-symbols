@@ -91,8 +91,8 @@ export const MARK = standUp(makePenrose(6, 1, 3, false).map);
 // A small Necker cube for "built on my own" constructions.
 export const CUBE = makeNecker(14, 6, 0);
 
-export const POLY_PAL: Palette = { T: "--bone", L: "--mid", R: "--dark", A: "--bone", M: "--line", F: "--ink-2", D: "--shadow", X: "--accent", Y: "--accent-mid", Z: "--accent-dark" };
-export const POLY_PAL_ACCENT: Palette = { T: "--accent", L: "--accent-mid", R: "--accent-dark", A: "--accent", M: "--accent-mid", F: "--ink-2" };
+export const POLY_PAL: Palette = { T: "--bone", L: "--mid", R: "--dark", A: "--bone", M: "--line", F: "--ink-2", H: "--ink-2", D: "--shadow", X: "--accent", Y: "--accent-mid", Z: "--accent-dark" };
+export const POLY_PAL_ACCENT: Palette = { T: "--accent", L: "--accent-mid", R: "--accent-dark", A: "--accent", M: "--accent-mid", F: "--ink-2", H: "--ink-2" };
 
 // The waterfall: the isometric tribar with water falling down its wall and
 // running back up along the tops, forever.
@@ -139,7 +139,7 @@ const dropShadow = (map: PixelMap, d: number): PixelMap => {
   });
 };
 const NECKER = [makeNecker(40, 16, 0, 2), makeNecker(40, 16, 1, 2)].map((m) => dropShadow(m, 3));
-const NECKER_PAL: Palette = { ...POLY_PAL, F: "--accent-dark" };
+const NECKER_PAL: Palette = { ...POLY_PAL, F: "--accent-dark", H: "--accent-mid" };
 const NECKER_DITHER = NECKER.map((m) => ditherRim(rimOf(m, [[1, 0], [-1, 0], [0, 1], [0, -1]])));
 
 export function NeckerScene({ scale = 5, className, flip }: { scale?: number; className?: string; flip?: boolean }) {
