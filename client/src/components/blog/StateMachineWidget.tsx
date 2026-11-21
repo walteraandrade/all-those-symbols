@@ -142,7 +142,7 @@ const Lead = ({ children, focusOnMount }: { children: ReactNode; focusOnMount?: 
 };
 
 const Status = ({ children }: { children: ReactNode }) => (
-  <span aria-live="polite" className="block min-h-[3rem] max-w-md text-center font-mono text-sm leading-snug text-[var(--mid)]">
+  <span aria-live="polite" className="block min-h-[3rem] max-w-md text-center font-mono text-sm leading-snug text-[var(--soft)]">
     {children}
   </span>
 );
@@ -364,7 +364,7 @@ const Switches = ({
             </span>
           ))}
         </span>
-        <span className="text-center font-mono text-xs text-[var(--mid)]">{copy.switches.tally}</span>
+        <span className="text-center font-mono text-sm text-[var(--soft)]">{copy.switches.tally}</span>
       </span>
       <Btn cta active={COMBOS.some((n) => cellKind(n) === "conflict")} onClick={onSwap}>
         {copy.switches.swap}
@@ -420,9 +420,9 @@ const Machine = ({ copy, onBack }: { copy: Copy; onBack: () => void }) => {
         <MachineMap state={state} last={last} copy={copy} />
       </span>
       <span className="flex flex-wrap items-center justify-center gap-2">
-        <span className="font-mono text-xs text-[var(--mid)]">{copy.machine.you}</span>
+        <span className="font-mono text-sm text-[var(--soft)]">{copy.machine.you}</span>
         <Btn onClick={() => fire("ask")}>{copy.events.ask}</Btn>
-        <span className="ml-2 font-mono text-xs text-[var(--mid)]">{copy.machine.net}</span>
+        <span className="ml-2 font-mono text-sm text-[var(--soft)]">{copy.machine.net}</span>
         <Btn onClick={() => fire("ok")}>{copy.events.ok}</Btn>
         <Btn onClick={() => fire("fail")}>{copy.events.fail}</Btn>
       </span>

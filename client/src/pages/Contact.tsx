@@ -73,10 +73,10 @@ export default function Contact() {
   return (
     <div className="esc-page">
       <header className="esc-pagehead">
-        <h1>Send a letter</h1>
+        <h1>Leave a note</h1>
         <p className="sub">
-          The next train leaves whenever you write. For anything faster,
-          email works too.
+          Work, an idea, a film I should watch. I read every note and answer
+          within a few days.
         </p>
       </header>
 
@@ -113,7 +113,7 @@ export default function Contact() {
 
       <aside className="esc-aside" aria-labelledby="contact-direct-h">
         <h2 id="contact-direct-h" className="esc-card-title">Or write directly</h2>
-        <p>No form, no queue. I read everything that arrives.</p>
+        <p>Prefer your own inbox? Same desk, same reply time.</p>
         <a className="esc-link" href={`mailto:${socialLinks.email}`}>{socialLinks.email}</a>
         <a className="esc-link" href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">LinkedIn</a>
         <a className="esc-link" href={`https://github.com/${socialLinks.github.replace("@", "")}`} target="_blank" rel="noopener noreferrer">GitHub</a>

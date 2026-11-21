@@ -327,7 +327,7 @@ export function IfThenSlider({ label }: { label?: string }) {
                 )}
                 <span
                   aria-hidden
-                  className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-pre font-['League_Spartan',sans-serif] text-xs font-bold leading-4 text-[var(--bone)] sm:text-sm"
+                  className="absolute left-1/2 top-full mt-1 -translate-x-1/2 whitespace-pre font-['League_Spartan',sans-serif] text-sm font-bold leading-4 text-[var(--bone)]"
                 >
                   {[...copy.sentences[i]].map((ch, j) => (
                     <span key={j} style={{ visibility: morph > pixelOrder(j + 1, j * 2 + i, i) ? "hidden" : "visible" }}>

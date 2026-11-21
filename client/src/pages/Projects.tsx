@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { projects } from "@/lib/data";
+import { isOwn, projects, type Project } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { slugify } from "@/lib/utils";
-import { Sprite, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { Sprite, MARK, CUBE, POLY_PAL } from "@/components/escher/sprites";
+
+const TOP_TAGS = 8;
 
 export default function Projects() {
   useDocumentMeta({
@@ -36,10 +38,7 @@ export default function Projects() {
     [counts],
   );
 
-  const shared = useMemo(
-    () => categories.filter((t) => counts.get(t)! > 1),
-    [categories, counts],
-  );
+  const shared = useMemo(() => categories.slice(0, TOP_TAGS), [categories]);
 
   const visible = showAll
     ? categories
@@ -56,12 +55,12 @@ export default function Projects() {
       <header className="esc-pagehead">
         <h1>Constructions</h1>
         <p className="sub">
-          Full-stack applications, platforms, and systems. Every one of them
-          solid from every side you look at it.
+          Products shipped with teams for clients and employers, and tools I
+          built on my own. Most of the second kind are open on GitHub.
         </p>
       </header>
 
-      <div className="esc-tagrow" role="group" aria-label="Filter by technology">
+      <div className="esc-tagrow scroll" role="group" aria-label="Filter by technology">
         <button className={`esc-tag ${activeFilter === null ? "on" : ""}`} aria-pressed={activeFilter === null} onClick={() => setActiveFilter(null)}>
           All
         </button>
@@ -90,39 +89,57 @@ export default function Projects() {
           : `${projects.length} constructions`}
       </p>
 
-      <div className="esc-projgrid">
-        {filtered.map((p) => {
-          const id = slugify(p.title);
-          return (
-          <article key={p.title} id={id} className={`esc-projcard ${p.link ? "linked" : ""} ${picked === id ? "on" : ""}`}>
-            <Sprite map={WIRECUBE} palette={p.link ? POLY_PAL_ACCENT : POLY_PAL} scale={2} className="gem" />
-            <div>
-              <h2 className="esc-card-title">{p.title}</h2>
-              <p className="esc-card-kicker">{p.role}</p>
-              <p className="esc-card-body">{p.description}</p>
-              <div className="esc-chips">
-                {p.tech.map((t) => (
-                  <span key={t} className="esc-chip">{t}</span>
-                ))}
-              </div>
-              {p.link && <span className="src" aria-hidden="true">Source on GitHub &#8599;</span>}
+      {[
+        { key: "team", title: "Shipped with a team", sub: "Client and company work.", items: filtered.filter((p) => !isOwn(p)) },
+        { key: "own", title: "Built on my own", sub: "Side projects and tools, most with source you can read.", items: filtered.filter(isOwn) },
+      ]
+        .filter((group) => group.items.length > 0)
+        .map((group) => (
+          <section key={group.key} className="esc-block" aria-labelledby={`proj-${group.key}-h`}>
+            <h2 id={`proj-${group.key}-h`} className="esc-h2 esc-grouphead">
+              <Sprite map={group.key === "own" ? CUBE : MARK} palette={POLY_PAL} scale={2} />
+              {group.title}
+              <span className="n">{group.items.length}</span>
+            </h2>
+            <p className="esc-sub">{group.sub}</p>
+            <div className={`esc-projgrid ${group.key}`}>
+              {group.items.map((p) => (
+                <ProjectCard key={p.title} p={p} picked={picked} />
+              ))}
             </div>
-            {p.link && (
-              <a
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${p.title}: source on GitHub (opens in a new tab)`}
-              />
-            )}
-          </article>
-          );
-        })}
-      </div>
+          </section>
+        ))}
 
       {filtered.length === 0 && (
         <p className="esc-sub">Nothing built with that yet. The staircase keeps going.</p>
       )}
     </div>
+  );
+}
+
+function ProjectCard({ p, picked }: { p: Project; picked: string }) {
+  const id = slugify(p.title);
+  return (
+    <article id={id} className={`esc-projcard ${p.link ? "linked" : ""} ${picked === id ? "on" : ""}`}>
+      <div>
+        <h3 className="esc-card-title">{p.title}</h3>
+        <p className="esc-card-kicker">{p.role}</p>
+        <p className="esc-card-body">{p.description}</p>
+        <div className="esc-chips">
+          {p.tech.map((t) => (
+            <span key={t} className="esc-chip">{t}</span>
+          ))}
+        </div>
+        {p.link && <span className="src" aria-hidden="true">Source on GitHub &#8599;</span>}
+      </div>
+      {p.link && (
+        <a
+          href={p.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${p.title}: source on GitHub (opens in a new tab)`}
+        />
+      )}
+    </article>
   );
 }

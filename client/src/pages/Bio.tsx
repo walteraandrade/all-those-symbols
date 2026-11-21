@@ -1,6 +1,6 @@
 import { bio, cvUrl, experience, skills, socialLinks } from "@/lib/data";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { TribarScene } from "@/components/escher/sprites";
+import { NeckerScene } from "@/components/escher/sprites";
 
 export default function Bio() {
   useDocumentMeta({
@@ -20,14 +20,14 @@ export default function Bio() {
       </header>
 
       <section className="esc-fall esc-block" aria-label="About">
-        <div className="art"><TribarScene /></div>
+        <div className="art"><NeckerScene /></div>
         <div>
           {bio.split("\n\n").map((paragraph) => (
             <p key={paragraph.slice(0, 24)}>{paragraph}</p>
           ))}
           <p className="dim">
             Bahia, Brazil. Degree in philosophy with a focus on logic.
-            The wheel has been turning the whole time.
+            One figure, two readings, like the cube.
           </p>
           <a className="esc-btn" href={cvUrl} download>DOWNLOAD CV</a>
         </div>
@@ -66,7 +66,7 @@ export default function Bio() {
 
       <section className="esc-block" aria-labelledby="bio-connect-h">
         <h2 id="bio-connect-h" className="esc-h2">Connect</h2>
-        <p className="esc-sub">The next train leaves whenever you write.</p>
+        <p className="esc-sub">Email is the fastest way in. I answer within a few days.</p>
         <div className="esc-linkrow">
           <a className="esc-link" href={`mailto:${socialLinks.email}`}>Email</a>
           <a className="esc-link" href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">

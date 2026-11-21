@@ -6,6 +6,8 @@ export interface Project {
   link?: string;
 }
 
+export const isOwn = (p: Project) => p.role === "Creator";
+
 export interface Experience {
   role: string;
   company: string;

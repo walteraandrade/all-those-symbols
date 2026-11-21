@@ -1,9 +1,10 @@
 import { Link } from "wouter";
-import { projects } from "@/lib/data";
+import { isOwn, projects } from "@/lib/data";
 import { blogPosts } from "@/lib/blog/metadata";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
 import { slugify } from "@/lib/utils";
-import { Sprite, TribarScene, MINI_TRIBAR, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { Sprite, WheelScene, WaterfallScene, MARK, CUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { KindLegend } from "@/components/escher/KindLegend";
 
 const FEATURED_TITLES = [
   "SmartHow Workspace Agent",
@@ -29,8 +30,8 @@ export default function Home() {
   return (
     <div>
       <section className="esc-hero">
-        <Sprite map={MINI_TRIBAR} palette={POLY_PAL} scale={3} className="floatcube one" />
-        <Sprite map={WIRECUBE} palette={POLY_PAL} scale={4} className="floatcube two" />
+        <div className="art"><WaterfallScene /></div>
+        <div className="copy">
         <h1>
           Code is a staircase <br />
           that <span className="accent">only goes up</span>, <br />
@@ -41,11 +42,12 @@ export default function Home() {
           <Link className="esc-btn ghost" href="/projects">See the work</Link>
           <Link className="esc-btn ghost" href="/blog">Read the essays</Link>
         </div>
+        </div>
       </section>
 
       <section className="esc-section" aria-labelledby="home-fall-h">
         <div className="esc-fall">
-        <div className="art"><TribarScene /></div>
+        <div className="art"><WheelScene /></div>
         <div>
           <h2 id="home-fall-h">The waterfall</h2>
           <p>
@@ -55,8 +57,8 @@ export default function Home() {
           </p>
           <p className="dim">
             From the inside it was always the same stream: formal logic,
-            careful arguments, systems that hold together. The wheel has
-            been turning the whole time.
+            careful arguments, systems that hold together. The water has
+            been running the whole time.
           </p>
           <Link className="esc-link" href="/bio">The full story</Link>
         </div>
@@ -65,13 +67,14 @@ export default function Home() {
 
       <section className="esc-section" aria-labelledby="home-work-h">
         <h2 id="home-work-h" className="esc-h2">Constructions</h2>
-        <p className="esc-sub">Selected structures, each one solid from every side you look at it.</p>
+        <p className="esc-sub">Selected work, marked by how it was built.</p>
+        <KindLegend />
         <div className="esc-grid">
-          {featured.map((p, i) => (
+          {featured.map((p) => (
             <article key={p.title} className="esc-cell">
               <div className="cube">
-                <Sprite map={i % 2 === 0 ? MINI_TRIBAR : WIRECUBE} palette={POLY_PAL} scale={i % 2 === 0 ? 2 : 5} className="bonecube" />
-                <Sprite map={i % 2 === 0 ? MINI_TRIBAR : WIRECUBE} palette={POLY_PAL_ACCENT} scale={i % 2 === 0 ? 2 : 5} className="accentcube" />
+                <Sprite map={isOwn(p) ? CUBE : MARK} palette={POLY_PAL} scale={3} className="bonecube" />
+                <Sprite map={isOwn(p) ? CUBE : MARK} palette={POLY_PAL_ACCENT} scale={3} className="accentcube" />
               </div>
               <h3>{p.title}</h3>
               <p className="note">{p.role}</p>
@@ -86,7 +89,7 @@ export default function Home() {
 
       <section className="esc-section" aria-labelledby="home-read-h">
         <h2 id="home-read-h" className="esc-h2">Ascending readings</h2>
-        <p className="esc-sub">Essays on film and thought. Each step is higher than the last, forever.</p>
+        <p className="esc-sub">Essays on film, logic and the work in between.</p>
         <ul className="esc-steps">
           {readings.map((post, i) => (
             <li key={post.slug}>

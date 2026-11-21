@@ -1,7 +1,9 @@
 import { ReactNode, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { cvUrl, socialLinks } from "@/lib/data";
-import { Sprite, WIRECUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { blogPosts } from "@/lib/blog/metadata";
+import { cvUrl, projects, socialLinks } from "@/lib/data";
+import { slugify } from "@/lib/utils";
+import { Sprite, MARK, CUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
 
 interface LayoutProps {
   children: ReactNode;
@@ -19,6 +21,7 @@ function TopNav() {
   return (
     <header className="esc-topnav">
       <Link href="/" className="brand" aria-label="Walter Andrade, home">
+        <Sprite map={MARK} palette={POLY_PAL} scale={1} className="mark" />
         <span className="full">WALTER ANDRADE</span>
         <span className="short">WA</span>
       </Link>
@@ -42,8 +45,13 @@ function TopNav() {
   );
 }
 
+const pick = <T,>(items: T[]) => items[Math.floor(Math.random() * items.length)];
+
+// The cube in the corner: a small reward for whoever clicks it, never a
+// second copy of the top bar.
 function GemNav() {
   const [open, setOpen] = useState(false);
+  const [, navigate] = useLocation();
   const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,19 +66,30 @@ function GemNav() {
     };
   }, [open]);
 
+  const go = (href: string) => {
+    setOpen(false);
+    navigate(href);
+  };
+  const items = [
+    { label: "A random essay", run: () => go(`/blog/${pick(blogPosts).slug}`) },
+    { label: "A random construction", run: () => go(`/projects#${slugify(pick(projects).title)}`) },
+    { label: "Back to the top", run: () => { setOpen(false); window.scrollTo({ top: 0 }); } },
+  ];
+
   return (
     <div className="esc-gemnav" ref={box}>
       {open && (
-        <nav aria-label="Quick">
-          {LINKS.map((l, i) => (
-            <Link key={l.href} href={l.href} style={{ animationDelay: `${i * 60}ms` }} onClick={() => setOpen(false)}>
-              {l.label}
-            </Link>
+        <div className="menu" role="group" aria-label="Detours">
+          <p>You found the cube. Take a detour:</p>
+          {items.map((item, i) => (
+            <button key={item.label} type="button" style={{ animationDelay: `${i * 60}ms` }} onClick={item.run}>
+              {item.label}
+            </button>
           ))}
-        </nav>
+        </div>
       )}
-      <button aria-expanded={open} aria-label="Quick menu" onClick={() => setOpen(!open)}>
-        <Sprite map={WIRECUBE} palette={open ? POLY_PAL_ACCENT : POLY_PAL} scale={3} />
+      <button className="gem" aria-expanded={open} aria-label="Detours" onClick={() => setOpen(!open)}>
+        <Sprite map={CUBE} palette={open ? POLY_PAL_ACCENT : POLY_PAL} scale={2} />
       </button>
     </div>
   );
