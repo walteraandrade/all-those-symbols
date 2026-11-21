@@ -281,7 +281,7 @@
 /* constructions grid (home) */
 .esc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px 32px; }
 .esc-cell { text-align: center; position: relative; }
-.esc-cell .cube { margin: 0 auto 16px; display: flex; justify-content: center; align-items: flex-end; min-height: 112px; transition: transform 120ms var(--step); }
+.esc-cell .cube { margin: 0 auto 16px; display: flex; justify-content: center; align-items: flex-end; min-height: 124px; transition: transform 120ms var(--step); }
 .esc-cell h3 { font-size: var(--fs-lg); line-height: 1.25; transition: color 120ms var(--step); }
 .esc-cell:hover h3, .esc-cell:focus-within h3 { color: var(--accent); }
 .esc-cell .note { color: var(--mid); font-size: var(--fs-sm); margin-top: 6px; display: inline-flex; align-items: center; gap: 8px; }
@@ -560,7 +560,7 @@
   .esc-steps { --rise: 16px; }
   .esc-hero { min-height: 0; grid-template-columns: 1fr; gap: 32px; padding-top: 40px; padding-bottom: 72px; }
   .esc-hero .art { order: 0; }
-  .esc-hero .art canvas { width: 216px; }
+  .esc-hero .art { width: 216px; }
   .esc-hero h1 br { display: none; }
   .esc { position: relative; }
   .esc-gemnav { position: absolute; right: 16px; }

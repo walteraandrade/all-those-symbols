@@ -73,8 +73,9 @@ export default function Projects() {
           <section key={group.key} className="esc-block" aria-labelledby={`proj-${group.key}-h`}>
             <h2 id={`proj-${group.key}-h`} className="esc-h2 esc-grouphead">
               <Sprite map={group.key === "own" ? CUBE : MARK} palette={POLY_PAL} scale={2} />
-              {group.title}
-              <span className="n">{group.items.length}</span>
+              <span>
+                {group.title} <span className="n">{group.items.length}</span>
+              </span>
             </h2>
             <p className="esc-sub">{group.sub}</p>
             <div className={`esc-projgrid ${group.key}`}>
