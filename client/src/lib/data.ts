@@ -45,7 +45,7 @@ export const projects: Project[] = [
     role: "Architect & Developer",
     lead: "Zero cross-document leakage in the isolation eval.",
     description:
-      "Retrieval layer that turns uploaded PDFs and audio transcripts into dependable context for the writing agent. Parsing, chunking and full-text search over Postgres, assets scoped per document with per-library permissions (the isolation eval showed zero cross-document leakage), and binary storage on an RBAC-only Azure Blob port with no public URLs.",
+      "Retrieval layer that turns uploaded PDFs and audio transcripts into dependable context for the writing agent. Parsing, chunking and full-text search over Postgres, assets scoped per document with per-library permissions, and binary storage on an RBAC-only Azure Blob port with no public URLs.",
     tech: [
       "TypeScript",
       "NestJS",
@@ -61,7 +61,7 @@ export const projects: Project[] = [
     role: "DevOps Lead",
     lead: "CI tests from 44 to 254, high advisories from 10 to 0.",
     description:
-      "Audited and rebuilt delivery for a multi-app monorepo. Restored the Azure OIDC federation that had silently broken every deploy, rebuilt the dev deploy as blue-green, made quality gates required on protected branches, and added CodeQL, dependency audits, SHA-pinned actions and mutation testing. CI unit tests went from 44 to 254 and high+ advisories from 10 to 0.",
+      "Audited and rebuilt delivery for a multi-app monorepo. Restored the Azure OIDC federation that had silently broken every deploy, rebuilt the dev deploy as blue-green, made quality gates required on protected branches, and added CodeQL, dependency audits, SHA-pinned actions and mutation testing.",
     tech: [
       "GitHub Actions",
       "Azure",
@@ -77,7 +77,7 @@ export const projects: Project[] = [
     role: "DevOps & Infrastructure Owner",
     lead: "About US$1k a month saved across 127 cloud resources.",
     description:
-      "Cloud cost initiative across ~127 resources in 17 resource groups, saving about US$0.9–1.07k/month at list price: mapped the full spend, decommissioned the staging environment and a superseded production stack, purged and downgraded container registries, right-sized app plans, and rerouted expensive model traffic to cheaper deployments.",
+      "Cloud cost initiative over 17 resource groups (US$0.9–1.07k/month at list price): mapped the full spend, decommissioned the staging environment and a superseded production stack, purged and downgraded container registries, right-sized app plans, and rerouted expensive model traffic to cheaper deployments.",
     tech: [
       "Azure",
       "Terraform",
@@ -90,9 +90,9 @@ export const projects: Project[] = [
   {
     title: "Modulart System",
     role: "Full Stack Developer & Product Owner",
-    lead: "Sole author of the backend, from v1.1.0 to v1.5.1.",
+    lead: "151 commits and 54 PRs, from v1.1.0 to v1.5.1.",
     description:
-      "Event sales and management platform. Product owner and lead developer; sole author of the Payload CMS 3 backend on Next.js 15 and PostgreSQL (data model, 17 migrations, editor hooks, Cloud Build to Cloud Run deploys), 151 commits and 54 PRs from v1.1.0 to v1.5.1.",
+      "Event sales and management platform. Product owner and lead developer; sole author of the Payload CMS 3 backend on Next.js 15 and PostgreSQL (data model, 17 migrations, editor hooks, Cloud Build to Cloud Run deploys).",
     tech: [
       "Next.js",
       "Node.js",
@@ -110,7 +110,7 @@ export const projects: Project[] = [
     role: "Full-Stack Developer & Lead",
     lead: "Winner of a national competition.",
     description:
-      "Animated landing page and responsive admin system for delivery management. Winner of national competition.",
+      "Animated landing page and responsive admin system for delivery management.",
     tech: [
       "Next.js",
       "Node.js",
@@ -127,7 +127,7 @@ export const projects: Project[] = [
     role: "Project Lead & Full-Stack Developer",
     lead: "1,100+ users live on launch day.",
     description:
-      "Salary-advance platform for a fintech client, in Node.js and TypeScript under strict API security requirements, with Retool internal tools and a coordinated onboarding launch that put 1,100+ users live on day one.",
+      "Salary-advance platform for a fintech client, in Node.js and TypeScript under strict API security requirements, with Retool internal tools and a coordinated onboarding launch.",
     tech: ["Node.js", "Retool", "API Security", "PostgreSQL", "AWS"],
   },
   {
@@ -143,7 +143,7 @@ export const projects: Project[] = [
     role: "Mobile Developer",
     lead: "Shipped on the App Store and Google Play.",
     description:
-      "React Native application with Bluetooth integration for pet management, deployed on Apple Store and Google Play.",
+      "React Native application with Bluetooth integration for pet management.",
     tech: ["React Native", "Bluetooth", "iOS", "Android"],
   },
   {

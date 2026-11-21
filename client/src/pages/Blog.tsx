@@ -5,7 +5,8 @@ import { formatPostDate } from "@/lib/blog/chrome";
 import type { BlogCategory } from "@/lib/blog/types";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useDocumentMeta } from "@/hooks/useDocumentMeta";
-import { NeckerScene } from "@/components/escher/sprites";
+import { Sprite, POLY_PAL } from "@/components/escher/sprites";
+import { QUESTION_MAP } from "@/components/escher/constructions";
 
 export default function Blog() {
   useDocumentMeta({
@@ -70,7 +71,7 @@ export default function Blog() {
       <div className="esc-postgrid">
         {featuredPost && activeCategory === null && (
           <Link href={`/blog/${featuredPost.slug}`} className="esc-postcard esc-featured">
-            <NeckerScene scale={2} className="gem" />
+            <Sprite map={QUESTION_MAP} palette={POLY_PAL} scale={3} className="gem" />
             <div>
               <div className="esc-card-meta">
                 <span className="esc-cat">{featuredPost.category}</span>

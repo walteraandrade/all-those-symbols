@@ -20,6 +20,7 @@ const COPY = {
       { article: { from: "the", to: "the" }, word: { from: "meaning", to: "semantics" }, verb: "leaves," },
       { article: { from: "the", to: "the" }, word: { from: "form", to: "syntax" }, verb: "stays." },
     ],
+    ticks: ["meaning", "syntax", "form"],
     stages: {
       sentences: "Three if-then sentences: about rain, a switch and a key.",
       dissolving: "The meaning is leaving the sentences.",
@@ -41,6 +42,7 @@ const COPY = {
       { article: { from: "o", to: "a" }, word: { from: "sentido", to: "semântica" }, verb: "sai," },
       { article: { from: "a", to: "a" }, word: { from: "forma", to: "sintaxe" }, verb: "fica." },
     ],
+    ticks: ["sentido", "sintaxe", "forma"],
     stages: {
       sentences: "Três frases \"se, então\": sobre chuva, interruptor e chave.",
       dissolving: "O sentido está saindo das frases.",
@@ -379,6 +381,11 @@ export function IfThenSlider({ label }: { label?: string }) {
           />
         </span>
         <Chip map={LETTER_A} mini />
+      </span>
+      <span aria-hidden className="-mt-2 flex w-full max-w-sm justify-between px-[calc(1.75rem+0.75rem)] font-mono text-xs text-[var(--mid)]">
+        {copy.ticks.map((label, i) => (
+          <span key={label} style={{ color: t >= i / 2 ? "var(--accent)" : undefined }}>{label}</span>
+        ))}
       </span>
     </span>
   );

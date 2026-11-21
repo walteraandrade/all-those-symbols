@@ -97,6 +97,10 @@ export const POLY_PAL_ACCENT: Palette = { T: "--accent", L: "--accent-mid", R: "
 // The waterfall: the isometric tribar with water falling down its wall and
 // running back up along the tops, forever.
 const FALL = makePenrose(12, 3, 4, true, 0.5);
+// shadow cells on the rim get dithered, so the shadow fades instead of ending
+const SHADOW_EDGE = FALL.map.map((row, y) =>
+  [...row].map((ch, x) => ch === "D" && [[1, 0], [-1, 0], [0, 1], [0, -1], [2, 0], [-2, 0]].some(([dx, dy]) => (FALL.map[y + dy]?.[x + dx] ?? ".") === ".")),
+);
 
 export function WaterfallScene({ scale = 5 }: { scale?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -106,6 +110,7 @@ export function WaterfallScene({ scale = 5 }: { scale?: number }) {
   useEffect(() => {
     if (!ref.current) return;
     paint(ref.current, FALL.map, POLY_PAL, (x, y, ch) => {
+      if (ch === "D") return (x + y) % 2 && SHADOW_EDGE[y][x] ? "" : undefined;
       if (ch !== "W") return undefined;
       const d = (((FALL.flow[y][x] - frame) % 4) + 4) % 4;
       return d === 0 ? "--accent-hi" : d === 1 ? "--accent" : "--accent-mid";
@@ -118,7 +123,21 @@ export function WaterfallScene({ scale = 5 }: { scale?: number }) {
 // The Necker cube: every edge drawn, the face read as nearer tinted, and
 // every few seconds the other face takes the tint. Nothing moves but the
 // reading. With `flip`, a click or Enter turns it by hand.
-const NECKER = [makeNecker(40, 16, 0, 2), makeNecker(40, 16, 1, 2)];
+// a flat shadow of the cube's outline, dropped down and right
+const dropShadow = (map: PixelMap, d: number): PixelMap => {
+  const w = map[0].length + d;
+  const out = [...map, ...Array.from({ length: d }, () => "")].map((row) => row.padEnd(w, "."));
+  const hull = (row = "") => {
+    const ink = [...row].map((ch, x) => (ch !== "." ? x : -1)).filter((x) => x >= 0);
+    return ink.length ? [Math.min(...ink), Math.max(...ink)] : [1, 0];
+  };
+  return out.map((row, y) => {
+    const [from, to] = hull(map[y - d]).map((x) => x + d);
+    const [ownFrom, ownTo] = hull(map[y]);
+    return [...row].map((ch, x) => (ch === "." && x >= from && x <= to && (x < ownFrom || x > ownTo) ? "D" : ch)).join("");
+  });
+};
+const NECKER = [makeNecker(40, 16, 0, 2), makeNecker(40, 16, 1, 2)].map((m) => dropShadow(m, 3));
 const NECKER_PAL: Palette = { ...POLY_PAL, F: "--accent-dark" };
 
 export function NeckerScene({ scale = 5, className, flip }: { scale?: number; className?: string; flip?: boolean }) {
@@ -139,10 +158,12 @@ export function NeckerScene({ scale = 5, className, flip }: { scale?: number; cl
     <button
       type="button"
       className={`esc-flip ${className ?? ""}`}
-      aria-label={`Necker cube, ${side ? "upper" : "lower"} face in front. Flip it`}
+      aria-label="Necker cube: flip which face is in front"
+      aria-pressed={side === 1}
       onClick={() => setTurns((t) => t + 1)}
     >
       {canvas}
+      <span className="hint" aria-hidden="true">&gt; click to flip</span>
     </button>
   );
 }
@@ -178,6 +199,7 @@ export function WheelScene({ scale = 6 }: { scale?: number }) {
     if (!ref.current) return;
     paint(ref.current, map, WHEEL_PAL, (x, y, ch) => {
       if (ch === "w") return (((x - frame) % 4) + 4) % 4 < 2 ? "--accent" : "--accent-mid";
+      if (ch === "." && y === STREAM_END - 1 - (frame % 2) && (x === STREAM_X - 1 - (frame % 2) || x === STREAM_X + 3 + (frame % 2))) return "--accent-hi";
       if (x < STREAM_X || x > STREAM_X + 2 || y < 6 || y > STREAM_END || ch === "R") return undefined;
       return (((y - frame) % 4) + 4) % 4 < 2 ? "--accent" : "--accent-mid";
     });

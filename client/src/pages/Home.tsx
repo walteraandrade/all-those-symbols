@@ -6,7 +6,7 @@ import { localizePost } from "@/lib/blog/metadata";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { slugify } from "@/lib/utils";
 import { Sprite, WheelScene, WaterfallScene, MARK, CUBE, POLY_PAL } from "@/components/escher/sprites";
-import { CONSTRUCTIONS } from "@/components/escher/constructions";
+import { CONSTRUCTIONS, STAIRS_MAP } from "@/components/escher/constructions";
 import { KindLegend } from "@/components/escher/KindLegend";
 
 const FEATURED_TITLES = [
@@ -43,7 +43,8 @@ export default function Home() {
         </h1>
         <p className="tagline">
           I'm Walter Andrade, a senior software engineer who ships AI agents
-          and full-stack products. Philosophy degree in logic.
+          and full-stack products. Philosophy degree in logic, based in
+          Bahia, Brazil.
         </p>
         <div className="esc-actions">
           <Link className="esc-btn" href="/projects">See the work</Link>
@@ -99,6 +100,7 @@ export default function Home() {
       <section className="esc-section" aria-labelledby="home-read-h">
         <h2 id="home-read-h" className="esc-h2">Ascending readings</h2>
         <p className="esc-sub">Essays on film, logic and the work in between.</p>
+        <div className="esc-readings">
         <ul className="esc-steps">
           {readings.map((post, i) => (
             <li key={post.slug}>
@@ -113,6 +115,8 @@ export default function Home() {
             </li>
           ))}
         </ul>
+        <div className="art"><Sprite map={STAIRS_MAP} palette={POLY_PAL} scale={3} /></div>
+        </div>
         <p className="esc-more">
           <Link className="esc-link" href="/blog">All writings</Link>
         </p>

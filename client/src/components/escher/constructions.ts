@@ -38,22 +38,22 @@ const MODELS: Record<string, Voxel[]> = {
     ...box(4, 1, 1, 5, 2, 7, 1),
     ...box(6, 1, 1, 7, 2, 4),
   ],
-  // a briefcase
+  // a briefcase, its handle open
   "Smells Like Job Spirit": [
-    ...box(0, 0, 0, 6, 2, 4),
-    ...box(1, 0, 4, 2, 2, 5),
-    ...box(4, 0, 4, 5, 2, 5),
-    ...box(1, 0, 5, 5, 2, 6),
-    ...box(2, 2, 1, 4, 3, 2, 1),
+    ...box(0, 0, 0, 8, 3, 5),
+    ...box(2, 1, 5, 3, 2, 7),
+    ...box(5, 1, 5, 6, 2, 7),
+    ...box(2, 1, 7, 6, 2, 8),
+    ...box(3, 3, 2, 5, 4, 3, 1),
   ],
   // a commit graph: a branch forks off the main line and merges back
   "Arachne": [
-    ...box(0, 0, 0, 1, 1, 9),
-    ...box(1, 0, 2, 4, 1, 3),
-    ...box(4, 0, 2, 5, 1, 7),
-    ...box(1, 0, 6, 4, 1, 7),
-    ...box(4, 0, 4, 5, 1, 5, 1),
-    ...box(0, 0, 9, 1, 1, 10, 1),
+    ...box(0, 0, 0, 1, 1, 10),
+    ...box(1, 0, 2, 5, 1, 3),
+    ...box(5, 0, 2, 6, 1, 8),
+    ...box(1, 0, 7, 5, 1, 8),
+    ...box(5, 0, 4, 6, 1, 6, 1),
+    ...box(0, 0, 10, 1, 1, 11, 1),
   ],
   // a door frame with a parcel at the step
   "NaPorta Platform": [
@@ -64,6 +64,25 @@ const MODELS: Record<string, Voxel[]> = {
     ...box(1, 2, 0, 4, 4, 2, 1),
   ],
 };
+
+// a staircase that climbs to a lit landing, for the essays
+const STAIRS: Voxel[] = [0, 1, 2, 3].flatMap((i) => [
+  ...box(0, (3 - i) * 2, 0, 3, (3 - i) * 2 + 2, i * 2 + 1),
+  ...box(0, (3 - i) * 2, i * 2 + 1, 3, (3 - i) * 2 + 2, i * 2 + 2, i === 3 ? 1 : 0),
+]);
+
+// a question mark, extruded, for "Philosophy, really?"
+const QUESTION: Voxel[] = [
+  ...box(1, 0, 9, 5, 2, 10),
+  ...box(0, 0, 7, 1, 2, 9),
+  ...box(5, 0, 6, 6, 2, 9),
+  ...box(3, 0, 5, 5, 2, 6),
+  ...box(3, 0, 3, 4, 2, 5),
+  ...box(3, 0, 0, 4, 2, 1, 1),
+];
+
+export const STAIRS_MAP = makeVoxels(STAIRS, 4);
+export const QUESTION_MAP = makeVoxels(QUESTION, 3);
 
 export const CONSTRUCTIONS: Record<string, PixelMap> = Object.fromEntries(
   Object.entries(MODELS).map(([title, voxels]) => [title, makeVoxels(voxels, CELL)]),

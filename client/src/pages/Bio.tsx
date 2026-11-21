@@ -28,7 +28,7 @@ export default function Bio() {
           ))}
           <p className="dim">
             Bahia, Brazil. Degree in philosophy with a focus on logic.
-            Click the cube to choose its front face yourself.
+            One figure, two readings, like the cube.
           </p>
           <a className="esc-btn" href={cvUrl} download>DOWNLOAD CV</a>
         </div>
