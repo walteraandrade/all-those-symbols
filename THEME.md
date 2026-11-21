@@ -48,10 +48,14 @@ follow the theme.
   `standUp`, `makeNecker` (twelve edges, filled near face, optional weight),
   `makeWheel`, and `makeVoxels` (free voxel models in the same projection).
 - `constructions.ts`: one voxel model per featured project, drawn as what the
-  software does (chat bubble, crate, bar chart, briefcase, branch, door).
+  software does (chat bubble, crate, bar chart, briefcase, branch, door), plus
+  the staircase beside the home readings and the question mark on the
+  featured essay.
 - `sprites.tsx`: `Sprite` plus the scenes. `WaterfallScene` (hero tribar with
   water running the loop), `WheelScene` (a flume pouring onto a turning
-  wheel), `NeckerScene` (flips every 3s; with `flip`, also by click).
+  wheel, with a splash where it lands), `NeckerScene` (flips every 3s; with
+  `flip`, also by click). Large art casts a `--shadow` shadow whose rim is
+  dithered.
 - Blog covers: `script/build-blog-images.ts` redraws each source photo on a
   240x135 grid snapped to the ink ramp plus verdigris.
 - Favicon set: `script/build-brand.ts` draws it from the same tribar.
