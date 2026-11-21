@@ -64,9 +64,9 @@ follow the theme.
 
 ## Layout
 - Top bar (solid ink): brand left, links and the CV button right.
-- One column: everything pads with `--pad` on a 1080px `--col`; data-heavy
-  pages (`.esc-page.wide`) use 1200px. Essays center a 42rem column; the
-  century timeline floats beside it.
+- One column: everything pads with `--pad` on a 1160px `--col`, so every left
+  edge lines up. Essays center a 42rem column; the century timeline floats
+  beside it.
 - Buttons have three tiers: primary `.esc-btn` (filled verdigris), secondary
   `.esc-btn.ghost` (outlined), tertiary `.esc-link` ("> " text link).
 - Cards: 3px dark borders, a drafting tick on the top-left corner, shared

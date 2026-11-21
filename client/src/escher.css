@@ -84,7 +84,7 @@
   --serif: 'Literata', Charter, 'Iowan Old Style', Georgia, serif;
 
   --gutter: clamp(20px, 5vw, 64px);
-  --col: 1080px;
+  --col: 1160px;
   --pad: max(var(--gutter), calc((100% - var(--col)) / 2));
   --step: steps(2, end);
 
@@ -305,7 +305,6 @@
 .esc-projcard { position: relative; scroll-margin-top: 96px; }
 .esc-projcard .head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
 .esc-projcard .kind { flex: none; margin-top: 2px; }
-.esc-page.wide { --col: 1200px; --pad: max(var(--gutter), calc((100% - var(--col)) / 2)); }
 .esc-grouphead { display: flex; align-items: center; gap: 14px; }
 .esc-grouphead .n { font-family: var(--mono); font-weight: 400; font-size: var(--fs-sm); color: var(--mid); }
 .esc-projcard .esc-card-body { margin-bottom: 16px; }

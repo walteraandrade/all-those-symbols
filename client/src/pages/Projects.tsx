@@ -28,7 +28,7 @@ export default function Projects() {
     : projects;
 
   return (
-    <div className="esc-page wide">
+    <div className="esc-page">
       <header className="esc-pagehead">
         <h1>Constructions</h1>
         <p className="sub">
