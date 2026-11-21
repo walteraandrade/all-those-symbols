@@ -1,21 +1,13 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { AlertCircle } from "lucide-react";
+import { Link } from "wouter";
+import { NeckerScene } from "@/components/escher/sprites";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gray-50">
-      <Card className="w-full max-w-md mx-4">
-        <CardContent className="pt-6">
-          <div className="flex mb-4 gap-2">
-            <AlertCircle className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold text-gray-900">404 Page Not Found</h1>
-          </div>
-
-          <p className="mt-4 text-sm text-gray-600">
-            Did you forget to add the page to the router?
-          </p>
-        </CardContent>
-      </Card>
+    <div className="esc-page esc-center">
+      <NeckerScene scale={2} />
+      <h1>404</h1>
+      <p>This page only exists from an angle we have not built yet.</p>
+      <Link className="esc-btn" href="/">BACK TO THE RIGHT ANGLE</Link>
     </div>
   );
 }

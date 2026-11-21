@@ -1,79 +1,143 @@
-import { ReactNode } from "react";
-import { useLocation } from "wouter";
-import { motion } from "framer-motion";
-import { MainNav } from "@/components/MainNav";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
-import { ThemeToggle } from "@/components/ThemeToggle";
-import { SfxToggle } from "@/components/SfxToggle";
-import { NetworkBackground } from "@/components/NetworkBackground";
-import { CentralHub } from "@/components/CentralHub";
-import { nodes } from "@/lib/data";
-import { useIsMobile } from "@/hooks/use-mobile";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import { Link, useLocation } from "wouter";
+import { blogPosts } from "@/lib/blog/metadata";
+import { cvUrl, projects, socialLinks } from "@/lib/data";
+import { slugify } from "@/lib/utils";
+import { Sprite, MARK, CUBE, POLY_PAL, POLY_PAL_ACCENT } from "@/components/escher/sprites";
+import { BackToTop } from "@/components/blog/BackToTop";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-export function Layout({ children }: LayoutProps) {
+const LINKS = [
+  { href: "/bio", label: "Bio" },
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/contact", label: "Contact" },
+];
+
+function TopNav() {
   const [location] = useLocation();
-  const isHome = location === "/";
-  const isMobile = useIsMobile();
+  return (
+    <header className="esc-topnav">
+      <Link href="/" className="brand" aria-label="Walter Andrade, home">
+        <Sprite map={MARK} palette={POLY_PAL} scale={1} className="mark" />
+        <span className="full">WALTER ANDRADE</span>
+        <span className="short">WA</span>
+      </Link>
+      <nav aria-label="Main">
+        {LINKS.map((l) => {
+          const active = location === l.href || location.startsWith(`${l.href}/`);
+          return (
+            <Link
+              key={l.href}
+              href={l.href}
+              className={active ? "on" : ""}
+              aria-current={active ? "page" : undefined}
+            >
+              {l.label}
+            </Link>
+          );
+        })}
+        <a className="cv" href={cvUrl} download aria-label="Download CV (PDF)">CV</a>
+      </nav>
+    </header>
+  );
+}
+
+const pick = <T,>(items: T[]) => items[Math.floor(Math.random() * items.length)];
+
+// The cube in the corner: a small reward for whoever clicks it, never a
+// second copy of the top bar.
+function GemNav() {
+  const [open, setOpen] = useState(false);
+  const [, navigate] = useLocation();
+  const box = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onDown = (e: PointerEvent) => !box.current?.contains(e.target as Node) && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onDown);
+    };
+  }, [open]);
+
+  const go = (href: string) => {
+    setOpen(false);
+    navigate(href);
+  };
+  const items = [
+    { label: "A random essay", run: () => go(`/blog/${pick(blogPosts).slug}`) },
+    { label: "A random construction", run: () => go(`/projects#${slugify(pick(projects).title)}`) },
+    { label: "Flip the Necker cube", run: () => go("/bio") },
+  ];
 
   return (
-    <div className="scanlines min-h-screen w-full bg-background text-foreground relative overflow-x-hidden font-sans selection:bg-primary/20">
-      {/* Skip link for a11y */}
+    <div className="esc-gemnav" ref={box}>
+      {open && (
+        <div className="menu" role="group" aria-label="Detours">
+          <p>You found the cube. Take a detour:</p>
+          {items.map((item, i) => (
+            <button key={item.label} type="button" style={{ animationDelay: `${i * 60}ms` }} onClick={item.run}>
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
+      <button className="gem" aria-expanded={open} aria-label="Detours" onClick={() => setOpen(!open)}>
+        <Sprite map={CUBE} palette={open ? POLY_PAL : POLY_PAL_ACCENT} scale={2} />
+      </button>
+    </div>
+  );
+}
+
+function useRouteReset(main: React.RefObject<HTMLElement | null>) {
+  const [location] = useLocation();
+  const first = useRef(true);
+
+  useEffect(() => {
+    if (first.current) {
+      first.current = false;
+      return;
+    }
+    const id = decodeURIComponent(window.location.hash.slice(1));
+    if (!id) window.scrollTo(0, 0);
+    main.current?.focus({ preventScroll: true });
+  }, [location, main]);
+}
+
+export function Layout({ children }: LayoutProps) {
+  const main = useRef<HTMLElement>(null);
+  useRouteReset(main);
+
+  return (
+    <div className="esc">
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-background focus:text-primary focus:rounded-md focus:ring-2 focus:ring-ring"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-[var(--accent)] focus:text-[var(--ink)]"
       >
         Skip to main content
       </a>
 
-      {/* Decorative background (hidden on home desktop when 3D active) */}
-      {!(isHome && !isMobile) && (
-        <NetworkBackground nodes={nodes} activeNodeId={null} />
-      )}
+      <TopNav />
+      <GemNav />
 
-      {/* Central hub on home only (mobile fallback) */}
-      {isHome && isMobile && <CentralHub />}
+      <main id="main-content" ref={main} tabIndex={-1}>{children}</main>
+      <BackToTop />
 
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-40 bg-background/80 backdrop-blur-md border-b border-border/50">
-        <div className="container mx-auto px-4 h-16 flex items-center justify-between">
-          <motion.a
-            href="/"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            className="font-retro text-sm tracking-tight"
-          >
-            WALTER<span className="text-primary">.</span>
-          </motion.a>
-
-          <div className="flex items-center gap-2">
-            <div className="hidden md:block">
-              <MainNav />
-            </div>
-            <SfxToggle />
-            <ThemeToggle />
-          </div>
-        </div>
-      </header>
-
-      {/* Main content */}
-      <main
-        id="main-content"
-        className={`relative z-10 pt-20 ${isMobile ? "pb-24" : "pb-8"}`}
-      >
-        {children}
-      </main>
-
-      {/* Footer */}
-      <footer className="relative z-10 text-center py-8 text-xs text-muted-foreground font-mono">
-        © {new Date().getFullYear()} Walter Andrade
+      <footer className="esc-footer">
+        <p className="quote">Impossible objects, shippable software. {import.meta.env.VITE_BUILD_YEAR}.</p>
+        <nav aria-label="Elsewhere">
+          <a href={`mailto:${socialLinks.email}`}>Email</a>
+          <a href={`https://github.com/${socialLinks.github.replace("@", "")}`} target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href={`https://linkedin.com${socialLinks.linkedin}`} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </nav>
       </footer>
-
-      {/* Mobile bottom nav */}
-      <MobileBottomNav />
     </div>
   );
 }
