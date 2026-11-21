@@ -1,0 +1,329 @@
+[
+  {
+    "title": "SmartHow Workspace Agent",
+    "role": "Senior Software Engineer",
+    "lead": "Cut writing a new technical document from 3 hours to 10 minutes.",
+    "description": "Agentic chat that writes and edits long-form technical documents. Designed and built the agent loop from scratch, chosen over LangGraph and Temporal: parallel tool calls, cross-turn memory, pause/resume and a stop policy with a cost cap. Moved tools to a per-tool registry, replaced the blind spinner with a live activity stream over WebSockets, reached ~76% prompt-cache reads with a per-session HMAC delimiter, and added voice dictation through Whisper.",
+    "tech": [
+      "TypeScript",
+      "NestJS",
+      "Next.js",
+      "WebSockets",
+      "Vercel AI SDK",
+      "Azure OpenAI",
+      "Prisma",
+      "PostgreSQL"
+    ]
+  },
+  {
+    "title": "Document Asset Ingestion",
+    "role": "Architect & Developer",
+    "lead": "Zero cross-document leakage in the isolation eval.",
+    "description": "Retrieval layer that turns uploaded PDFs and audio transcripts into dependable context for the writing agent. Parsing, chunking and full-text search over Postgres, assets scoped per document with per-library permissions, and binary storage on an RBAC-only Azure Blob port with no public URLs.",
+    "tech": [
+      "TypeScript",
+      "NestJS",
+      "PostgreSQL",
+      "Prisma",
+      "Azure Blob Storage",
+      "Python",
+      "FastAPI"
+    ]
+  },
+  {
+    "title": "Monorepo CI/CD Hardening",
+    "role": "DevOps Lead",
+    "lead": "CI tests from 44 to 254, high advisories from 10 to 0.",
+    "description": "Audited and rebuilt delivery for a multi-app monorepo. Restored the Azure OIDC federation that had silently broken every deploy, rebuilt the dev deploy as blue-green, made quality gates required on protected branches, and added CodeQL, dependency audits, SHA-pinned actions and mutation testing.",
+    "tech": [
+      "GitHub Actions",
+      "Azure",
+      "OIDC",
+      "Docker",
+      "CodeQL",
+      "Stryker",
+      "Vercel"
+    ]
+  },
+  {
+    "title": "Azure Cost Program",
+    "role": "DevOps & Infrastructure Owner",
+    "lead": "About US$1k a month saved across 127 cloud resources.",
+    "description": "Cloud cost initiative over 17 resource groups (US$0.9–1.07k/month at list price): mapped the full spend, decommissioned the staging environment and a superseded production stack, purged and downgraded container registries, right-sized app plans, and rerouted expensive model traffic to cheaper deployments.",
+    "tech": [
+      "Azure",
+      "Terraform",
+      "Container Apps",
+      "Azure OpenAI",
+      "PostgreSQL",
+      "Neo4j"
+    ]
+  },
+  {
+    "title": "Modulart System",
+    "role": "Full Stack Developer & Product Owner",
+    "lead": "151 commits and 54 PRs, from v1.1.0 to v1.5.1.",
+    "description": "Event sales and management platform. Product owner and lead developer; sole author of the Payload CMS 3 backend on Next.js 15 and PostgreSQL (data model, 17 migrations, editor hooks, Cloud Build to Cloud Run deploys).",
+    "tech": [
+      "Next.js",
+      "Node.js",
+      "PostgreSQL",
+      "TypeScript",
+      "Payload CMS",
+      "GCP",
+      "Prisma",
+      "Apollo GraphQL",
+      "Docker"
+    ]
+  },
+  {
+    "title": "NaPorta Platform",
+    "role": "Full-Stack Developer & Lead",
+    "lead": "Winner of a national competition.",
+    "description": "Animated landing page and responsive admin system for delivery management.",
+    "tech": [
+      "Next.js",
+      "Node.js",
+      "Framer Motion",
+      "Refine",
+      "GSAP",
+      "React Query",
+      "TypeScript",
+      "Tailwind CSS"
+    ]
+  },
+  {
+    "title": "Payssego Platform",
+    "role": "Project Lead & Full-Stack Developer",
+    "lead": "1,100+ users live on launch day.",
+    "description": "Salary-advance platform for a fintech client, in Node.js and TypeScript under strict API security requirements, with Retool internal tools and a coordinated onboarding launch.",
+    "tech": [
+      "Node.js",
+      "Retool",
+      "API Security",
+      "PostgreSQL",
+      "AWS"
+    ]
+  },
+  {
+    "title": "Vivenda Platform",
+    "role": "Full-Stack Developer & DevOps",
+    "lead": "Connects construction companies to people at risk.",
+    "description": "Astro-based platform connecting construction companies to at-risk individuals, simplifying bureaucracy and stakeholder connections.",
+    "tech": [
+      "Astro",
+      "AWS",
+      "EC2",
+      "Ubuntu",
+      "Node.js"
+    ]
+  },
+  {
+    "title": "ioP Pet App",
+    "role": "Mobile Developer",
+    "lead": "Shipped on the App Store and Google Play.",
+    "description": "React Native application with Bluetooth integration for pet management.",
+    "tech": [
+      "React Native",
+      "Bluetooth",
+      "iOS",
+      "Android"
+    ]
+  },
+  {
+    "title": "AI Decco Assistant",
+    "role": "Creator",
+    "description": "AI-powered assistant for interior decoration recommendations.",
+    "tech": [
+      "HTML",
+      "CSS",
+      "JavaScript"
+    ]
+  },
+  {
+    "title": "HTML to DOCX Converter",
+    "role": "Creator",
+    "description": "Python tool for converting HTML documents to DOCX format.",
+    "tech": [
+      "Python"
+    ],
+    "link": "https://github.com/walteraandrade/html-to-docx"
+  },
+  {
+    "title": "Aetheria",
+    "role": "Creator",
+    "description": "Game project built with Phaser.js and TypeScript.",
+    "tech": [
+      "Phaser.js",
+      "TypeScript"
+    ],
+    "link": "https://github.com/walteraandrade/aetheria"
+  },
+  {
+    "title": "Smells Like Job Spirit",
+    "role": "Creator",
+    "lead": "A local LLM that helps with the job hunt.",
+    "description": "Browser extension with Python backend and Ollama integration for job search assistance.",
+    "tech": [
+      "Browser Extension",
+      "Python",
+      "Ollama"
+    ],
+    "link": "https://github.com/walteraandrade/smells-like-job-spirit"
+  },
+  {
+    "title": "The Thought Weaver",
+    "role": "Creator",
+    "description": "TypeScript project for thought organization and note-taking.",
+    "tech": [
+      "TypeScript"
+    ],
+    "link": "https://github.com/walteraandrade/the-thought-weaver"
+  },
+  {
+    "title": "Arachne",
+    "role": "Creator",
+    "lead": "GitHub's Network tab, rebuilt for the terminal.",
+    "description": "TUI git network graph viewer that replaces GitHub's Network tab. Renders commit DAGs with branch lanes, integrates with GitHub for fork/branch data, and live-reloads on new commits.",
+    "tech": [
+      "Rust",
+      "TUI",
+      "Git",
+      "GitHub API"
+    ],
+    "link": "https://github.com/walteraandrade/arachne"
+  },
+  {
+    "title": "Mr. Argus",
+    "role": "Creator",
+    "lead": "A live dashboard of every Claude Code process.",
+    "description": "Terminal process monitor for Claude Code instances. Displays a live dashboard with process trees, CPU/memory usage, sparkline history, and aggregated totals by reading the Linux /proc filesystem directly.",
+    "tech": [
+      "TypeScript",
+      "Bun",
+      "Ink",
+      "React",
+      "Linux"
+    ],
+    "link": "https://github.com/walteraandrade/mr-argus"
+  },
+  {
+    "title": "Chrono Digger",
+    "role": "Creator",
+    "lead": "Students question AI witnesses of Sarajevo, 1914.",
+    "description": "History sim where students question source-grounded AI witnesses frozen on a Sarajevo street on 28 June 1914. Each character turn retrieves passages, builds the prompt and streams the answer with its sources under one deadline, with per-player and global daily quotas, an investigation diary, and a fidelity eval with a judge.",
+    "tech": [
+      "TypeScript",
+      "Cloudflare Workers",
+      "Durable Objects",
+      "Workers AI",
+      "Vectorize",
+      "Effect",
+      "WebSockets"
+    ],
+    "link": "https://github.com/walteraandrade/chrono-digger"
+  },
+  {
+    "title": "Desafinado",
+    "role": "Creator",
+    "lead": "Every AI suggestion is a tracked change you can refuse.",
+    "description": "Markdown editor with an AI co-author, for prose and agent Skills. Every suggestion sits in the text as a tracked change with a rationale until you accept, reject or refine it, and a timeline keeps a version after each step. Ships as an Electron app with a Skills library and evals, and as a web app.",
+    "tech": [
+      "TypeScript",
+      "React",
+      "Electron",
+      "CodeMirror",
+      "Vercel AI SDK",
+      "OpenRouter",
+      "Tailwind CSS"
+    ],
+    "link": "https://github.com/walteraandrade/desafinado"
+  },
+  {
+    "title": "Rashomon",
+    "role": "Creator",
+    "lead": "Which words stick to 27 Brazilian public figures.",
+    "description": "Shows which words stick to 27 Brazilian public figures across ten sources, from Bluesky and Google News to GDELT, the press and both houses of Congress. One collector per source, term extraction, and PMI computed in SQL, so every number opens to the texts behind it.",
+    "tech": [
+      "TypeScript",
+      "SvelteKit",
+      "Hono",
+      "PGlite",
+      "PostgreSQL",
+      "Effect"
+    ],
+    "link": "https://github.com/walteraandrade/rashomon"
+  },
+  {
+    "title": "Anamnesis",
+    "role": "Creator",
+    "lead": "Answers job applications without your data leaving the browser.",
+    "description": "Chromium side panel that answers job application questions from your own story bank of Markdown files. Semantic search with EmbeddingGemma and an optional WebLLM rewrite both run in the browser, so nothing about you leaves the machine, and it never submits a form.",
+    "tech": [
+      "TypeScript",
+      "Browser Extension",
+      "WXT",
+      "React",
+      "WebLLM",
+      "Transformers.js",
+      "WebGPU"
+    ],
+    "link": "https://github.com/walteraandrade/anamnesis"
+  },
+  {
+    "title": "Estante",
+    "role": "Creator",
+    "lead": "A shared shelf of music for a study group.",
+    "description": "Shared shelf of album and track recommendations for a psychoacoustics study group. Installs as a share target, so a link sent on WhatsApp lands on the shelf with the form filled in, and filters live in the URL so any view can be shared.",
+    "tech": [
+      "TypeScript",
+      "SvelteKit",
+      "Hono",
+      "libSQL",
+      "Turso",
+      "Vercel"
+    ],
+    "link": "https://github.com/walteraandrade/estante"
+  },
+  {
+    "title": "Homer",
+    "role": "Creator",
+    "lead": "Turns new commits into a written chronicle.",
+    "description": "Git chronicle TUI, third sibling to Mr. Argus and Arachne. Watches a repository, groups new commits into narrative units (bursts, singles, merges) and writes them as prose through a pluggable narrator, either an LLM over OpenRouter or a template heuristic.",
+    "tech": [
+      "Go",
+      "TUI",
+      "Bubble Tea",
+      "Git",
+      "SQLite",
+      "OpenRouter"
+    ],
+    "link": "https://github.com/walteraandrade/homer"
+  },
+  {
+    "title": "Cerberus",
+    "role": "Creator",
+    "lead": "A password manager that never leaves your machine.",
+    "description": "Local-only TUI password manager with a single encrypted vault file. Envelope encryption with XChaCha20-Poly1305 and Argon2id, key material held in memguard, a password and diceware passphrase generator, and a clipboard that clears itself.",
+    "tech": [
+      "Go",
+      "TUI",
+      "Bubble Tea",
+      "Cryptography"
+    ],
+    "link": "https://github.com/walteraandrade/cerberus"
+  },
+  {
+    "title": "Apollo",
+    "role": "Creator",
+    "lead": "A review queue for new commits, in the terminal.",
+    "description": "Local-first terminal app for commit review triage. Detects new commits in a local repository, notifies that they might need a review, tracks their status in SQLite and surfaces the unreviewed queue in a keyboard-first TUI.",
+    "tech": [
+      "Go",
+      "TUI",
+      "Git",
+      "SQLite"
+    ],
+    "link": "https://github.com/walteraandrade/claude-apollo"
+  }
+]
