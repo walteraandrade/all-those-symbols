@@ -559,6 +559,9 @@
   .esc { position: relative; }
   .esc-gemnav { position: absolute; right: 16px; }
 }
+@media (max-width: 1279px) {
+  .esc-footer { padding-bottom: 88px; }
+}
 @media (max-width: 700px) {
   .esc-postgrid { grid-template-columns: 1fr; }
 }
