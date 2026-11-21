@@ -53,11 +53,16 @@ export default function Projects() {
         ))}
       </div>
 
-      <p className="esc-count" role="status">
-        {activeFilter
-          ? `${filtered.length} of ${projects.length} constructions use ${activeFilter}`
-          : `${projects.length} constructions`}
-      </p>
+      <div className="esc-countrow">
+        <p className="esc-count" role="status">
+          {activeFilter
+            ? `${filtered.length} of ${projects.length} constructions use ${activeFilter}`
+            : `${projects.length} constructions`}
+        </p>
+        {filtered.some(isOwn) && filtered.some((p) => !isOwn(p)) && (
+          <a className="esc-link" href="#proj-own-h">Jump to solo tools</a>
+        )}
+      </div>
 
       {[
         { key: "team", title: "Shipped with a team", sub: "Client and company work.", items: filtered.filter((p) => !isOwn(p)) },

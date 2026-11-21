@@ -41,9 +41,9 @@ const MODELS: Record<string, Voxel[]> = {
   // a briefcase, its handle open
   "Smells Like Job Spirit": [
     ...box(0, 0, 0, 8, 3, 5),
-    ...box(2, 1, 5, 3, 2, 7),
-    ...box(5, 1, 5, 6, 2, 7),
-    ...box(2, 1, 7, 6, 2, 8),
+    ...box(1, 1, 5, 2, 2, 8),
+    ...box(6, 1, 5, 7, 2, 8),
+    ...box(1, 1, 8, 7, 2, 9),
     ...box(3, 3, 2, 5, 4, 3, 1),
   ],
   // a commit graph: a branch forks off the main line and merges back

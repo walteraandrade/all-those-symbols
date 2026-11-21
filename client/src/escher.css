@@ -188,6 +188,9 @@
 .esc-sub { color: var(--mid); font-size: var(--fs-sm); margin-bottom: 32px; max-width: 62ch; }
 .esc-more { margin-top: 32px; }
 .esc-count { color: var(--mid); font-size: var(--fs-xs); margin: -16px 0 24px; }
+.esc-countrow .esc-count { margin: 0; }
+.esc-countrow { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 24px; margin: -16px 0 24px; }
+.esc-grouphead { scroll-margin-top: 96px; }
 
 .esc-center {
   min-height: 70dvh; display: flex; flex-direction: column;
@@ -594,4 +597,13 @@
   .esc-skills dd { margin-bottom: 12px; }
   .esc-cell h3 { font-size: var(--fs-md); }
   .esc-cell .note { font-size: var(--fs-xs); }
+}
+@media (max-width: 400px) {
+  .esc-topnav .brand { min-width: 44px; }
+  .esc-topnav .brand .short { display: none; }
+  .esc-topnav nav a.cv::after { margin-left: 4px; }
+}
+@media (max-width: 360px) {
+  .esc-topnav nav a { font-size: var(--fs-xs); padding: 0 3px; }
+  .esc-topnav nav a.cv { padding: 0 4px; }
 }

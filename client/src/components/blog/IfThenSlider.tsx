@@ -343,7 +343,7 @@ export function IfThenSlider({ label }: { label?: string }) {
         })}
       </span>
 
-      <span className="flex w-full max-w-sm items-center gap-3">
+      <span className="flex w-full max-w-sm items-center gap-3 pb-6">
         <Chip map={CLOUD} mini />
         <span ref={track} className="relative flex h-11 w-full items-center">
           <input
@@ -364,13 +364,19 @@ export function IfThenSlider({ label }: { label?: string }) {
               <span key={i} className="flex-1" style={{ background: i < filled ? "var(--bone)" : "var(--mid)" }} />
             ))}
           </span>
-          {[0, 0.5, 1].map((stop) => (
-            <span
-              key={stop}
-              aria-hidden
-              className="absolute bottom-0 h-2 w-[3px]"
-              style={{ left: `calc(${stop} * (100% - 1rem) + 0.5rem - 1px)`, background: t >= stop ? "var(--accent)" : "var(--mid)" }}
-            />
+          {[0, 0.5, 1].map((stop, i) => (
+            <span key={stop} aria-hidden>
+              <span
+                className="absolute bottom-0 h-2 w-[3px]"
+                style={{ left: `calc(${stop} * (100% - 1rem) + 0.5rem - 1px)`, background: t >= stop ? "var(--accent)" : "var(--mid)" }}
+              />
+              <span
+                className="absolute top-full mt-1 -translate-x-1/2 font-mono text-xs"
+                style={{ left: `calc(${stop} * (100% - 1rem) + 0.5rem)`, color: t >= stop ? "var(--accent)" : "var(--mid)" }}
+              >
+                {copy.ticks[i]}
+              </span>
+            </span>
           ))}
           <motion.span
             aria-hidden
@@ -381,11 +387,6 @@ export function IfThenSlider({ label }: { label?: string }) {
           />
         </span>
         <Chip map={LETTER_A} mini />
-      </span>
-      <span aria-hidden className="-mt-2 flex w-full max-w-sm justify-between px-[calc(1.75rem+0.75rem)] font-mono text-xs text-[var(--mid)]">
-        {copy.ticks.map((label, i) => (
-          <span key={label} style={{ color: t >= i / 2 ? "var(--accent)" : undefined }}>{label}</span>
-        ))}
       </span>
     </span>
   );

@@ -98,9 +98,10 @@ export const POLY_PAL_ACCENT: Palette = { T: "--accent", L: "--accent-mid", R: "
 // running back up along the tops, forever.
 const FALL = makePenrose(12, 3, 4, true, 0.5);
 // shadow cells on the rim get dithered, so the shadow fades instead of ending
-const SHADOW_EDGE = FALL.map.map((row, y) =>
-  [...row].map((ch, x) => ch === "D" && [[1, 0], [-1, 0], [0, 1], [0, -1], [2, 0], [-2, 0]].some(([dx, dy]) => (FALL.map[y + dy]?.[x + dx] ?? ".") === ".")),
-);
+const rimOf = (map: PixelMap, reach: number[][]) =>
+  map.map((row, y) => [...row].map((ch, x) => ch === "D" && reach.some(([dx, dy]) => (map[y + dy]?.[x + dx] ?? ".") === ".")));
+const ditherRim = (rim: boolean[][]) => (x: number, y: number, ch: string) => (ch === "D" && (x + y) % 2 && rim[y][x] ? "" : undefined);
+const SHADOW_EDGE = rimOf(FALL.map, [[1, 0], [-1, 0], [0, 1], [0, -1], [2, 0], [-2, 0]]);
 
 export function WaterfallScene({ scale = 5 }: { scale?: number }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -110,7 +111,7 @@ export function WaterfallScene({ scale = 5 }: { scale?: number }) {
   useEffect(() => {
     if (!ref.current) return;
     paint(ref.current, FALL.map, POLY_PAL, (x, y, ch) => {
-      if (ch === "D") return (x + y) % 2 && SHADOW_EDGE[y][x] ? "" : undefined;
+      if (ch === "D") return ditherRim(SHADOW_EDGE)(x, y, ch);
       if (ch !== "W") return undefined;
       const d = (((FALL.flow[y][x] - frame) % 4) + 4) % 4;
       return d === 0 ? "--accent-hi" : d === 1 ? "--accent" : "--accent-mid";
@@ -139,6 +140,7 @@ const dropShadow = (map: PixelMap, d: number): PixelMap => {
 };
 const NECKER = [makeNecker(40, 16, 0, 2), makeNecker(40, 16, 1, 2)].map((m) => dropShadow(m, 3));
 const NECKER_PAL: Palette = { ...POLY_PAL, F: "--accent-dark" };
+const NECKER_DITHER = NECKER.map((m) => ditherRim(rimOf(m, [[1, 0], [-1, 0], [0, 1], [0, -1]])));
 
 export function NeckerScene({ scale = 5, className, flip }: { scale?: number; className?: string; flip?: boolean }) {
   const ref = useRef<HTMLCanvasElement>(null);
@@ -149,8 +151,8 @@ export function NeckerScene({ scale = 5, className, flip }: { scale?: number; cl
   const { cols, rows } = size(map);
 
   useEffect(() => {
-    if (ref.current) paint(ref.current, map, NECKER_PAL);
-  }, [map]);
+    if (ref.current) paint(ref.current, map, NECKER_PAL, NECKER_DITHER[side]);
+  }, [map, side]);
 
   const canvas = <canvas ref={ref} width={cols} height={rows} className={flip ? undefined : className} role="presentation" style={canvasStyle(cols, scale)} />;
   if (!flip) return canvas;
