@@ -37,7 +37,7 @@ export const experience: Experience[] = [
     company: "SmartHow",
     period: "September 2025 - August 2026",
     description:
-      "Top PR author on the team (473 merged PRs, 42.7% of all merges) and de facto release manager. Designed and built the workspace's AI agent from scratch, cutting a new document from 3 hours to 10 minutes. Shipped document generation from PDFs and audio with structured outputs, repair and evals. Built a voice-agent platform on Recall.ai and ElevenLabs that handled 724 interactions (447 phone calls, 277 video meetings), AI checklists with LangGraph and vision, and an audit agent that only proposes writes.",
+      "Ran the team's releases. Designed and built the workspace's AI agent from scratch, cutting a new document from 3 hours to 10 minutes. Shipped document generation from PDFs and audio with structured outputs, repair and evals. Built a voice-agent platform on Recall.ai and ElevenLabs that handled 724 interactions (447 phone calls, 277 video meetings), AI checklists with LangGraph and vision, and an audit agent that only proposes writes.",
   },
   {
     role: "Senior Full Stack Web Developer | Mentor | Product Owner",
