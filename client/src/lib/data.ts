@@ -3,10 +3,15 @@ import projectData from "./projects.json";
 export interface Project {
   title: string;
   role: string;
+  tier?: "featured" | "minor";
   lead?: string;
   description: string;
   tech: string[];
+  specs?: [string, string][];
+  how?: string[];
+  notes?: string[];
   link?: string;
+  live?: string;
 }
 
 export const isOwn = (p: Project) => p.role === "Creator";
@@ -24,7 +29,7 @@ export const bio = `I build products end-to-end: six years of TypeScript, React 
 
 Philosophy degree in logic taught me to find clarity in complexity. My rule: the model proposes; code and people guarantee the contract.`;
 
-export const projects: Project[] = projectData;
+export const projects = projectData as Project[];
 
 export const experience: Experience[] = [
   {

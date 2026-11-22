@@ -319,6 +319,65 @@
 .esc-projcard.linked:hover :is(.esc-card-title, .src),
 .esc-projcard.linked:focus-within :is(.esc-card-title, .src) { color: var(--accent); }
 
+/* specs: a short spec sheet in label/value pairs */
+.esc-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px 24px; margin: 0 0 18px; padding: 14px 0; border-top: 2px solid var(--dark); border-bottom: 2px solid var(--dark); }
+.esc-specs dt { color: var(--mid); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em; }
+.esc-specs dd { color: var(--bone); font-size: var(--fs-sm); line-height: 1.45; margin-top: 2px; }
+.esc-projcard .esc-specs { grid-template-columns: 1fr 1fr; padding: 10px 0; }
+
+/* dossiers: the selected work, with the build notes a click away */
+.esc-dossiers { display: flex; flex-direction: column; gap: 32px; }
+.esc-dossier {
+  position: relative; scroll-margin-top: 96px;
+  display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 8px 40px;
+  border: 3px solid var(--dark); padding: 32px;
+  background: rgba(20, 19, 15, 0.6);
+  transition: border-color 120ms var(--step);
+}
+.esc-dossier::before {
+  content: ""; position: absolute; top: -3px; left: -3px; width: 14px; height: 14px;
+  border-top: 3px solid var(--mid); border-left: 3px solid var(--mid); pointer-events: none;
+}
+.esc-dossier.on { border-color: var(--accent); }
+.esc-dossier > .art { display: flex; justify-content: center; align-items: flex-start; padding-top: 12px; }
+.esc-dossier .esc-card-title { font-size: var(--fs-h2); line-height: 1.1; margin-bottom: 10px; }
+.esc-dossier .kind { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; }
+.esc-dossier .esc-card-body { margin-bottom: 18px; }
+.esc-dossier .esc-linkrow { margin-top: 12px; }
+.esc-hood { grid-column: 1 / -1; margin-top: 16px; border-top: 3px solid var(--dark); }
+.esc-hood > summary {
+  display: inline-flex; align-items: center; gap: 10px; min-height: 44px; margin-top: 12px;
+  cursor: pointer; list-style: none; color: var(--bone); font-size: var(--fs-base);
+  transition: color 120ms var(--step);
+}
+.esc-hood > summary::-webkit-details-marker { display: none; }
+.esc-hood > summary::before { content: "+"; display: inline-flex; justify-content: center; width: 24px; border: 2px solid var(--line); color: var(--accent); line-height: 20px; }
+.esc-hood[open] > summary::before { content: "\2212"; }
+.esc-hood > summary:hover { color: var(--accent); }
+.esc-hood > summary:hover::before { border-color: var(--accent); }
+.esc-hood .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px 48px; padding: 16px 0 4px; }
+.esc-hood h4 { color: var(--mid); font-size: var(--fs-xs); font-weight: 400; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px; }
+.esc-hood ol, .esc-hood ul { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.esc-hood ol { counter-reset: step; }
+.esc-hood li { position: relative; padding-left: 36px; }
+.esc-hood ol li::before {
+  counter-increment: step; content: counter(step);
+  position: absolute; left: 0; top: 3px; width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: var(--fs-xs); color: var(--ink); background: var(--mid);
+}
+.esc-hood ul li::before { content: ">"; position: absolute; left: 6px; font-family: var(--mono); font-weight: 700; color: var(--accent); }
+
+/* sketches: the small and retired tools, one line each */
+.esc-sketches { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.esc-sketches li { padding: 20px 0 22px; border-top: 3px solid var(--dark); scroll-margin-top: 96px; }
+.esc-sketches h3 { font-size: var(--fs-md); line-height: 1.3; margin-bottom: 6px; }
+.esc-sketches h3 a { color: var(--bone); text-decoration: none; display: inline-flex; min-height: 32px; align-items: center; box-shadow: inset 0 -3px 0 var(--line); transition: color 120ms var(--step), box-shadow 120ms var(--step); }
+.esc-sketches h3 a::after { content: " \2197"; content: " \2197" / ""; white-space: pre; color: var(--mid); }
+.esc-sketches h3 a:hover, .esc-sketches h3 a:focus-visible { color: var(--accent); box-shadow: inset 0 -3px 0 var(--accent); }
+.esc-sketches .esc-card-body { font-size: var(--fs-sm); line-height: 1.6; margin-bottom: 10px; }
+.esc-sketches li.on { border-top-color: var(--accent); }
+
 /* essay/post lists */
 .esc-postgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .esc-postcard { position: relative; display: flex; flex-direction: column; height: 100%; color: var(--bone); text-decoration: none; }
@@ -535,7 +594,7 @@
   @keyframes escSpinnerPulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
   .esc-gemnav .menu { animation: escGemIn 160ms steps(3, end) backwards; }
   @keyframes escGemIn { from { transform: translateY(14px); opacity: 0; } }
-  .esc-projcard.on { animation: escFlash 900ms steps(3, end) 2; }
+  .esc-projcard.on, .esc-dossier.on { animation: escFlash 900ms steps(3, end) 2; }
   @keyframes escFlash { 50% { border-color: var(--dark); } }
 }
 
@@ -556,6 +615,10 @@
   .esc-topnav nav a { font-size: var(--fs-sm); }
   .esc-grid { grid-template-columns: 1fr 1fr; gap: 40px 16px; }
   .esc-projgrid { grid-template-columns: 1fr; }
+  .esc-dossier { grid-template-columns: 1fr; padding: 28px; }
+  .esc-dossier > .art { justify-content: flex-start; padding-top: 0; margin-bottom: 8px; }
+  .esc-hood .cols { grid-template-columns: 1fr; }
+  .esc-sketches { grid-template-columns: 1fr; }
   .esc-fall { grid-template-columns: 1fr; gap: 32px; }
   .esc-split { grid-template-columns: 1fr; gap: 48px; }
   .esc-aside { margin-top: 0; }
@@ -595,6 +658,9 @@
   .esc-topnav .brand .full { display: none; }
   .esc-topnav .brand .short { display: inline; }
   .esc-projcard { padding: 20px; gap: 14px; }
+  .esc-dossier { padding: 20px; }
+  .esc-dossier .esc-specs { grid-template-columns: 1fr 1fr; }
+  .esc-projcard .esc-specs { grid-template-columns: 1fr; }
   .esc-postcard { padding: 20px; }
   .esc-featured { flex-direction: column; align-items: flex-start; gap: 16px; }
   .esc-postnav { flex-direction: column; }

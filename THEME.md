@@ -48,7 +48,8 @@ follow the theme.
   `standUp`, `makeNecker` (twelve edges, filled near face, optional weight),
   `makeWheel`, and `makeVoxels` (free voxel models in the same projection).
 - `constructions.ts`: one voxel model per featured project, drawn as what the
-  software does (chat bubble, crate, bar chart, briefcase, branch, door), plus
+  software does (chat bubble, crate, bar chart, briefcase, branch, door,
+  padlock, hourglass, page, plinth), plus
   the staircase beside the home readings and the question mark on the
   featured essay.
 - `sprites.tsx`: `Sprite` plus the scenes. `WaterfallScene` (hero tribar with
@@ -73,6 +74,11 @@ follow the theme.
   beside it.
 - Buttons have three tiers: primary `.esc-btn` (filled verdigris), secondary
   `.esc-btn.ghost` (outlined), tertiary `.esc-link` ("> " text link).
+- Projects page order: Selected (dossiers: wide cards with the project's
+  voxel construction, a spec sheet, and a "How it's built" disclosure with
+  numbered steps and decisions), then team cards, then solo cards, then
+  Sketches (one-line entries for small or retired tools). `tier` in
+  `projects.json` places a project; technical facts come from its repository.
 - Cards: 3px dark borders, a drafting tick on the top-left corner, shared
   `.esc-card-*` parts, `.esc-card-lead` for the outcome line. Only cards that
   go somewhere take the verdigris border on hover.
