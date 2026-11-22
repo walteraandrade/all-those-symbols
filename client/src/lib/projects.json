@@ -229,8 +229,8 @@
     "title": "Chrono Digger",
     "role": "Creator",
     "tier": "featured",
-    "lead": "Students question AI witnesses of Sarajevo, 1914.",
-    "description": "History sim in Portuguese where students question four source-grounded AI witnesses frozen on a Sarajevo street on 28 June 1914: Princip, Harrach, Potiorek and the historian Albertini. Students deduce what happened by putting the voices together, and keep an investigation diary as they go.",
+    "lead": "Students question AI witnesses grounded in historical sources.",
+    "description": "History sim where students question AI characters grounded in primary sources, each frozen at a moment in history. Students deduce what happened by putting the voices together, and keep an investigation diary as they go. It started on a Sarajevo street on 28 June 1914.",
     "tech": [
       "TypeScript",
       "Cloudflare Workers",
@@ -250,8 +250,8 @@
         "Llama 3.3 70B, bge-m3 embeddings in Vectorize"
       ],
       [
-        "Sources",
-        "the 1918 trial record and Albertini, 1953"
+        "Retrieval",
+        "passages filtered per character"
       ],
       [
         "Code",
