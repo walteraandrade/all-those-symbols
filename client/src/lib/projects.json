@@ -77,6 +77,19 @@
     ]
   },
   {
+    "title": "Payssego Platform",
+    "role": "Project Lead & Full-Stack Developer",
+    "lead": "1,100+ users live on launch day.",
+    "description": "Salary-advance platform for a fintech client, in Node.js and TypeScript under strict API security requirements, with Retool internal tools and a coordinated onboarding launch.",
+    "tech": [
+      "Node.js",
+      "Retool",
+      "API Security",
+      "PostgreSQL",
+      "AWS"
+    ]
+  },
+  {
     "title": "NaPorta Platform",
     "role": "Full-Stack Developer & Lead",
     "lead": "Winner of a national competition.",
@@ -90,19 +103,6 @@
       "React Query",
       "TypeScript",
       "Tailwind CSS"
-    ]
-  },
-  {
-    "title": "Payssego Platform",
-    "role": "Project Lead & Full-Stack Developer",
-    "lead": "1,100+ users live on launch day.",
-    "description": "Salary-advance platform for a fintech client, in Node.js and TypeScript under strict API security requirements, with Retool internal tools and a coordinated onboarding launch.",
-    "tech": [
-      "Node.js",
-      "Retool",
-      "API Security",
-      "PostgreSQL",
-      "AWS"
     ]
   },
   {
@@ -131,103 +131,58 @@
     ]
   },
   {
-    "title": "AI Decco Assistant",
+    "title": "Rashomon",
     "role": "Creator",
-    "description": "AI-powered assistant for interior decoration recommendations.",
-    "tech": [
-      "HTML",
-      "CSS",
-      "JavaScript"
-    ]
-  },
-  {
-    "title": "HTML to DOCX Converter",
-    "role": "Creator",
-    "description": "Python tool for converting HTML documents to DOCX format.",
-    "tech": [
-      "Python"
-    ],
-    "link": "https://github.com/walteraandrade/html-to-docx"
-  },
-  {
-    "title": "Aetheria",
-    "role": "Creator",
-    "description": "Game project built with Phaser.js and TypeScript.",
-    "tech": [
-      "Phaser.js",
-      "TypeScript"
-    ],
-    "link": "https://github.com/walteraandrade/aetheria"
-  },
-  {
-    "title": "Smells Like Job Spirit",
-    "role": "Creator",
-    "lead": "A local LLM that helps with the job hunt.",
-    "description": "Browser extension with Python backend and Ollama integration for job search assistance.",
-    "tech": [
-      "Browser Extension",
-      "Python",
-      "Ollama"
-    ],
-    "link": "https://github.com/walteraandrade/smells-like-job-spirit"
-  },
-  {
-    "title": "The Thought Weaver",
-    "role": "Creator",
-    "description": "TypeScript project for thought organization and note-taking.",
-    "tech": [
-      "TypeScript"
-    ],
-    "link": "https://github.com/walteraandrade/the-thought-weaver"
-  },
-  {
-    "title": "Arachne",
-    "role": "Creator",
-    "lead": "GitHub's Network tab, rebuilt for the terminal.",
-    "description": "TUI git network graph viewer that replaces GitHub's Network tab. Renders commit DAGs with branch lanes, integrates with GitHub for fork/branch data, and live-reloads on new commits.",
-    "tech": [
-      "Rust",
-      "TUI",
-      "Git",
-      "GitHub API"
-    ],
-    "link": "https://github.com/walteraandrade/arachne"
-  },
-  {
-    "title": "Mr. Argus",
-    "role": "Creator",
-    "lead": "A live dashboard of every Claude Code process.",
-    "description": "Terminal process monitor for Claude Code instances. Displays a live dashboard with process trees, CPU/memory usage, sparkline history, and aggregated totals by reading the Linux /proc filesystem directly.",
+    "tier": "featured",
+    "lead": "Which words stick to 27 Brazilian public figures.",
+    "description": "Collects what Bluesky, Google News, GDELT, the press and both houses of Congress say about 27 Brazilian public figures, then draws the words that keep landing next to each name: how often, how surprising, from which outlet and in what tone. Every number opens to the texts behind it.",
     "tech": [
       "TypeScript",
-      "Bun",
-      "Ink",
-      "React",
-      "Linux"
+      "SvelteKit",
+      "Hono",
+      "PGlite",
+      "PostgreSQL",
+      "Effect"
     ],
-    "link": "https://github.com/walteraandrade/mr-argus"
-  },
-  {
-    "title": "Chrono Digger",
-    "role": "Creator",
-    "lead": "Students question AI witnesses of Sarajevo, 1914.",
-    "description": "History sim where students question source-grounded AI witnesses frozen on a Sarajevo street on 28 June 1914. Each character turn retrieves passages, builds the prompt and streams the answer with its sources under one deadline, with per-player and global daily quotas, an investigation diary, and a fidelity eval with a judge.",
-    "tech": [
-      "TypeScript",
-      "Cloudflare Workers",
-      "Durable Objects",
-      "Workers AI",
-      "Vectorize",
-      "Effect",
-      "WebSockets"
+    "specs": [
+      [
+        "Sources",
+        "10, one collector each"
+      ],
+      [
+        "Window",
+        "the last 21 days"
+      ],
+      [
+        "Association",
+        "PMI, computed in SQL"
+      ],
+      [
+        "Database",
+        "PGlite locally, Postgres in production"
+      ]
     ],
-    "link": "https://github.com/walteraandrade/chrono-digger"
+    "how": [
+      "Collect: each source has its own collector with the same signature, storing text, URL, outlet, date and tone.",
+      "Extract: the text is normalized into hashtags, words and phrases. A document that names nobody tracked is dropped, not stored.",
+      "Score: terms are counted per person and scored with PMI against every document that mentions anyone tracked.",
+      "Serve: a Hono API, and a SvelteKit front end prerendered at build time."
+    ],
+    "notes": [
+      "Frequency and PMI answer different questions. The map sorts by PMI times ln(1 + count), so a word seen twice cannot outrank one seen two hundred times.",
+      "Tone comes only from GDELT. Every other source stores no tone rather than an invented one.",
+      "Tone toward each person comes from kikori, a separate model, and the page says plainly that it carries a name prior: read it as one outlet against others on the same person, never as person against person.",
+      "An outlet's political lean is a judgment with citations, and a missing outlet means nobody has researched it, not that it is neutral."
+    ],
+    "link": "https://github.com/walteraandrade/rashomon",
+    "live": "https://rashomon-five.vercel.app"
   },
   {
     "title": "Desafinado",
     "role": "Creator",
+    "tier": "featured",
     "lead": "Every AI suggestion is a tracked change you can refuse.",
-    "description": "Markdown editor with an AI co-author, for prose and agent Skills. Every suggestion sits in the text as a tracked change with a rationale until you accept, reject or refine it, and a timeline keeps a version after each step. Ships as an Electron app with a Skills library and evals, and as a web app.",
+    "description": "Markdown editor with an AI co-author, for prose and for agent Skills. The name comes from Jobim's song in defense of the singer who is slightly out of tune: the AI proposes, your voice wins. Ships as an Electron app with a Skills library and evals, and as a web app.",
     "tech": [
       "TypeScript",
       "React",
@@ -237,22 +192,128 @@
       "OpenRouter",
       "Tailwind CSS"
     ],
+    "specs": [
+      [
+        "Editor",
+        "CodeMirror 6"
+      ],
+      [
+        "Model calls",
+        "Vercel AI SDK over OpenRouter"
+      ],
+      [
+        "History",
+        "SQLite per file (desktop), localStorage (web)"
+      ],
+      [
+        "Design record",
+        "20 architecture decision records"
+      ]
+    ],
+    "how": [
+      "Ask about a passage with Ctrl+K: a quick action or any instruction.",
+      "The answer lands in the text as a tracked change, old text struck through, with a one-line rationale on a card in the margin.",
+      "Accept, reject or refine it. Accept is an ordinary edit, so Ctrl+Z undoes it.",
+      "A review pass reads the whole document and streams up to six suggestions, and the timeline keeps a version after each step, marked by who made it."
+    ],
+    "notes": [
+      "The model returns structured output and the app owns the anchors, so a suggestion always points at real text in the document.",
+      "Small edits show a word-level diff and rewrites show the whole block.",
+      "Only validated streams reach the text: a partial answer that fails the schema is never applied.",
+      "Skill files on disk are the source of truth. When an agent, another editor or git changes the open file, the editor reloads it and records an external version.",
+      "The Evals page runs a Skill's evals through the Claude CLI with and without the Skill, to show whether it helped. The default model was picked by a bake-off."
+    ],
     "link": "https://github.com/walteraandrade/desafinado"
   },
   {
-    "title": "Rashomon",
+    "title": "Chrono Digger",
     "role": "Creator",
-    "lead": "Which words stick to 27 Brazilian public figures.",
-    "description": "Shows which words stick to 27 Brazilian public figures across ten sources, from Bluesky and Google News to GDELT, the press and both houses of Congress. One collector per source, term extraction, and PMI computed in SQL, so every number opens to the texts behind it.",
+    "tier": "featured",
+    "lead": "Students question AI witnesses of Sarajevo, 1914.",
+    "description": "History sim in Portuguese where students question four source-grounded AI witnesses frozen on a Sarajevo street on 28 June 1914: Princip, Harrach, Potiorek and the historian Albertini. Students deduce what happened by putting the voices together, and keep an investigation diary as they go.",
     "tech": [
       "TypeScript",
-      "SvelteKit",
-      "Hono",
-      "PGlite",
-      "PostgreSQL",
-      "Effect"
+      "Cloudflare Workers",
+      "Durable Objects",
+      "Workers AI",
+      "Vectorize",
+      "Effect",
+      "WebSockets"
     ],
-    "link": "https://github.com/walteraandrade/rashomon"
+    "specs": [
+      [
+        "Runtime",
+        "Cloudflare Workers + Durable Objects"
+      ],
+      [
+        "Models",
+        "Llama 3.3 70B, bge-m3 embeddings in Vectorize"
+      ],
+      [
+        "Sources",
+        "the 1918 trial record and Albertini, 1953"
+      ],
+      [
+        "Code",
+        "private repository"
+      ]
+    ],
+    "how": [
+      "Each pair of student and character gets its own Durable Object, with the conversation history and a hibernatable WebSocket.",
+      "A turn is one Effect: retrieve passages, build the prompt, stream the answer, attach its sources, all under one 45-second deadline.",
+      "Per-student and global daily quotas live in their own Durable Objects, and a failed turn is refunded.",
+      "Providers sit behind interfaces, so Workers AI and OpenRouter swap by configuration, and tests inject fakes at that seam."
+    ],
+    "notes": [
+      "A fidelity eval with an LLM judge asked one question: is the free model faithful to its sources? It was not. It failed every round, at best 27 of 35, and the failures were not missing sources: the model got the right passage and skipped the sentence that mattered.",
+      "So the disputed questions now come from a written script reviewed by people, and the case can be closed with the script alone.",
+      "The model answers only free questions. Its answers are labeled as unchecked conversation, never enter the diary, and a disputed question asked freely is routed back to the script.",
+      "Infrastructure is code in Alchemy, and every pull request gets its own preview deployment, destroyed when it closes."
+    ]
+  },
+  {
+    "title": "Cerberus",
+    "role": "Creator",
+    "tier": "featured",
+    "lead": "A password manager that never leaves your machine.",
+    "description": "Local-only TUI password manager with a single encrypted vault file. No server, no sync and no browser extension: the vault never leaves the machine, and what is on disk is useless without the master password.",
+    "tech": [
+      "Go",
+      "TUI",
+      "Bubble Tea",
+      "Cryptography"
+    ],
+    "specs": [
+      [
+        "Cipher",
+        "XChaCha20-Poly1305"
+      ],
+      [
+        "Key derivation",
+        "Argon2id, 64 MiB, 3 passes, 4 lanes"
+      ],
+      [
+        "Key memory",
+        "memguard"
+      ],
+      [
+        "Storage",
+        "one file, atomic temp + rename"
+      ]
+    ],
+    "how": [
+      "The master password goes through Argon2id to make a wrapping key.",
+      "The wrapping key unwraps a random vault key, and only that vault key ever touches the entries.",
+      "The vault key opens the vault with XChaCha20-Poly1305, whose 24-byte nonce is safe to pick at random.",
+      "Saving writes a temp file and renames it over the vault, so a crash never leaves half a vault."
+    ],
+    "notes": [
+      "Key material stays in byte slices that are zeroed by hand: a memguard LockedBuffer while in use, an Enclave at rest.",
+      "Every random byte comes from crypto/rand: passwords (20 characters by default) and diceware passphrases (6 words).",
+      "Copying a password starts a 30-second timer that clears the clipboard, on Wayland or X11.",
+      "Domain types never import crypto or file IO, so the vault model is tested on its own."
+    ],
+    "link": "https://github.com/walteraandrade/cerberus"
   },
   {
     "title": "Anamnesis",
@@ -268,7 +329,41 @@
       "Transformers.js",
       "WebGPU"
     ],
+    "specs": [
+      [
+        "Search",
+        "EmbeddingGemma 300M in a worker, vectors cached in IndexedDB"
+      ],
+      [
+        "Rewrite",
+        "WebLLM, loaded only on request"
+      ]
+    ],
     "link": "https://github.com/walteraandrade/anamnesis"
+  },
+  {
+    "title": "Mr. Argus",
+    "role": "Creator",
+    "lead": "A live dashboard of every Claude Code process.",
+    "description": "Process monitor and analytics for Claude Code on Linux, read straight from /proc. A daemon tracks each instance and its token use, a terminal UI shows live process trees with CPU and memory sparklines, and a web dashboard charts cost, models, tools and cache efficiency.",
+    "tech": [
+      "TypeScript",
+      "Bun",
+      "Ink",
+      "React",
+      "Linux"
+    ],
+    "specs": [
+      [
+        "Sampling",
+        "/proc every 2 seconds"
+      ],
+      [
+        "Interfaces",
+        "daemon, TUI and web dashboard"
+      ]
+    ],
+    "link": "https://github.com/walteraandrade/mr-argus"
   },
   {
     "title": "Estante",
@@ -286,6 +381,19 @@
     "link": "https://github.com/walteraandrade/estante"
   },
   {
+    "title": "Aetheria",
+    "role": "Creator",
+    "lead": "Ear training you play instead of answer.",
+    "description": "Top-down action RPG where sound is world information: doors sing intervals, bells answer them, and enemies telegraph attacks by singing. The answer is always spatial (move, dodge, strike), never naming the interval. No engine, just canvas and Web Audio, with sounds synthesized at runtime on random roots so the player learns intervals, not pitches.",
+    "tech": [
+      "JavaScript",
+      "Canvas",
+      "Web Audio",
+      "Vite"
+    ],
+    "link": "https://github.com/walteraandrade/aetheria"
+  },
+  {
     "title": "Homer",
     "role": "Creator",
     "lead": "Turns new commits into a written chronicle.",
@@ -301,21 +409,36 @@
     "link": "https://github.com/walteraandrade/homer"
   },
   {
-    "title": "Cerberus",
+    "title": "Arachne",
     "role": "Creator",
-    "lead": "A password manager that never leaves your machine.",
-    "description": "Local-only TUI password manager with a single encrypted vault file. Envelope encryption with XChaCha20-Poly1305 and Argon2id, key material held in memguard, a password and diceware passphrase generator, and a clipboard that clears itself.",
+    "tier": "minor",
+    "lead": "GitHub's Network tab, rebuilt for the terminal.",
+    "description": "TUI git network graph viewer that replaces GitHub's Network tab. Renders commit DAGs with branch lanes, integrates with GitHub for fork/branch data, and live-reloads on new commits.",
     "tech": [
-      "Go",
+      "Rust",
       "TUI",
-      "Bubble Tea",
-      "Cryptography"
+      "Git",
+      "GitHub API"
     ],
-    "link": "https://github.com/walteraandrade/cerberus"
+    "link": "https://github.com/walteraandrade/arachne"
+  },
+  {
+    "title": "Smells Like Job Spirit",
+    "role": "Creator",
+    "tier": "minor",
+    "lead": "A local LLM that helps with the job hunt.",
+    "description": "Browser extension with Python backend and Ollama integration for job search assistance.",
+    "tech": [
+      "Browser Extension",
+      "Python",
+      "Ollama"
+    ],
+    "link": "https://github.com/walteraandrade/smells-like-job-spirit"
   },
   {
     "title": "Apollo",
     "role": "Creator",
+    "tier": "minor",
     "lead": "A review queue for new commits, in the terminal.",
     "description": "Local-first terminal app for commit review triage. Detects new commits in a local repository, notifies that they might need a review, tracks their status in SQLite and surfaces the unreviewed queue in a keyboard-first TUI.",
     "tech": [
@@ -325,5 +448,36 @@
       "SQLite"
     ],
     "link": "https://github.com/walteraandrade/claude-apollo"
+  },
+  {
+    "title": "AI Decco Assistant",
+    "role": "Creator",
+    "tier": "minor",
+    "description": "Web app that takes a photo of an office and a request, such as a new wall color or a shelf with plants, and generates AI variations. Any variation can become the new base image for another round.",
+    "tech": [
+      "TypeScript",
+      "Next.js",
+      "LangGraph",
+      "OpenRouter"
+    ],
+    "link": "https://github.com/walteraandrade/ai-decor-assistant"
+  },
+  {
+    "title": "HTML to DOCX Converter",
+    "role": "Creator",
+    "tier": "minor",
+    "description": "Python tool for converting HTML documents to DOCX format.",
+    "tech": [
+      "Python"
+    ]
+  },
+  {
+    "title": "The Thought Weaver",
+    "role": "Creator",
+    "tier": "minor",
+    "description": "TypeScript project for thought organization and note-taking.",
+    "tech": [
+      "TypeScript"
+    ]
   }
 ]

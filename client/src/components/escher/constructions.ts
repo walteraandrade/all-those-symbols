@@ -1,6 +1,6 @@
 import { makeVoxels, type PixelMap, type Voxel } from "./geometry";
 
-// One small voxel construction per featured project, each a picture of what
+// One small voxel construction per featured project (home and the projects page), each a picture of what
 // the software does, in the same projection and light as the tribar.
 
 const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number, m: 0 | 1 = 0): Voxel[] => {
@@ -54,6 +54,45 @@ const MODELS: Record<string, Voxel[]> = {
     ...box(1, 0, 7, 5, 1, 8),
     ...box(5, 0, 4, 6, 1, 6, 1),
     ...box(0, 0, 10, 1, 1, 11, 1),
+  ],
+  // a padlock, its keyhole lit
+  "Cerberus": [
+    ...box(0, 0, 0, 6, 3, 5),
+    ...box(1, 1, 5, 2, 2, 8),
+    ...box(4, 1, 5, 5, 2, 8),
+    ...box(1, 1, 8, 5, 2, 9),
+    ...box(2, 3, 2, 4, 4, 3, 1),
+    ...box(2, 3, 1, 3, 4, 2, 1),
+  ],
+  // one figure on a plinth, words standing around it, the one that sticks lit
+  "Rashomon": [
+    ...box(0, 0, 0, 9, 9, 1),
+    ...box(3, 3, 1, 5, 5, 8),
+    ...box(6, 1, 1, 8, 2, 3),
+    ...box(1, 6, 1, 2, 8, 4),
+    ...box(6, 7, 1, 8, 8, 2),
+    ...box(1, 1, 1, 2, 3, 2),
+    ...box(6, 3, 1, 7, 5, 5, 1),
+  ],
+  // a page: a line struck, a suggestion lit beside it
+  "Desafinado": [
+    ...box(0, 0, 0, 7, 1, 9),
+    ...box(1, 1, 7, 6, 2, 8),
+    ...box(1, 1, 5, 4, 2, 6),
+    ...box(1, 1, 3, 6, 2, 4, 1),
+    ...box(1, 1, 1, 5, 2, 2),
+  ],
+  // an hourglass, the sand that has run lit at the bottom
+  "Chrono Digger": [
+    ...box(0, 0, 0, 5, 5, 1),
+    ...box(0, 0, 10, 5, 5, 11),
+    ...box(4, 0, 1, 5, 1, 10),
+    ...box(0, 4, 1, 1, 5, 10),
+    ...box(1, 1, 1, 4, 4, 3, 1),
+    ...box(2, 2, 3, 3, 3, 4, 1),
+    ...box(2, 2, 4, 3, 3, 6),
+    ...box(1, 1, 6, 4, 4, 8),
+    ...box(1, 1, 8, 4, 4, 10, 1),
   ],
   // a door frame with a parcel at the step
   "NaPorta Platform": [
