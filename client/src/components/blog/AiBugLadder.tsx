@@ -16,7 +16,8 @@ useEffect(() => {
   setItems(items.map(withPrice))
 }, [items])`,
   1: `const { items } = useCartStore()
-const [cart, setCart] = useState(items)
+const [cart, setCart] =
+  useState(items)
 
 const add = (item) =>
   setCart([...cart, item])`,
@@ -118,7 +119,7 @@ export function AiBugLadder({ label }: { label?: string }) {
       </span>
 
       <span className="flex w-full flex-col gap-4 sm:flex-row">
-        <pre className="m-0 min-w-0 flex-1 overflow-x-auto border-[3px] border-[var(--dark)] bg-[var(--ink)] p-3 font-mono text-xs leading-relaxed text-[var(--soft)]">
+        <pre className="m-0 min-w-0 flex-1 whitespace-pre-wrap break-words border-[3px] border-[var(--dark)] bg-[var(--ink)] !px-5 !py-5 font-mono text-xs leading-relaxed text-[var(--soft)]">
           <code>{CODE[step]}</code>
         </pre>
         <span className="flex flex-col justify-center border-[3px] border-[var(--mid)] bg-[var(--ink)] px-4 py-2 sm:w-48">
