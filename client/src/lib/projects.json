@@ -182,48 +182,46 @@
     "role": "Creator",
     "tier": "featured",
     "lead": "Every AI suggestion is a tracked change you can refuse.",
-    "description": "Markdown editor with an AI co-author, for prose and for agent Skills. The name comes from Jobim's song in defense of the singer who is slightly out of tune: the AI proposes, your voice wins. Ships as an Electron app with a Skills library and evals, and as a web app.",
+    "description": "Native Markdown editor with an AI co-author, for prose and for agent Skills, written in Rust on GPUI, the UI framework behind Zed. The name comes from Jobim's song in defense of the singer who is slightly out of tune: the AI proposes, your voice wins. It runs on Linux as a single binary, with no Chromium.",
     "tech": [
-      "TypeScript",
-      "React",
-      "Electron",
-      "CodeMirror",
-      "Vercel AI SDK",
-      "OpenRouter",
-      "Tailwind CSS"
+      "Rust",
+      "GPUI",
+      "SQLite",
+      "OpenRouter"
     ],
     "specs": [
       [
-        "Editor",
-        "CodeMirror 6"
+        "UI",
+        "GPUI with gpui-kit, drawing on Vulkan"
       ],
       [
         "Model calls",
-        "Vercel AI SDK over OpenRouter"
+        "OpenRouter directly, with your own key in the system keyring"
       ],
       [
         "History",
-        "SQLite per file (desktop), localStorage (web)"
+        "SQLite, one timeline per document"
       ],
       [
-        "Design record",
-        "20 architecture decision records"
+        "Workspace",
+        "Six crates; only the app crate knows about GPUI"
       ]
     ],
     "how": [
       "Ask about a passage with Ctrl+K: a quick action or any instruction.",
-      "The answer lands in the text as a tracked change, old text struck through, with a one-line rationale on a card in the margin.",
+      "The answer sits in the text as a tracked change, old text struck through, with a one-line rationale on a card in the margin.",
       "Accept, reject or refine it. Accept is an ordinary edit, so Ctrl+Z undoes it.",
-      "A review pass reads the whole document and streams up to six suggestions, and the timeline keeps a version after each step, marked by who made it."
+      "Review reads the whole document like an editor: it leaves notes in the margin, or, when you ask for changes, streams up to six suggestions. A small model reads your request and picks the mode.",
+      "The timeline keeps a version after each step, marked by who made it, and reopening a file brings back the caret, the scroll and any suggestions still open."
     ],
     "notes": [
-      "The model returns structured output and the app owns the anchors, so a suggestion always points at real text in the document.",
-      "Small edits show a word-level diff and rewrites show the whole block.",
-      "Only validated streams reach the text: a partial answer that fails the schema is never applied.",
-      "Skill files on disk are the source of truth. When an agent, another editor or git changes the open file, the editor reloads it and records an external version.",
-      "The Evals page runs a Skill's evals through the Claude CLI with and without the Skill, to show whether it helped. The default model was picked by a bake-off."
+      "It began as an Electron and web app in TypeScript. The Rust build reached feature parity with it, starts faster and uses less memory.",
+      "Suggestions show inside the text through a vendored, patched copy of gpui-base that adds inlays and block zones.",
+      "The logic lives in plain Rust crates with unit tests (Markdown blocks, the adaptive diff, suggestion positions, prompts and stream parsing), so none of it needs a window to test.",
+      "Skill files on disk are the source of truth. Saves are atomic, and when an agent or git changes the open file, the editor reloads it, or asks first if you have unsaved text.",
+      "The Evals page runs a Skill's evals through the Claude CLI with and without the Skill, to show whether it helped. Every AI call is logged with its tokens and cost, and a spend page charts them."
     ],
-    "link": "https://github.com/walteraandrade/desafinado"
+    "link": "https://github.com/walteraandrade/desafinado-rust-port"
   },
   {
     "title": "Chrono Digger",
