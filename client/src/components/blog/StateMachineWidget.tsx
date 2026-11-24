@@ -1,8 +1,9 @@
-import { type ComponentProps, type ReactNode, useEffect, useId, useRef, useState } from "react";
+import { useId, useState } from "react";
 import { motion, useAnimationControls, useReducedMotion } from "framer-motion";
 import { Sprite } from "@/components/escher/sprites";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { WIDGET_BOX } from "./widgetBox";
+import { Btn, Lead, Status } from "./widgetParts";
 import { cn } from "@/lib/utils";
 
 type State = "idle" | "loading" | "data" | "error";
@@ -122,50 +123,6 @@ const CELLS = {
 const flagBit = (flag: Flag) => 1 << FLAGS.indexOf(flag);
 
 const countOn = (combo: number) => FLAGS.filter((flag) => combo & flagBit(flag)).length;
-
-const Lead = ({ children, focusOnMount }: { children: ReactNode; focusOnMount?: boolean }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-
-  useEffect(() => {
-    if (focusOnMount) ref.current?.focus();
-  }, [focusOnMount]);
-
-  return (
-    <span
-      ref={ref}
-      tabIndex={focusOnMount ? -1 : undefined}
-      className="block scroll-mt-24 text-center font-['League_Spartan',sans-serif] text-lg font-bold leading-snug text-[var(--bone)] outline-none sm:text-xl"
-    >
-      {children}
-    </span>
-  );
-};
-
-const Status = ({ children }: { children: ReactNode }) => (
-  <span aria-live="polite" className="block min-h-[3rem] max-w-md text-center font-mono text-sm leading-snug text-[var(--soft)]">
-    {children}
-  </span>
-);
-
-const Btn = ({
-  active,
-  cta,
-  className,
-  ...props
-}: ComponentProps<"button"> & { active?: boolean; cta?: boolean }) => (
-  <button
-    type="button"
-    {...props}
-    className={cn(
-      "min-h-11 cursor-pointer border-[3px] px-3 py-2 font-bold leading-tight hover:border-[var(--bone)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]",
-      cta ? "font-['League_Spartan',sans-serif] text-base" : "font-mono text-sm",
-      active
-        ? "border-[var(--accent)] bg-[var(--accent)] text-[var(--ink)]"
-        : "border-[var(--mid)] bg-[var(--ink)] text-[var(--bone)]",
-      className,
-    )}
-  />
-);
 
 const Screen = ({
   loading,
