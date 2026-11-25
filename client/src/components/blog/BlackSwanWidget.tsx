@@ -27,7 +27,7 @@ const RIPPLES = [
   [6, 18], [28, 62], [47, 30], [71, 78], [88, 22], [15, 84], [58, 52], [35, 12], [80, 48], [5, 50],
 ];
 const BLACK = { w: "--shadow", b: "--danger" };
-const SHOWN = 24;
+const MAX_WHITES = 20;
 
 const COPY = {
   en: {
@@ -49,6 +49,7 @@ const COPY = {
     sail: "Sail to Australia",
     back: "Back to Europe",
     hint: "Observe a few swans.",
+    kidding: "You kidding bro?",
     count: (n: number) => `${n} white ${n === 1 ? "swan" : "swans"}. The theory gets support, never proof.`,
     refuted: (n: number) => `${n} confirmations proved nothing. One refutation is enough.`,
     lake: (white: number, black: boolean) =>
@@ -73,6 +74,7 @@ const COPY = {
     sail: "Navegar até a Austrália",
     back: "Voltar à Europa",
     hint: "Observe alguns cisnes.",
+    kidding: "Tá de sacanagem?",
     count: (n: number) => `${n} ${n === 1 ? "cisne branco" : "cisnes brancos"}. A teoria ganha apoio, nunca prova.`,
     refuted: (n: number) => `${n} confirmações não provaram nada. Uma refutação basta.`,
     lake: (white: number, black: boolean) =>
@@ -121,8 +123,8 @@ export function BlackSwanWidget({ label }: { label?: string }) {
   const copy = COPY[lang];
   const [whites, setWhites] = useState(0);
   const [black, setBlack] = useState(false);
+  const [kidding, setKidding] = useState(false);
 
-  const shown = Math.min(whites, SHOWN);
   const lines = black ? copy.australia : copy.europe;
 
   return (
@@ -139,12 +141,9 @@ export function BlackSwanWidget({ label }: { label?: string }) {
             <Sprite map={RIPPLE} palette={RIPPLE_PAL} scale={3} />
           </span>
         ))}
-        {Array.from({ length: shown }, (_, i) => (
+        {Array.from({ length: whites }, (_, i) => (
           <Swan key={i} palette={WHITE} scale={3} delay={(i % 7) * 0.23} />
         ))}
-        {whites > SHOWN && (
-          <span className="self-center font-mono text-sm font-bold text-[var(--ink)]">+{whites - SHOWN}</span>
-        )}
         {black && <Swan palette={BLACK} scale={5} delay={0} className="ml-auto" />}
       </span>
 
@@ -160,7 +159,9 @@ export function BlackSwanWidget({ label }: { label?: string }) {
         </span>
       </span>
 
-      <Status>{black ? copy.refuted(whites) : whites === 0 ? copy.hint : copy.count(whites)}</Status>
+      <Status>
+        {black ? copy.refuted(whites) : kidding ? copy.kidding : whites === 0 ? copy.hint : copy.count(whites)}
+      </Status>
 
       <span className="flex flex-wrap justify-center gap-3">
         {black ? (
@@ -169,13 +170,20 @@ export function BlackSwanWidget({ label }: { label?: string }) {
             onClick={() => {
               setBlack(false);
               setWhites(0);
+              setKidding(false);
             }}
           >
             {copy.back}
           </Btn>
         ) : (
           <>
-            <Btn onClick={() => setWhites((n) => n + 1)}>{copy.observe}</Btn>
+            <Btn
+              disabled={kidding}
+              className="disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-[var(--mid)]"
+              onClick={() => (whites >= MAX_WHITES ? setKidding(true) : setWhites((n) => n + 1))}
+            >
+              {copy.observe}
+            </Btn>
             {whites >= 3 && (
               <Btn cta active onClick={() => setBlack(true)}>
                 {copy.sail}
