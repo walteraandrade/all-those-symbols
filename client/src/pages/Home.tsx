@@ -20,7 +20,7 @@ const FEATURED_TITLES = [
 
 export default function Home() {
   useDocumentMeta({
-    title: "Walter Andrade | Developer & Thinker",
+    title: "Walterfall | Walter Andrade",
     description: "Software developer with a background in philosophy and logic. Building rigorous, elegant systems. Exploring ideas at the intersection of code and thought.",
     canonical: "/",
   });

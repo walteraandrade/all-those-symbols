@@ -2,7 +2,7 @@ import { readFile, writeFile, mkdir } from "fs/promises";
 import path from "path";
 import { pathToFileURL } from "url";
 import { readBlogPosts } from "./blog-content";
-import { BASE_URL } from "../client/src/lib/site";
+import { BASE_URL, SITE_NAME } from "../client/src/lib/site";
 import type { BlogPost } from "../client/src/lib/blog/types";
 
 const DIST_PATH = path.resolve(import.meta.dirname, "..", "dist", "public");
@@ -19,7 +19,7 @@ interface PageMeta {
 
 const staticPages: Record<string, PageMeta> = {
   "/": {
-    title: "Walter Andrade | Developer & Thinker",
+    title: "Walterfall | Walter Andrade",
     description:
       "Software developer with a background in philosophy and logic. Building rigorous, elegant systems. Exploring ideas at the intersection of code and thought.",
     canonical: "/",
@@ -70,6 +70,7 @@ const generateMetaTags = (meta: PageMeta): string => {
     `<meta property="og:title" content="${title}" />`,
     `<meta property="og:description" content="${description}" />`,
     `<meta property="og:type" content="${meta.ogType || "website"}" />`,
+    `<meta property="og:site_name" content="${SITE_NAME}" />`,
     url && `<meta property="og:url" content="${url}" />`,
     `<meta property="og:image" content="${ogImage}" />`,
     `<meta name="twitter:card" content="summary_large_image" />`,
@@ -91,6 +92,7 @@ const injectMeta = (template: string, meta: PageMeta): string => {
   html = html.replace(/<meta property="og:title"[^>]*>\n?/, "");
   html = html.replace(/<meta property="og:description"[^>]*>\n?/, "");
   html = html.replace(/<meta property="og:type"[^>]*>\n?/, "");
+  html = html.replace(/<meta property="og:site_name"[^>]*>\n?/, "");
   html = html.replace(/<meta property="og:image"[^>]*>\n?/, "");
   html = html.replace(/<meta name="twitter:card"[^>]*>\n?/, "");
   html = html.replace(/<meta name="twitter:site"[^>]*>\n?/, "");

@@ -1,9 +1,10 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
 
-const PRODUCTION_ORIGIN = "https://all-those-symbols.vercel.app";
+// The old vercel.app address stays allowed while it redirects to the new domain.
+const PRODUCTION_ORIGINS = ["https://walterfall.space", "https://all-those-symbols.vercel.app"];
 
 const allowedOrigins = (): string[] => [
-  PRODUCTION_ORIGIN,
+  ...PRODUCTION_ORIGINS,
   ...[
     process.env.VERCEL_PROJECT_PRODUCTION_URL,
     process.env.VERCEL_BRANCH_URL,

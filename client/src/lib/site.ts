@@ -1,1 +1,2 @@
-export const BASE_URL = "https://all-those-symbols.vercel.app";
+export const BASE_URL = "https://walterfall.space";
+export const SITE_NAME = "Walterfall";
