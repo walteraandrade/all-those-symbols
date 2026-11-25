@@ -46,7 +46,7 @@ Acredito que, como humanos, certamente encontraremos maneiras muito melhores de 
 
 Pessoalmente, acredito que sofrer é uma parte inegociável da experiência. Estamos programados para enxergar problemas no mundo. Filosoficamente, acredito que, aconteça o que acontecer na "singularidade da IA", ainda encontraremos problemas para resolver. A Ciência, esquecemos, é uma forma de conhecer e interagir com o mundo. Nossa época fez dela um deus, como se ela entregasse certezas. Ela não entrega, e nem pode. Uma teoria prevê certas observações; quando elas ocorrem, nós as tomamos como evidência de que a teoria é verdadeira. Mas evidência não é prova: concluir uma teoria a partir de suas previsões confirmadas é, logicamente, afirmar o consequente. Outra teoria poderia prever exatamente as mesmas observações.
 
-Um exemplo simples deixa isso mais claro: durante séculos, os europeus observaram apenas cisnes brancos. Eles concluíram que todos os cisnes eram brancos. Afinal, se todos os cisnes são brancos, os cisnes que observamos devem ser brancos. E eram. Até que os europeus chegaram à Austrália e encontraram cisnes negros.
+Um exemplo simples deixa isso mais claro: durante séculos, os europeus observaram apenas cisnes brancos. Disso, concluíram que todos os cisnes eram brancos. Ora, se todos os cisnes são brancos, os cisnes que observamos devem ser brancos. E eram, até que os europeus chegaram à Austrália e encontraram cisnes negros.
 
 ![Widget interativo: observar cisnes brancos um a um nunca prova que todos os cisnes são brancos, o argumento continua inválido; um cisne negro da Austrália o refuta, e esse argumento é válido.](#black-swan)
 

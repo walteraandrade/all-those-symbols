@@ -49,7 +49,7 @@ I believe that, as humans, we'll surely find far better ways to explore the worl
 
 Personally, I believe that to suffer is a nonnegotiable part of experience. We're hardwired to see problems in the world. Philosophically, I believe that whatever happens at the "AI singularity," we will still find problems to solve. Science, we forget, is one way to know and to interact with the world. Our times have made a god of it, as if it delivered certainty. It doesn't, and it can't. A theory predicts certain observations; when they occur, we take them as evidence that the theory is true. But evidence is not proof: concluding a theory from its confirmed predictions is, logically, affirming the consequent. Another theory could predict the very same observations.
 
-A simple example makes it clearer: for centuries, Europeans observed only white swans. They concluded that all swans were white. After all, if all swans are white, the swans we observe should be white. And they were. Until Europeans reached Australia and found black swans.
+A simple example makes it clearer: for centuries, Europeans observed only white swans. From that, they concluded that all swans were white. Well, if all swans are white, the swans we observe must be white. And they were, until Europeans reached Australia and found black swans.
 
 ![Interactive widget: observing white swans one by one never proves that all swans are white, the argument stays invalid; one black swan from Australia refutes it, and that argument is valid.](#black-swan)
 
