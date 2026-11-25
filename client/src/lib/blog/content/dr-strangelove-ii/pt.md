@@ -26,7 +26,7 @@ Fazer arte é sonhar como espécie. Eu acredito fortemente nisso. Ao criar esses
 ## O aliado
 "Humano" é uma palavra difícil de definir. Alguns dizem que temos que tratar as galinhas com mais humanidade, enquanto às vezes defendem uma vida mais parecida com a de galinhas para aqueles que não oferecem humanidade às galinhas. Agir com amor é humano. Agir com ódio é humano. Stalin não era um porco, apesar da imaginação de Orwell. Nem Hitler. E humanas eram todas e cada uma das pessoas que trabalhavam para eles. Brutus foi humano, demasiado humano, quando traiu César. Assim como Judas e Efialtes.
 
-Há poucas palavras que tenho mais dificuldade em entender do que "Humano", quando usada como qualificação de algo ou alguém. A preocupação com a IA substituindo os humanos é compreensível, considerando as histórias que nos foram contadas. Mas se você gosta de histórias, sabe que o propósito delas é ensinar, não exatamente prever.
+Há poucas palavras que tenho mais dificuldade em entender do que "Humano", quando usada como qualificação de algo ou alguém. A preocupação com a IA substituindo os humanos é compreensível, considerando as histórias que nos foram contadas. Mas todo mundo que aprecia uma boa história sabe que o propósito maior dela é, sempre que possível, guiar — nunca prever.
 
 Esse é o único motivo pelo qual, na minha opinião, uma das coisas que salvam a última temporada de Game of Thrones é justamente o reconhecimento da importância das histórias, simbolizado pela coroação de Bran, que, através da crise, tornou-se aquele que conhece todas as histórias e, portanto, governa o mundo.
 
