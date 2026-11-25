@@ -53,7 +53,7 @@ A simple example makes it clearer: for centuries, Europeans observed only white 
 
 ![Interactive widget: observing white swans one by one never proves that all swans are white, the argument stays invalid; one black swan from Australia refutes it, and that argument is valid.](#black-swan)
 
-The observations were real. The conclusion was not necessarily true. No number of white swans can prove that all swans are white, but a single black swan proves that they are not. Hume saw the problem in the eighteenth century, and Popper built his philosophy of science around this asymmetry: science does not prove theories, it keeps the ones that have not been refuted yet.
+The observations were real, but the conclusion was not necessarily true. No number of white swans can prove that all swans are white, but a single black swan is enough to prove that they are not. Hume saw the problem in the eighteenth century, and Popper built his philosophy of science around this asymmetry: science does not prove theories, it keeps the ones that have not been refuted yet.
 
 This fundamental limit does not make Science less awesome. It only means that it is a particular way of inquiring and describing the world. When we use language, we are doing this in another way, through sounds and/or words. When we play songs, we are doing the same. When we hug or kiss, that's yet another way of inquiring and describing the world.
 

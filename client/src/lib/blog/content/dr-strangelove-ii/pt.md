@@ -50,7 +50,7 @@ Um exemplo simples deixa isso mais claro: durante séculos, os europeus observar
 
 ![Widget interativo: observar cisnes brancos um a um nunca prova que todos os cisnes são brancos, o argumento continua inválido; um cisne negro da Austrália o refuta, e esse argumento é válido.](#black-swan)
 
-As observações eram reais. A conclusão não era necessariamente verdadeira. Nenhuma quantidade de cisnes brancos pode provar que todos os cisnes são brancos, mas um único cisne negro prova que não são. Hume viu o problema no século XVIII, e Popper construiu sua filosofia da ciência em torno dessa assimetria: a ciência não prova teorias, ela fica com as que ainda não foram refutadas.
+As observações eram reais, mas a conclusão não era necessariamente verdadeira. Nenhuma quantidade de cisnes brancos pode provar que todos os cisnes são brancos, mas basta um único cisne negro para provar que não são. Hume viu o problema no século XVIII, e Popper construiu sua filosofia da ciência em torno dessa assimetria: a ciência não prova teorias, ela fica com as que ainda não foram refutadas.
 
 Esse limite fundamental não torna a Ciência menos incrível. Significa apenas que ela é uma maneira particular de investigar e descrever o mundo. Quando usamos a linguagem, estamos fazendo isso de outra forma, por meio de sons e/ou palavras. Quando tocamos músicas, estamos fazendo o mesmo. Quando abraçamos ou beijamos, essa é ainda outra forma de investigar e descrever o mundo.
 
