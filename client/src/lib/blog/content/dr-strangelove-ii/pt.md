@@ -13,7 +13,7 @@ O coração da história está na seguinte pergunta: o fim trágico de Édipo fo
 
 Essa história foi escrita cerca de 500 anos antes de Cristo aparecer no pedaço. Mil e quinhentos anos depois que ele veio, um cara chamado Lutero contou a mesma história, afirmando que a Igreja Católica caiu na "húbris" do poder, corrompeu-se e se desviou da mensagem de Cristo.
 
-Daria para dizer que o Jardim do Éden é uma dessas histórias.
+Podemos dizer que o Jardim do Éden é uma dessas histórias.
 
 Hoje em dia, a maioria das pessoas conhece Matrix. Algumas conhecem Duna, mas a maioria não sabe que a tecnologia em Duna só é tão estranha porque o universo deles quase foi destruído. Logo no primeiro capítulo de Duna:
 

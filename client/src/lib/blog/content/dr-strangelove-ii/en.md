@@ -16,7 +16,7 @@ The heart of the story lies in one question: was Oedipus's tragic end caused by 
 
 This story was written about 500 years before Christ came into town. Fifteen hundred years after he came, a guy named Luther told the same story, claiming that the Catholic Church fell into the "hubris" of power, became corrupt and deviated from Christ's message.
 
-One could say the Garden of Eden is one of these stories.
+We can say the Garden of Eden is one of these stories.
 
 Most people nowadays are familiar with The Matrix. Some are with Dune, but most of them don't know that the technology in Dune is only that odd because their universe was almost destroyed. From the very first chapter of Dune:
 
