@@ -21,7 +21,7 @@ Hoje em dia, a maioria das pessoas conhece Matrix. Algumas conhecem Duna, mas a 
 
 O gênio absurdo de Jorge Luis Borges deu vida à sua própria versão desse conto através de um universo feito de uma biblioteca infinita, que guarda todos os livros possíveis, 99,99% deles lixo incompreensível que ninguém consegue ler.
 
-Fazer arte é sonhar como espécie. Eu acredito fortemente nisso. Ao criar esses delírios, os artistas conseguem nos dar um gostinho momentâneo do que está por vir, para preparar nossos cérebros e nossa imaginação para encarar o que vem, mesmo quando são pesadelos. Esses contos costumam nos dizer o que realmente importa: valorizar, cuidar e cultivar o contato humano, a intuição humana e a engenhosidade humana.
+Fazer arte é sonhar como espécie. Eu acredito fortemente nisso. Ao criar esses delírios, os artistas conseguem nos dar um gostinho momentâneo do que está por vir, para preparar nossos cérebros, corpos e corações para encarar o que vem, mesmo quando são pesadelos. Esses contos costumam nos dizer o que realmente importa: valorizar, cuidar e cultivar o contato humano, a intuição humana e a engenhosidade humana.
 
 ## O aliado
 "Humano" é uma palavra difícil de definir. Alguns dizem que temos que tratar as galinhas com mais humanidade, enquanto às vezes defendem uma vida mais parecida com a de galinhas para aqueles que não oferecem humanidade às galinhas. Agir com amor é humano. Agir com ódio é humano. Stalin não era um porco, apesar da imaginação de Orwell. Nem Hitler. E humanas eram todas e cada uma das pessoas que trabalhavam para eles. Brutus foi humano, demasiado humano, quando traiu César. Assim como Judas e Efialtes.
