@@ -1,5 +1,6 @@
 import { MotionConfig } from "framer-motion";
 import { AiBugLadder } from "./AiBugLadder";
+import { BlackSwanWidget } from "./BlackSwanWidget";
 import { CertaintyMethod } from "./CertaintyMethod";
 import { ContextWindowWidget } from "./ContextWindowWidget";
 import { IfThenSlider } from "./IfThenSlider";
@@ -13,6 +14,7 @@ const widgets: Record<string, (props: { label?: string }) => React.ReactNode> = 
   "#certainty-method": CertaintyMethod,
   "#context-window": ContextWindowWidget,
   "#ai-bug-ladder": AiBugLadder,
+  "#black-swan": BlackSwanWidget,
 };
 
 export default function Widget({ src, label }: { src: string; label?: string }) {

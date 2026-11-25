@@ -32,6 +32,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     setLangState(preferredLang());
   }, []);
 
+  useEffect(() => {
+    document.documentElement.lang = lang === "pt" ? "pt-BR" : "en";
+  }, [lang]);
+
   const setLang = useCallback((next: PostLang) => {
     setLangState(next);
     try {
