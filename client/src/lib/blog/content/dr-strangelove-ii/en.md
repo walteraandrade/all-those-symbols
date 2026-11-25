@@ -29,7 +29,7 @@ To make art is to dream as a species. I strongly believe that. By creating these
 ## The Ally
 "Human" is a tough word to define. Some say we have to treat chickens with more humanity, while sometimes defending a more chicken-like life for those who do not offer humanity to chickens. To act in love is human. To act in hate is human. Stalin was no pig, despite Orwell's imagination. Neither was Hitler. And humans were every single one of the people working for them. Brutus was human, all too human, when he betrayed Caesar. So were Judas and Ephialtes.
 
-There are few words that I have a harder time understanding than "Human", when used as a qualification of something or someone. The concern about AI replacing humans is understandable, considering the stories we've been told. But if you are into stories, you know that their purpose is to teach, not exactly to predict.
+There are few words that I have a harder time understanding than "Human", when used as a qualification of something or someone. The concern about AI replacing humans is understandable, considering the stories we've been told. But everyone who appreciates a good story knows their better purpose is, whenever possible, to guide — never to predict.
 
 That is the only reason why, in my opinion, one of the things that save the last season of Game of Thrones is precisely the recognition of the importance of stories, symbolized by the coronation of Bran, who, through crisis, became the one who knows all the stories and, therefore, rules the world.
 
