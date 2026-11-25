@@ -1,6 +1,6 @@
-# all-those-symbols
+# walterfall
 
-Personal portfolio site for Walter Andrade. Logic × Philosophy × Code.
+Personal site of Walter Andrade, live at https://walterfall.space. Logic × Philosophy × Code.
 
 ## Stack
 - React 19 + TypeScript
