@@ -9,6 +9,7 @@ tags: [ai, philosophy, logic, hubris, philosophy-of-science]
 
 The fear of AI doom is quite understandable. It is new, and we have been blown away by its capabilities lately. I don't even think it is bold to say that Fable 5.2 can write better code than 90% of the developers employed in the world, and much faster. The same is happening in mathematics, and some mathematicians are really getting emotional about it.
 
+## The Enemy
 The good part of being in the tech world but having a philosophical background is that I get to see how these worlds are similar from a unique perspective, and I often think about philosophical ideas while watching nerds debate the end of the world. Philosophers call one of those ideas "hubris." The word is ancient Greek and means, among a whole lot of other things, "excess" or "imbalance." Its best-known story is one of the coolest of all time: Oedipus, a great hero possessed by the urge to know himself, finds out he has murdered his father and is married to his mother, with whom he even had children. Taken by the horror of knowing this, he gouges out his own eyes, as he does not want to look at his own disgrace anymore.
 
 This story was written about 500 years before Christ came into town. Fifteen hundred years after he came, a guy named Luther told the same story, claiming that the Catholic Church fell into the "hubris" of power, became corrupt and deviated from Christ's message.

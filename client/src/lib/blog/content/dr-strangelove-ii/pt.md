@@ -6,6 +6,7 @@ readingTime: 7
 
 O medo do apocalipse da IA é bem compreensível. É algo novo, e ultimamente temos ficado estatelados com o que ela é capaz de fazer. Nem acho ousado dizer que o Fable 5.2 consegue escrever código melhor do que 90% dos desenvolvedores empregados no mundo, e muito mais rápido. O mesmo está acontecendo na matemática, e alguns matemáticos estão ficando realmente emocionais com isso.
 
+## O inimigo
 A parte boa de estar no mundo da tecnologia tendo uma formação filosófica é que consigo enxergar como esses dois universos se parecem a partir de uma perspectiva única, e frequentemente penso em ideias filosóficas enquanto assisto a nerds debatendo o fim do mundo. Os filósofos chamam uma dessas ideias de "húbris". A palavra vem do grego antigo e significa, entre um monte de outras coisas, "excesso" ou "desequilíbrio". Sua história mais conhecida é uma das mais legais de todos os tempos: Édipo, um grande herói possuído pela urgência de conhecer a si mesmo, descobre que matou o próprio pai e se casou com a própria mãe, com quem inclusive teve filhos. Tomado pelo horror dessa descoberta, ele arranca os próprios olhos, pois não quer mais olhar para a própria desgraça.
 
 Essa história foi escrita cerca de 500 anos antes de Cristo aparecer no pedaço. Mil e quinhentos anos depois que ele veio, um cara chamado Lutero contou a mesma história, afirmando que a Igreja Católica caiu na "húbris" do poder, corrompeu-se e se desviou da mensagem de Cristo.
