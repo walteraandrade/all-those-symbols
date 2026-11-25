@@ -24,7 +24,7 @@ Most people nowadays are familiar with The Matrix. Some are with Dune, but most 
 
 The absurd genius of Jorge Luis Borges brought his own version of this tale to life through a universe made of an infinite library, one that holds every possible book, 99.99% of them incomprehensible garbage no one can read.
 
-To make art is to dream as a species. I strongly believe that. By creating these delusions, artists can give us a momentary taste of what's coming, to prepare our brains, bodies and hearts to face it, even when they are nightmares. These tales often tell us what truly matters: to treasure, care for and cultivate human contact, human intuition and ingenuity.
+To make art is to dream as a species. I strongly believe that. By creating these delusions, artists can give us a momentary taste of what's coming, to prepare our brains, our souls, our bodies and our perceptions to face it, even when they are nightmares. These tales often tell us what truly matters: to treasure, care for and cultivate human contact, human intuition and ingenuity.
 
 ## The Ally
 "Human" is a tough word to define. Some say we have to treat chickens with more humanity, while sometimes defending a more chicken-like life for those who do not offer humanity to chickens. To act in love is human. To act in hate is human. Stalin was no pig, despite Orwell's imagination. Neither was Hitler. And humans were every single one of the people working for them. Brutus was human, all too human, when he betrayed Caesar. So were Judas and Ephialtes.
