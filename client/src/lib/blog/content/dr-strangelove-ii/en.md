@@ -43,7 +43,7 @@ As if to prove a point, Art itself sometimes speaks as a real goddess, like when
 
 For this reason, I don't think we'd be doomed even if AI one day does everything reason can do, if that day ever really comes. Most likely, we'll go through a paradigm shift about what we are: as a species, as members of this planet Earth, earthlings, within this so unexplored galaxy. And that will be the twist no story could predict, the paradigm shift that overwrites, in history, even the technological one.
 
-When, in 1608, some revolutionary discoveries in optics got the young nerd Galileo excited to build his new super mega cool telescope, he did it, and had the brilliant idea of pointing it up. And looking.
+When, in 1608, some revolutionary discoveries in optics got the young nerd Galileo (he was only 45) excited to build his new super mega cool telescope, he did it, and had the brilliant idea of pointing it up. And looking.
 
 I believe that, as humans, we'll surely find far better ways to explore the world. We forget that besides being rational, we're also social. Political. Philosophical. And this, I can assure you, is not a vision of optimism.
 

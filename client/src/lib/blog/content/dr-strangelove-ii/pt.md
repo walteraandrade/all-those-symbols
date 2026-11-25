@@ -40,7 +40,7 @@ Como que para provar um ponto, a própria Arte às vezes fala como uma deusa de 
 
 Por essa razão, não acho que estaríamos condenados mesmo que a IA um dia faça tudo o que a razão pode fazer, se esse dia realmente chegar. O mais provável é que tenhamos uma mudança de paradigma sobre o que somos, como espécie, membros desse planeta Terra, terráqueos, dentro dessa tão inexplorada galáxia. E esse vai ser o twist que nenhuma história poderia prever, a mudança de paradigma que sobrescreve, na história, até mesmo a mudança tecnológica.
 
-Quando, em 1608, algumas descobertas revolucionárias em óptica animaram o jovem nerd Galileu a construir sua nova super mega cool luneta, ele o fez e teve a brilhante ideia de apontá-la pra cima. E observar.
+Quando, em 1608, algumas descobertas revolucionárias em óptica animaram o jovem nerd Galileu (ele só tinha 45) a construir sua nova super mega cool luneta, ele o fez e teve a brilhante ideia de apontá-la pra cima. E observar.
 
 Acredito que, como humanos, certamente encontraremos maneiras muito melhores de explorar o mundo. Esquecemos que, além de racionais, somos também sociais. Políticos. Filosóficos. E esta, posso te garantir, não é uma visão otimista.
 
