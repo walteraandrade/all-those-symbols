@@ -24,7 +24,7 @@ The absurd genius of Jorge Luis Borges brought his own version of this tale to l
 
 To make art is to dream as a species. I strongly believe that. By creating these delusions, artists can give us a momentary taste of what's coming, to prepare our brains and our imagination to look, even when they are nightmares. These tales often tell us what truly matters: to treasure, care for and cultivate human contact, human intuition and ingenuity.
 
-## The ally
+## The Ally
 "Human" is a tough word to define. Some say we have to treat chickens with more humanity, while sometimes defending a more chicken-like life for those who do not offer humanity to chickens. To act in love is human. To act in hate is human. Stalin was no pig, despite Orwell's imagination. Neither was Hitler. And humans were every single one of the people working for them. Brutus was human, all too human, when he betrayed Caesar. So were Judas and Ephialtes.
 
 There are few words that I have a harder time understanding than "Human", when used as a qualification of something or someone. The concern about AI replacing humans is understandable, considering the stories we've been told. But if you are into stories, you know that their purpose is to teach, not exactly to predict.
