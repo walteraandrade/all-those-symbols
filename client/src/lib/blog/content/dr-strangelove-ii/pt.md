@@ -18,8 +18,6 @@ Hoje em dia, a maioria das pessoas conhece Matrix. Algumas conhecem Duna, mas a 
 
 O gênio absurdo de Jorge Luis Borges deu vida à sua própria versão desse conto através de um universo feito de uma biblioteca infinita, que guarda todos os livros possíveis, 99,99% deles lixo incompreensível que ninguém consegue ler.
 
-![Widget interativo: abra páginas aleatórias da Biblioteca de Babel, feita de todas as combinações de 25 símbolos, e conte como é raro aparecer uma palavra de verdade.](#library-of-babel)
-
 Fazer arte é sonhar como espécie. Eu acredito fortemente nisso. Ao criar esses delírios, os artistas conseguem nos dar um gostinho momentâneo do que está por vir, para preparar nossos cérebros e nossa imaginação para encarar o que vem, mesmo quando são pesadelos. Esses contos costumam nos dizer o que realmente importa: valorizar, cuidar e cultivar o contato humano, a intuição humana e a engenhosidade humana.
 
 ## O aliado

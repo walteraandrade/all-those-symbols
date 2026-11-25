@@ -5,7 +5,7 @@ import { slugify } from "@/lib/utils";
 import { CHROME } from "@/lib/blog/chrome";
 import type { PostLang } from "@/lib/blog/types";
 
-const widgetSrcs = new Set(["#if-then", "#state-machine", "#logic-circuit", "#certainty-method", "#context-window", "#ai-bug-ladder", "#black-swan", "#library-of-babel"]);
+const widgetSrcs = new Set(["#if-then", "#state-machine", "#logic-circuit", "#certainty-method", "#context-window", "#ai-bug-ladder", "#black-swan"]);
 const Widget = lazy(() => import("./Widgets"));
 
 const sizeFromSrc = (src?: string) => {

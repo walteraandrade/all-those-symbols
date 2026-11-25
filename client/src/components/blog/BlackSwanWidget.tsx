@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Sprite } from "@/components/escher/sprites";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { WIDGET_BOX } from "./widgetBox";
@@ -16,7 +17,15 @@ const SWAN = [
   ".wwwww....",
 ];
 
+const WAKE = ["h.hh...hh.h.", ".h..hhh..h.."];
+
 const WHITE = { w: "--bone", b: "--mid" };
+const WATER = { h: "--accent-hi" };
+const RIPPLE = ["hh.hhh"];
+const RIPPLE_PAL = { h: "--accent-dark" };
+const RIPPLES = [
+  [6, 18], [28, 62], [47, 30], [71, 78], [88, 22], [15, 84], [58, 52], [35, 12], [80, 48], [5, 50],
+];
 const BLACK = { w: "--shadow", b: "--danger" };
 const SHOWN = 24;
 
@@ -71,6 +80,31 @@ const COPY = {
   },
 };
 
+const Swan = ({
+  palette,
+  scale,
+  delay,
+  className,
+}: {
+  palette: Record<string, string>;
+  scale: number;
+  delay: number;
+  className?: string;
+}) => (
+  <motion.span
+    className={cn("relative flex flex-col items-center", className)}
+    initial={{ opacity: 0, y: -6 }}
+    animate={{ opacity: 1, y: [0, -scale, 0] }}
+    transition={{
+      opacity: { duration: 0.3 },
+      y: { duration: 1.6, repeat: Infinity, ease: (p: number) => Math.round(p * 2) / 2, delay },
+    }}
+  >
+    <Sprite map={SWAN} palette={palette} scale={scale} />
+    <Sprite map={WAKE} palette={WATER} scale={scale} style={{ marginTop: -scale * 2 }} />
+  </motion.span>
+);
+
 const Stamp = ({ ok, children }: { ok: boolean; children: string }) => (
   <span
     className={cn(
@@ -98,15 +132,20 @@ export function BlackSwanWidget({ label }: { label?: string }) {
       <span
         role="img"
         aria-label={copy.lake(whites, black)}
-        className="flex min-h-[7.5rem] w-full flex-wrap content-start items-end gap-x-2 gap-y-1 border-[3px] border-[var(--dark)] bg-[var(--accent-mid)] p-3"
+        className="flex min-h-[7.5rem] w-full flex-wrap content-start items-end gap-x-2 gap-y-1 border-[3px] border-[var(--dark)] bg-[var(--accent-mid)] relative p-3"
       >
+        {RIPPLES.map(([x, y]) => (
+          <span key={`${x}-${y}`} aria-hidden className="pointer-events-none absolute" style={{ left: `${x}%`, top: `${y}%` }}>
+            <Sprite map={RIPPLE} palette={RIPPLE_PAL} scale={3} />
+          </span>
+        ))}
         {Array.from({ length: shown }, (_, i) => (
-          <Sprite key={i} map={SWAN} palette={WHITE} scale={3} />
+          <Swan key={i} palette={WHITE} scale={3} delay={(i % 7) * 0.23} />
         ))}
         {whites > SHOWN && (
           <span className="self-center font-mono text-sm font-bold text-[var(--ink)]">+{whites - SHOWN}</span>
         )}
-        {black && <Sprite map={SWAN} palette={BLACK} scale={5} className="ml-auto" />}
+        {black && <Swan palette={BLACK} scale={5} delay={0} className="ml-auto" />}
       </span>
 
       <span className="flex w-full flex-col gap-1 border-[3px] border-[var(--dark)] bg-[var(--ink)] p-4 font-mono text-sm leading-snug text-[var(--soft)]">

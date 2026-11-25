@@ -21,8 +21,6 @@ Most people nowadays are familiar with The Matrix. Some are with Dune, but most 
 
 The absurd genius of Jorge Luis Borges brought his own version of this tale to life through a universe made of an infinite library, one that holds every possible book, 99.99% of them incomprehensible garbage no one can read.
 
-![Interactive widget: open random pages from the Library of Babel, made of every combination of 25 symbols, and count how rarely a real word shows up.](#library-of-babel)
-
 To make art is to dream as a species. I strongly believe that. By creating these delusions, artists can give us a momentary taste of what's coming, to prepare our brains and our imagination to look, even when they are nightmares. These tales often tell us what truly matters: to treasure, care for and cultivate human contact, human intuition and ingenuity.
 
 ## The ally
